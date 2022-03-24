@@ -6,15 +6,15 @@ class Car:
         self.x=x
         self.y=y
 
-    def getX():
+    def getX(self):
         return self.x
-    def getY():
+    def getY(self):
         return self.y
-    def isSelfDriven():
+    def isSelfDriven(self):
         return self.Type
-    def getSource():
+    def getSource(self):
         return self.source
-    def getDestination():
+    def getDestination(self):
         return self.getDestination
 
 class Lanes:
