@@ -1,11 +1,15 @@
+from random import randint
+
+
 maxNumber=5
 class Car:
-    def __init__(self,Type, source, destination, x, y):
+    #def __init__(self,Type, source, destination, x, y):
+    def __init__(self,Type, source, destination):
         self.Type=Type
         self.source=source
         self.destination=destination
-        self.x=x
-        self.y=y
+        #self.x=x
+        #self.y=y
 
     def getX(self):
         return self.x
@@ -29,7 +33,7 @@ class Lanes:
         self.laneneg2=[]
         self.laneneg3=[]
 
-    def addCars(self,vehicle):
+    def addCar(self,vehicle):
         if(vehicle.getSource()==1):
             if(len(self.lanePos1)<=maxNumber):
                 self.lanePos1.append(vehicle)
@@ -39,6 +43,7 @@ class Lanes:
         if(vehicle.getSource()==3):
             if(len(self.lanePos3)<=maxNumber):
                 self.lanePos3.append(vehicle)
+
     
 class Intersection:
     def __init__(self):
@@ -46,6 +51,15 @@ class Intersection:
         self.leftLane=Lanes()
         self.topLane=Lanes()
         self.bottomLane=Lanes()
+
+    def randomGenerater(self):
+        #randomly select where the car is coming from
+        origion=randint(1,4)
+        #randomly select where the car is going
+        destination=randint(1,3)
+        
+        if(origion==1):
+            self.rightLane.addCar(Car())
 
 
 #ignore the draw function for now
