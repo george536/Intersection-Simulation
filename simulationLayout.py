@@ -17,6 +17,7 @@ class Car:
     def getDestination(self):
         return self.getDestination
 
+
 class Lanes:
     def __init__(self):
         self.lanePos1=[]
@@ -34,6 +35,7 @@ class Intersection:
         self.bottomLane=Lanes()
 
 
+#ignore the draw function for now
 def draw():
     width=36
     height=30
