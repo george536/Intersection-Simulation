@@ -57,9 +57,20 @@ class Intersection:
         origion=randint(1,4)
         #randomly select where the car is going
         destination=randint(1,3)
+        #randomly select type of car
+        temp=randint(1,2)
+        if(temp==1):Type=False 
+        else: Type=True
+
         
         if(origion==1):
-            self.rightLane.addCar(Car())
+            self.rightLane.addCar(Car(Type,origion,destination))
+        if(origion==2):
+            self.topLane.addCar(Car(Type,origion,destination))
+        if(origion==3):
+            self.leftLane.addCar(Car(Type,origion,destination))
+        if(origion==4):
+            self.bottomLane.addCar(Car(Type,origion,destination))
 
 
 #ignore the draw function for now
