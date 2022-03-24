@@ -1,6 +1,5 @@
 from random import randint
 
-
 maxNumber=5
 class Car:
     #def __init__(self,Type, source, destination, x, y):
@@ -131,6 +130,13 @@ def draw():
         print("\n")
 
 def main():
-    intersection1=Intersection()
-    
+    design =Intersection()
+    i=0
+    while(i<5):
+        design.randomGenerater()
+        i+=1
+
+    for i in range(0,4):
+        for lane in design.rightLane:
+            for car in lane
 main()
