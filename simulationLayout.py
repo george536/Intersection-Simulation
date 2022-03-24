@@ -33,6 +33,9 @@ class Lanes:
         if(vehicle.getSource()==1):
             if(len(self.lanePos1)<=maxNumber):
                 self.lanePos1.append(vehicle)
+        if(vehicle.getSource()==2):
+            if(len(self.lanePos2)<=maxNumber):
+                self.lanePos2.append(vehicle)
     
 class Intersection:
     def __init__(self):
