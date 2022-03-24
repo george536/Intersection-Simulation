@@ -1,3 +1,4 @@
+maxNumber=5
 class Car:
     def __init__(self,Type, source, destination, x, y):
         self.Type=Type
@@ -19,6 +20,7 @@ class Car:
 
 
 class Lanes:
+    global maxNumber
     def __init__(self):
         self.lanePos1=[]
         self.lanePos2=[]
@@ -26,6 +28,11 @@ class Lanes:
         self.laneneg1=[]
         self.laneneg2=[]
         self.laneneg3=[]
+
+    def addCars(self,vehicle):
+        if(vehicle.getSource()==1):
+            if(len(self.lanePos1)<=maxNumber):
+                self.lanePos1.append(vehicle)
     
 class Intersection:
     def __init__(self):
