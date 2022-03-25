@@ -17,6 +17,11 @@ class VehcileType(Enum):
     Self_Driven=0,
     Human_Driven=1
 
+class LaneType(Enum):
+    mostRight=1,
+    middle=2,
+    mostLeft=3,
+
 
 maxNumber=5
 class Car:
@@ -68,7 +73,9 @@ class Lanes:
                     self.laneneg1,
                     self.laneneg2,
                     self.laneneg3]
+        
 
+    '''
     def addCar(self,vehicle):
         if(vehicle.getSource()==Source.East):
             pass
@@ -82,7 +89,7 @@ class Lanes:
         if(vehicle.getSource()==Source.South):
             pass
             #check for limit
-
+    '''
     
 class Intersection:
     def __init__(self):
@@ -102,13 +109,27 @@ class Intersection:
                     self.topDirection,
                     self.bottomDirection]
 
-    def addToEast(self):
+    def canTakeMore(self,lane):
+        if(len(lane)<=maxNumber):
+            return True
+        else:
+            return False
+
+    def addToEast(self,Type,origion,destination):
+        if(destination==Destination.North):
+            if(self.canTakeMore(self.rightDirection.lanePos1)):
+                self.rightDirection.lanePos1.append(Car(Type,origion,destination,LaneType.mostRight))
+
+        if(destination==Destination.West):
+            if(self.canTakeMore(self.rightDirection.lanePos3)):
+                self.rightDirection.lanePos3.append(Car(Type,origion,destination,LaneType.mostLeft))
+
+
+    def addToNorth(self,Type,origion,destination):
         pass
-    def addToNorth(self):
+    def addToWest(self,Type,origion,destination):
         pass
-    def addToWest(self):
-        pass
-    def addToSouth(self):
+    def addToSouth(self,Type,origion,destination):
         pass
 
     def randomCarGenerater(self):
