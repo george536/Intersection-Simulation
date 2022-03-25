@@ -243,7 +243,7 @@ class Intersection:
 
     def display(self):
         for laneSet in self.fourWay:
-            for lanes in laneSet:
+            for lanes in laneSet.lanesSet:
                 for lane in lanes:
                     for car in lane:
                         print("Is it self-driven: ",car.isSelfDriven(),"Source: ",car.getSource(), "in lane number: ", car.getLane(), "destination: ",car.getDestination(),"\n")
