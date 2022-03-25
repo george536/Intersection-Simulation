@@ -22,6 +22,12 @@ class LaneType(Enum):
     middle=2,
     leftMost=3,
 
+class Traffic(Enum):
+    EastWest=1,
+    NorthSouth=2,
+    NorthSouthLeftTurn=3,
+    EastWestLeftTurn=4
+
 
 maxNumber=5
 class Car:
@@ -108,6 +114,10 @@ class Intersection:
             if(self.canTakeMore(self.East.lanePos2)):
                 self.East.lanePos2.append(Car(Type,origion,destination,LaneType.middle))
 
+        if(destination==Destination.West and Type==VehcileType.Self_Driven):
+            if(self.canTakeMore(self.East.lanePos3)):
+                self.East.lanePos3.append(Car(Type,origion,destination,LaneType.leftMost))
+
 
 
     def addToNorth(self,Type,origion,destination):
@@ -134,6 +144,7 @@ class Intersection:
                 self.addToSouth(Type,origion,destination)
 
     def SarahsComments():
+
         ################### Sarah's Comments ######################            
 
                 #if origin%2 == destination%2 #going straight
@@ -164,7 +175,6 @@ class Intersection:
                         #going neg 1 lane
 
         pass
-
     ############# ignore the draw function for now ###################
     def draw():
         width=36
