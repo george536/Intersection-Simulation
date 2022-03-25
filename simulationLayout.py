@@ -108,8 +108,41 @@ class Intersection:
         #randomly select where the car is going
         destination=random.choice(list(Destination))
         #randomly select type of car
+<<<<<<< HEAD
         Type=random.choice(list(VehcileType))
 
+=======
+        temp=randint(1,2)
+        if(temp==1):Type=False 
+        else: Type=True
+            
+         #if origin%2 == destination%2 #going straight
+            #positive 2 lane
+            #goign neg 2 lane
+        #else
+            #if abs(origin-destination)==1
+                #if origin > destination #turning right
+                    #positive 1 lane
+                    #going neg 1 lane
+                #else #turning left
+                    #if self driving
+                        #positive 1 lane
+                        #going neg 1 lane (more needs to be done here)
+                    #else human
+                        #positive 3 lane
+                        #going into neg 3 lane
+            #else
+                #if origin > destination #turning left
+                    #if self driving
+                        #positive 1 lane
+                        #going neg 1 lane (more needs to be done here)
+                    #else human
+                        #positive 3 lane
+                        #going into neg 3 lane
+                #else #turning right
+                    #positive 1 lane
+                    #going neg 1 lane
+>>>>>>> f8af989ac0fcf02b093f021246021666b78ed04a
 
         if(destination!=origion):
             if(origion==1):
