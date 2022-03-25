@@ -1,14 +1,30 @@
-from random import randint
+import random
+from enum import Enum
+
+class Destination(Enum):
+    East=1,
+    North=2,
+    West=3,
+    South=4
+
+class Source(Enum):
+    East=1,
+    North=2,
+    West=3,
+    South=4
+
+class VehcileType(Enum):
+    Self_Driven=0,
+    Human_Driven=1
+
+
 maxNumber=5
 class Car:
-    #def __init__(self,Type, source, destination, x, y):
     def __init__(self,Type, source, destination, lane):
         self.Type=Type
         self.source=source
         self.destination=destination
         self.lane=lane
-        #self.x=x
-        #self.y=y
 
     def getX(self):
         return self.x
@@ -27,26 +43,45 @@ class Car:
 class Lanes:
     global maxNumber
     def __init__(self):
-        #pos means positive lane, cars are entering the intersection and exiting the lane (this is the right side of the road)
-        #self.lanePos1=[]
-        #self.lanePos2=[]
-        #self.lanePos3=[]
-        #neg means negative lane, cars are exiting the intersection and entering the lane (this is the left side of the road)
-        #self.laneneg1=[]
-        #self.laneneg2=[]
-        #self.laneneg3=[]
-        self.lane=[[],[],[],[],[],[]]
+        #pos means positive lane, cars are entering the intersection 
+        #and exiting the lane (this is the right side of the road)
+        self.lanePos1=[]
+        self.lanePos2=[]
+        self.lanePos3=[]
+        #neg means negative lane, cars are exiting the intersection 
+        #and entering the lane (this is the left side of the road)
+        self.laneneg1=[]
+        self.laneneg2=[]
+        self.laneneg3=[]
+
+        self.lanesSet=[self.lanePos1,
+                    self.laneneg2,
+                    self.lanePos3,
+                    self.laneneg1,
+                    self.laneneg2,
+                    self.laneneg3]
+
+    def update(self):
+        self.lanesSet=[self.lanePos1,
+                    self.laneneg2,
+                    self.lanePos3,
+                    self.laneneg1,
+                    self.laneneg2,
+                    self.laneneg3]
 
     def addCar(self,vehicle):
-        if(vehicle.getSource()==1):
-            if(len(self.lane[0])<=maxNumber):
-                self.lane[0].append(vehicle)
-        if(vehicle.getSource()==2):
-            if(len(self.lane[1])<=maxNumber):
-                self.lane[1].append(vehicle)
-        if(vehicle.getSource()==3):
-            if(len(self.lane[2])<=maxNumber):
-                self.lane[2].append(vehicle)
+        if(vehicle.getSource()==Source.East):
+            pass
+            #check for limit
+        if(vehicle.getSource()==Source.North):
+            pass
+            #check for limit
+        if(vehicle.getSource()==Source.West):
+            pass
+            #check for limit
+        if(vehicle.getSource()==Source.South):
+            pass
+            #check for limit
 
     
 class Intersection:
@@ -56,16 +91,25 @@ class Intersection:
         self.topDirection=Lanes()
         self.bottomDirection=Lanes()
 
+        self.fourWay=[self.rightDirection,
+                    self.leftDirection,
+                    self.topDirection,
+                    self.bottomDirection]
+
+    def update(self):
+        self.fourWay=[self.rightDirection,
+                    self.leftDirection,
+                    self.topDirection,
+                    self.bottomDirection]
+
     def randomGenerater(self):
         #randomly select where the car is coming from
-        origion=randint(1,4)
+        origion=random.choice(list(Source))
         #randomly select where the car is going
-        #changeeeeeeeeee
-        destination=randint(1,4)
+        destination=random.choice(list(Destination))
         #randomly select type of car
-        temp=randint(1,2)
-        if(temp==1):Type=False 
-        else: Type=True
+        Type=random.choice(list(VehcileType))
+
 
         if(destination!=origion):
             if(origion==1):
