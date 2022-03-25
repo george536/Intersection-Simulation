@@ -18,9 +18,9 @@ class VehcileType(Enum):
     Human_Driven=1
 
 class LaneType(Enum):
-    mostRight=1,
+    rightMost=1,
     middle=2,
-    mostLeft=3,
+    leftMost=3,
 
 
 maxNumber=5
@@ -118,11 +118,11 @@ class Intersection:
     def addToEast(self,Type,origion,destination):
         if(destination==Destination.North):
             if(self.canTakeMore(self.rightDirection.lanePos1)):
-                self.rightDirection.lanePos1.append(Car(Type,origion,destination,LaneType.mostRight))
+                self.rightDirection.lanePos1.append(Car(Type,origion,destination,LaneType.rightMost))
 
         if(destination==Destination.West):
             if(self.canTakeMore(self.rightDirection.lanePos3)):
-                self.rightDirection.lanePos3.append(Car(Type,origion,destination,LaneType.mostLeft))
+                self.rightDirection.lanePos3.append(Car(Type,origion,destination,LaneType.leftMost))
 
 
     def addToNorth(self,Type,origion,destination):
