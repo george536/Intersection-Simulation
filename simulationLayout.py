@@ -66,6 +66,33 @@ class Intersection:
         temp=randint(1,2)
         if(temp==1):Type=False 
         else: Type=True
+            
+         #if origin%2 == destination%2 #going straight
+            #positive 2 lane
+            #goign neg 2 lane
+        #else
+            #if abs(origin-destination)==1
+                #if origin > destination #turning right
+                    #positive 1 lane
+                    #going neg 1 lane
+                #else #turning left
+                    #if self driving
+                        #positive 1 lane
+                        #going neg 1 lane (more needs to be done here)
+                    #else human
+                        #positive 3 lane
+                        #going into neg 3 lane
+            #else
+                #if origin > destination #turning left
+                    #if self driving
+                        #positive 1 lane
+                        #going neg 1 lane (more needs to be done here)
+                    #else human
+                        #positive 3 lane
+                        #going into neg 3 lane
+                #else #turning right
+                    #positive 1 lane
+                    #going neg 1 lane
 
         if(destination!=origion):
             if(origion==1):
