@@ -130,40 +130,42 @@ class Intersection:
             if(origion==4):
                 self.bottomDirection.addCar(Car(Type,origion,destination,0))
 
-             #if origin%2 == destination%2 #going straight
-            #positive 2 lane
-            #goign neg 2 lane
-        #else
-            #if abs(origin-destination)==1
-                #if origin > destination #turning right
-                    #positive 1 lane
-                    #going neg 1 lane
-                #else #turning left
-                    #if self driving
-                        #positive 1 lane
-                        #going neg 1 lane (more needs to be done here)
-                    #else human
-                        #positive 3 lane
-                        #going into neg 3 lane
+    def SarahsComments():
+        ################### Sarah's Comments ######################            
+
+                #if origin%2 == destination%2 #going straight
+                #positive 2 lane
+                #goign neg 2 lane
             #else
-                #if origin > destination #turning left
-                    #if self driving
+                #if abs(origin-destination)==1
+                    #if origin > destination #turning right
                         #positive 1 lane
-                        #going neg 1 lane (more needs to be done here)
-                    #else human
-                        #positive 3 lane
-                        #going into neg 3 lane
-                #else #turning right
-                    #positive 1 lane
-                    #going neg 1 lane
+                        #going neg 1 lane
+                    #else #turning left
+                        #if self driving
+                            #positive 1 lane
+                            #going neg 1 lane (more needs to be done here)
+                        #else human
+                            #positive 3 lane
+                            #going into neg 3 lane
+                #else
+                    #if origin > destination #turning left
+                        #if self driving
+                            #positive 1 lane
+                            #going neg 1 lane (more needs to be done here)
+                        #else human
+                            #positive 3 lane
+                            #going into neg 3 lane
+                    #else #turning right
+                        #positive 1 lane
+                        #going neg 1 lane
 
-
-    #ignore the draw function for now
+        pass
+    
+    ############# ignore the draw function for now ###################
     def draw():
         width=36
         height=30
-        #y for height
-        #x for width
         #¦
         for y in range(0,height+1):
             for x in range(0,width):
