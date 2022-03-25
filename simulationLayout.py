@@ -1,5 +1,8 @@
+from calendar import c
+from multiprocessing.dummy import Array
 import random
 from enum import Enum
+from re import A
 
 class Destination(Enum):
     East=1,
@@ -27,6 +30,32 @@ class Traffic(Enum):
     NorthSouth=2,
     NorthSouthLeftTurn=3,
     EastWestLeftTurn=4
+
+class PriorityQueue:
+    Array=[]
+    def __init__(self,size):
+        self.size=size
+        self.count=0
+        for i in range(0,size):
+            Array[i]=0  
+        self.Array=Array
+    
+    def add(self,element):
+        if(self.count<=self.size):
+            for i in self.Array:
+                if(i<self.size and i==0):
+                    self.Array[i]=element
+                    self.count+=1
+                    break
+
+    def remove(self):
+        if(self.count>0):
+            self.Array[0]=0
+            for i in range(1,self.size):
+                self.Array[i-1]=self.Array[i]
+            self.Array[self.count-1]=0
+            self.count-=1
+
 
 currentTrafic=Traffic.EastWest
 maxNumber=5
