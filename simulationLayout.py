@@ -62,13 +62,13 @@ class Intersection:
 
         
         if(origion==1):
-            self.rightLane.addCar(Car(Type,origion,destination))
+            self.rightDirection.addCar(Car(Type,origion,destination))
         if(origion==2):
-            self.topLane.addCar(Car(Type,origion,destination))
+            self.topDirection.addCar(Car(Type,origion,destination))
         if(origion==3):
-            self.leftLane.addCar(Car(Type,origion,destination))
+            self.leftDirection.addCar(Car(Type,origion,destination))
         if(origion==4):
-            self.bottomLane.addCar(Car(Type,origion,destination))
+            self.bottomDirection.addCar(Car(Type,origion,destination))
 
 
 #ignore the draw function for now
