@@ -28,7 +28,7 @@ class Traffic(Enum):
     NorthSouthLeftTurn=3,
     EastWestLeftTurn=4
 
-
+currentTrafic=Traffic.EastWest
 maxNumber=5
 class Car:
     def __init__(self,Type, source, destination, lane):
@@ -87,6 +87,7 @@ class Intersection:
         self.West=Lanes()
         self.North=Lanes()
         self.South=Lanes()
+        self.currentTrafic=currentTrafic
 
         self.fourWay=[self.East,
                     self.West,
@@ -99,6 +100,14 @@ class Intersection:
                     self.North,
                     self.South]
 
+        self.currentTrafic=currentTrafic
+
+    def controlTraffic(self):
+        global currentTrafic
+        #put code here
+        self.currentTrafic=currentTrafic
+        pass
+
     def canTakeMore(self,lane):
         if(len(lane)<=maxNumber):
             return True
@@ -106,18 +115,20 @@ class Intersection:
             return False
 
     def addToEast(self,Type,origion,destination):
-        if(destination==Destination.North):
+        #car turning right or self-driven car turning right to go left
+        if(destination==Destination.North or (destination==Destination.South and Type==VehcileType.Self_Driven)):
             if(self.canTakeMore(self.East.lanePos1)):
                 self.East.lanePos1.append(Car(Type,origion,destination,LaneType.rightMost))
 
+        #Human-driven car turning left
         if(destination==Destination.South and Type==VehcileType.Human_Driven):
             if(self.canTakeMore(self.East.lanePos2)):
                 self.East.lanePos2.append(Car(Type,origion,destination,LaneType.middle))
 
+        #self-driven car going straight
         if(destination==Destination.West and Type==VehcileType.Self_Driven):
             if(self.canTakeMore(self.East.lanePos3)):
                 self.East.lanePos3.append(Car(Type,origion,destination,LaneType.leftMost))
-
 
 
     def addToNorth(self,Type,origion,destination):
