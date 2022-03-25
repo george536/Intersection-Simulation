@@ -74,22 +74,6 @@ class Lanes:
                     self.laneneg2,
                     self.laneneg3]
         
-
-    '''
-    def addCar(self,vehicle):
-        if(vehicle.getSource()==Source.East):
-            pass
-            #check for limit
-        if(vehicle.getSource()==Source.North):
-            pass
-            #check for limit
-        if(vehicle.getSource()==Source.West):
-            pass
-            #check for limit
-        if(vehicle.getSource()==Source.South):
-            pass
-            #check for limit
-    '''
     
 class Intersection:
     def __init__(self):
@@ -122,7 +106,8 @@ class Intersection:
 
         if(destination==Destination.South and Type==VehcileType.Human_Driven):
             if(self.canTakeMore(self.East.lanePos2)):
-                self.East.lanePos3.append(Car(Type,origion,destination,LaneType.leftMost))
+                self.East.lanePos2.append(Car(Type,origion,destination,LaneType.middle))
+
 
 
     def addToNorth(self,Type,origion,destination):
@@ -133,11 +118,8 @@ class Intersection:
         pass
 
     def randomCarGenerater(self):
-        #randomly select where the car is coming from
         origion=random.choice(list(Source))
-        #randomly select where the car is going
         destination=random.choice(list(Destination))
-        #randomly select type of car
         Type=random.choice(list(VehcileType))
 
 
