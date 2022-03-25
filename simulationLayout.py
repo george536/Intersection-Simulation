@@ -24,9 +24,11 @@ class Car:
 class Lanes:
     global maxNumber
     def __init__(self):
+        #pos means positive lane, cars are entering the intersection and exiting the lane (this is the right side of the road)
         self.lanePos1=[]
         self.lanePos2=[]
         self.lanePos3=[]
+        #neg means negative lane, cars are exiting the intersection and entering the lane (this is the left side of the road)
         self.laneneg1=[]
         self.laneneg2=[]
         self.laneneg3=[]
