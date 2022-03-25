@@ -103,7 +103,7 @@ class Intersection:
                     self.bottomDirection]
 
     def addToEast(self):
-            pass
+        pass
     def addToNorth(self):
         pass
     def addToWest(self):
@@ -111,7 +111,7 @@ class Intersection:
     def addToSouth(self):
         pass
 
-    def randomGenerater(self):
+    def randomCarGenerater(self):
         #randomly select where the car is coming from
         origion=random.choice(list(Source))
         #randomly select where the car is going
@@ -121,14 +121,14 @@ class Intersection:
 
 
         if(destination.value!=origion.value):
-            if(origion==1):
-                self.rightDirection.addCar(Car(Type,origion,destination,0))
-            if(origion==2):
-                self.topDirection.addCar(Car(Type,origion,destination,0))
-            if(origion==3):
-                self.leftDirection.addCar(Car(Type,origion,destination,0))
-            if(origion==4):
-                self.bottomDirection.addCar(Car(Type,origion,destination,0))
+            if(origion==Source.East):
+                self.addToEast(Type,origion,destination)
+            if(origion==Source.North):
+                self.addToNorth(Type,origion,destination)
+            if(origion==Source.West):
+                self.addToWest(Type,origion,destination)
+            if(origion==Source.South):
+                self.addToSouth(Type,origion,destination)
 
     def SarahsComments():
         ################### Sarah's Comments ######################            
@@ -161,7 +161,7 @@ class Intersection:
                         #going neg 1 lane
 
         pass
-    
+
     ############# ignore the draw function for now ###################
     def draw():
         width=36
@@ -226,11 +226,11 @@ class Intersection:
 
 
 def main():
-    design = Intersection()
+    sim = Intersection()
     i=0
     while(i<5):
-        design.randomGenerater()
+        sim.randomCarGenerater()
         i+=1
-    design.display()
+    sim.display()
 
 main()
