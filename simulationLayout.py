@@ -95,6 +95,11 @@ class Intersection:
                     self.South]
 
     def update(self):
+        self.East.update()
+        self.North.update()
+        self.West.update()
+        self.South.update()
+
         self.fourWay=[self.East,
                     self.West,
                     self.North,
@@ -129,6 +134,7 @@ class Intersection:
         elif(destination==Destination.West and Type==VehcileType.Self_Driven):
             if(self.canTakeMore(self.East.lanePos1)):
                 self.East.lanePos1.append(Car(Type,origion,destination,LaneType.rightMost))
+
             elif(self.canTakeMore(self.East.lanePos3)):
                 self.East.lanePos3.append(Car(Type,origion,destination,LaneType.leftMost))
 
@@ -249,6 +255,7 @@ class Intersection:
             print("\n")
 
     def display(self):
+        self.update()
         for laneSet in self.fourWay:
             for lanes in laneSet.lanesSet:
                 for lane in lanes:
