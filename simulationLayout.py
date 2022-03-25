@@ -121,14 +121,21 @@ class Intersection:
                 self.East.lanePos1.append(Car(Type,origion,destination,LaneType.rightMost))
 
         #Human-driven car turning left
-        if(destination==Destination.South and Type==VehcileType.Human_Driven):
+        elif(destination==Destination.South and Type==VehcileType.Human_Driven):
             if(self.canTakeMore(self.East.lanePos2)):
                 self.East.lanePos2.append(Car(Type,origion,destination,LaneType.middle))
 
         #self-driven car going straight
-        if(destination==Destination.West and Type==VehcileType.Self_Driven):
-            if(self.canTakeMore(self.East.lanePos3)):
+        elif(destination==Destination.West and Type==VehcileType.Self_Driven):
+            if(self.canTakeMore(self.East.lanePos1)):
+                self.East.lanePos1.append(Car(Type,origion,destination,LaneType.rightMost))
+            elif(self.canTakeMore(self.East.lanePos3)):
                 self.East.lanePos3.append(Car(Type,origion,destination,LaneType.leftMost))
+
+        #human-driev car going straight
+        elif(destination==Destination.West and Type==VehcileType.Human_Driven):
+            if(self.canTakeMore(self.East.lanePos1)):
+                self.East.lanePos1.append(Car(Type,origion,destination,LaneType.rightMost))
 
 
     def addToNorth(self,Type,origion,destination):
