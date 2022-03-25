@@ -102,6 +102,15 @@ class Intersection:
                     self.topDirection,
                     self.bottomDirection]
 
+    def addToEast(self):
+            pass
+    def addToNorth(self):
+        pass
+    def addToWest(self):
+        pass
+    def addToSouth(self):
+        pass
+
     def randomGenerater(self):
         #randomly select where the car is coming from
         origion=random.choice(list(Source))
@@ -110,8 +119,18 @@ class Intersection:
         #randomly select type of car
         Type=random.choice(list(VehcileType))
 
-            
-         #if origin%2 == destination%2 #going straight
+
+        if(destination.value!=origion.value):
+            if(origion==1):
+                self.rightDirection.addCar(Car(Type,origion,destination,0))
+            if(origion==2):
+                self.topDirection.addCar(Car(Type,origion,destination,0))
+            if(origion==3):
+                self.leftDirection.addCar(Car(Type,origion,destination,0))
+            if(origion==4):
+                self.bottomDirection.addCar(Car(Type,origion,destination,0))
+
+             #if origin%2 == destination%2 #going straight
             #positive 2 lane
             #goign neg 2 lane
         #else
@@ -137,17 +156,6 @@ class Intersection:
                 #else #turning right
                     #positive 1 lane
                     #going neg 1 lane
-
-
-        if(destination!=origion):
-            if(origion==1):
-                self.rightDirection.addCar(Car(Type,origion,destination,0))
-            if(origion==2):
-                self.topDirection.addCar(Car(Type,origion,destination,0))
-            if(origion==3):
-                self.leftDirection.addCar(Car(Type,origion,destination,0))
-            if(origion==4):
-                self.bottomDirection.addCar(Car(Type,origion,destination,0))
 
 
     #ignore the draw function for now
