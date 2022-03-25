@@ -242,11 +242,11 @@ class Intersection:
             print("\n")
 
     def display(self):
-        for i in range(0,4):
-            for lanes in self.rightDirection:
+        for laneSet in self.fourWay:
+            for lanes in laneSet:
                 for lane in lanes:
                     for car in lane:
-                        print("Is it self-driven: ",car.isSelfDriven(),"Source: ",car.getSource, "in lane number: ", car.getLane(), "destination: ",car.getDestination(),"\n")
+                        print("Is it self-driven: ",car.isSelfDriven(),"Source: ",car.getSource(), "in lane number: ", car.getLane(), "destination: ",car.getDestination(),"\n")
 
 
 def main():
