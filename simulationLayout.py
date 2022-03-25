@@ -93,21 +93,21 @@ class Lanes:
     
 class Intersection:
     def __init__(self):
-        self.rightDirection=Lanes()
-        self.leftDirection=Lanes()
-        self.topDirection=Lanes()
-        self.bottomDirection=Lanes()
+        self.East=Lanes()
+        self.West=Lanes()
+        self.North=Lanes()
+        self.South=Lanes()
 
-        self.fourWay=[self.rightDirection,
-                    self.leftDirection,
-                    self.topDirection,
-                    self.bottomDirection]
+        self.fourWay=[self.East,
+                    self.West,
+                    self.North,
+                    self.South]
 
     def update(self):
-        self.fourWay=[self.rightDirection,
-                    self.leftDirection,
-                    self.topDirection,
-                    self.bottomDirection]
+        self.fourWay=[self.East,
+                    self.West,
+                    self.North,
+                    self.South]
 
     def canTakeMore(self,lane):
         if(len(lane)<=maxNumber):
@@ -117,12 +117,12 @@ class Intersection:
 
     def addToEast(self,Type,origion,destination):
         if(destination==Destination.North):
-            if(self.canTakeMore(self.rightDirection.lanePos1)):
-                self.rightDirection.lanePos1.append(Car(Type,origion,destination,LaneType.rightMost))
+            if(self.canTakeMore(self.East.lanePos1)):
+                self.East.lanePos1.append(Car(Type,origion,destination,LaneType.rightMost))
 
-        if(destination==Destination.West):
-            if(self.canTakeMore(self.rightDirection.lanePos3)):
-                self.rightDirection.lanePos3.append(Car(Type,origion,destination,LaneType.leftMost))
+        if(destination==Destination.South and Type==VehcileType.Human_Driven):
+            if(self.canTakeMore(self.East.lanePos2)):
+                self.East.lanePos3.append(Car(Type,origion,destination,LaneType.leftMost))
 
 
     def addToNorth(self,Type,origion,destination):
