@@ -46,7 +46,7 @@ class Car:
     def getSource(self):
         return self.source
     def getDestination(self):
-        return self.getDestination
+        return self.destination
     def getLane(self):
         return self.lane
 
@@ -61,24 +61,24 @@ class Lanes:
         self.lanePos3=[]
         #neg means negative lane, cars are exiting the intersection 
         #and entering the lane (this is the left side of the road)
-        self.laneneg1=[]
-        self.laneneg2=[]
-        self.laneneg3=[]
+        self.laneNeg1=[]
+        self.laneNeg2=[]
+        self.laneNeg3=[]
 
         self.lanesSet=[self.lanePos1,
-                    self.laneneg2,
+                    self.lanePos2,
                     self.lanePos3,
-                    self.laneneg1,
-                    self.laneneg2,
-                    self.laneneg3]
+                    self.laneNeg1,
+                    self.laneNeg2,
+                    self.laneNeg3]
 
     def update(self):
         self.lanesSet=[self.lanePos1,
-                    self.laneneg2,
+                    self.lanePos2,
                     self.lanePos3,
-                    self.laneneg1,
-                    self.laneneg2,
-                    self.laneneg3]
+                    self.laneNeg1,
+                    self.laneNeg2,
+                    self.laneNeg3]
         
     
 class Intersection:
@@ -257,16 +257,15 @@ class Intersection:
     def display(self):
         self.update()
         for laneSet in self.fourWay:
-            for lanes in laneSet.lanesSet:
-                for lane in lanes:
-                    for car in lane:
-                        print("Is it self-driven: ",car.isSelfDriven(),"Source: ",car.getSource(), "in lane number: ", car.getLane(), "destination: ",car.getDestination(),"\n")
+            for lane in laneSet.lanesSet:
+                for car in lane:
+                    print("Is it self-driven: ",car.isSelfDriven(),"\nSource: ",car.getSource(),"\ndestination: ",car.getDestination(), "\nin lane number: ", car.getLane(),"\n")
 
 
 def main():
     sim = Intersection()
     i=0
-    while(i<5):
+    while(i<100):
         sim.randomCarGenerater()
         i+=1
     sim.display()
