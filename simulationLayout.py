@@ -40,13 +40,13 @@ class Lanes:
     def addCar(self,vehicle):
         if(vehicle.getSource()==1):
             if(len(self.lane[0])<=maxNumber):
-                self.lanePos1.append(vehicle)
+                self.lane[0].append(vehicle)
         if(vehicle.getSource()==2):
             if(len(self.lane[1])<=maxNumber):
-                self.lanePos2.append(vehicle)
+                self.lane[1].append(vehicle)
         if(vehicle.getSource()==3):
             if(len(self.lane[2])<=maxNumber):
-                self.lanePos3.append(vehicle)
+                self.lane[2].append(vehicle)
 
     
 class Intersection:
@@ -71,11 +71,11 @@ class Intersection:
             if(origion==1):
                 self.rightDirection.addCar(Car(Type,origion,destination,0))
             if(origion==2):
-                self.topDirection.addCar(Car(Type,origion,destination))
+                self.topDirection.addCar(Car(Type,origion,destination,0))
             if(origion==3):
-                self.leftDirection.addCar(Car(Type,origion,destination))
+                self.leftDirection.addCar(Car(Type,origion,destination,0))
             if(origion==4):
-                self.bottomDirection.addCar(Car(Type,origion,destination))
+                self.bottomDirection.addCar(Car(Type,origion,destination,0))
 
 
     #ignore the draw function for now
@@ -135,9 +135,9 @@ class Intersection:
                     print(" ",end=" ")
             print("\n")
 
-    def display(design):
+    def display(self):
         for i in range(0,4):
-            for lanes in design.rightDirection:
+            for lanes in self.rightDirection:
                 for lane in lanes:
                     for car in lane:
                         print("Is it self-driven: ",car.isSelfDriven(),"Source: ",car.getSource, "in lane number: ", car.getLane(), "destination: ",car.getDestination(),"\n")
@@ -149,6 +149,6 @@ def main():
     while(i<5):
         design.randomGenerater()
         i+=1
-    design.display(design)
+    design.display()
 
 main()
