@@ -1,5 +1,4 @@
 from random import randint
-
 maxNumber=5
 class Car:
     #def __init__(self,Type, source, destination, x, y):
@@ -46,10 +45,10 @@ class Lanes:
     
 class Intersection:
     def __init__(self):
-        self.rightLane=Lanes()
-        self.leftLane=Lanes()
-        self.topLane=Lanes()
-        self.bottomLane=Lanes()
+        self.rightDirection=Lanes()
+        self.leftDirection=Lanes()
+        self.topDirection=Lanes()
+        self.bottomDirection=Lanes()
 
     def randomGenerater(self):
         #randomly select where the car is coming from
