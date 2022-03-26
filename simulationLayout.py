@@ -55,6 +55,9 @@ class PriorityQueue:
             self.count-=1
             return out
 
+    def getArray(self):
+        return self.Array[:self.count]
+
 
 currentTrafic=Traffic.EastWest
 maxNumber=5
@@ -142,7 +145,7 @@ class Intersection:
         pass
 
     def canTakeMore(self,lane):
-        if(len(lane)<=maxNumber):
+        if(len(lane.Array)<=maxNumber):
             return True
         else:
             return False
@@ -253,16 +256,27 @@ class Intersection:
             if(origion==Source.East):
                 self.addToEast(Type,origion,destination)
             if(origion==Source.North):
-                self.addToNorth(Type,origion,destination)
+                pass
+                #self.addToNorth(Type,origion,destination)
             if(origion==Source.West):
-                self.addToWest(Type,origion,destination)
+                pass
+                #self.addToWest(Type,origion,destination)
             if(origion==Source.South):
-                self.addToSouth(Type,origion,destination)
+                pass
+                #self.addToSouth(Type,origion,destination)
 
-    def move(self,car):
+    def move(self):
+        self.East.update()
         if(self.currentTrafic==Traffic.EastWest):
             #loop over PQ (positive ones) from east and west
-            for vehicle in self.fourWay.
+            for i in range(3):
+                for vehicle in self.East.lanesSet[i].getArray():
+                    if(vehicle.getDestination()==Destination.West and vehicle.getLane()==LaneType.leftMost):
+                        print("moving from", vehicle.getsource(), "To ",vehicle.getDestination())
+                        self.West.laneNeg3.add(self.East.lanesSet[i].pop())
+                        self.West.update()
+                        self.East.update()
+            
 
     def SarahsComments():
 
@@ -355,7 +369,7 @@ class Intersection:
         self.update()
         for laneSet in self.fourWay:
             for lane in laneSet.lanesSet:
-                for car in lane:
+                for car in lane.getArray():
                     print("Is it self-driven: ",car.isSelfDriven(),"\nSource: ",car.getSource(),"\ndestination: ",car.getDestination(), "\nin lane: ", car.getLane(),"\n")
 
 
@@ -365,18 +379,11 @@ def main():
     while(i<100):
         sim.randomCarGenerater()
         i+=1
-    #sim.display()
+    sim.display()
 
-    lane =PriorityQueue(5)
-    lane.add(1)
-    lane.add(2)
-    lane.add(3)
-    for i in lane.Array:
-        print(i)
-
-    lane.pop()
-
-    for i in lane.Array:
-        print(i)
+    print("------------------------------------------")
+    sim.move()
+    print("------------------------------------------")
+    sim.display()
 
 main()
