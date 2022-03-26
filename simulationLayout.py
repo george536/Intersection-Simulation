@@ -174,7 +174,6 @@ class Intersection:
             if(self.canTakeMore(self.East.lanePos1)):
                 self.East.lanePos1.add(Car(Type,origion,destination,LaneType.rightMost))
 
-
     def addToNorth(self,Type,origion,destination):
        #car turning right or self-driven car turning right to go left
         if(destination==Destination.West or (destination==Destination.West and Type==VehcileType.Self_Driven)):
@@ -256,14 +255,11 @@ class Intersection:
             if(origion==Source.East):
                 self.addToEast(Type,origion,destination)
             if(origion==Source.North):
-                pass
-                #self.addToNorth(Type,origion,destination)
+                self.addToNorth(Type,origion,destination)
             if(origion==Source.West):
-                pass
-                #self.addToWest(Type,origion,destination)
+                self.addToWest(Type,origion,destination)
             if(origion==Source.South):
-                pass
-                #self.addToSouth(Type,origion,destination)
+                self.addToSouth(Type,origion,destination)
 
     def move(self):
         self.East.update()
