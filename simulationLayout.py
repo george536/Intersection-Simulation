@@ -363,10 +363,69 @@ class Intersection:
 
     def display(self):
         self.update()
-        for laneSet in self.fourWay:
-            for lane in laneSet.lanesSet:
-                for car in lane.getArray():
-                    print("Is it self-driven: ",car.isSelfDriven(),"\nSource: ",car.getSource(),"\ndestination: ",car.getDestination(), "\nin lane: ", car.getLane(),"\n")
+        # for laneSet in self.fourWay:
+        #     for lane in laneSet.lanesSet:
+        #         for car in lane.getArray():
+        #             print("Is it self-driven: ",car.isSelfDriven(),"\nSource: ",car.getSource(),"\ndestination: ",car.getDestination(), "\nin lane: ", car.getLane(),"\n")
+        print("East\n")
+        for i in range(3):
+            print("Pos",i+1,"lane: ",end="")
+            for car in self.East.lanesSet[i].getArray():
+                print("car",end=" ")
+            print("\n")
+
+        print("\n")
+
+        for i in range(3,6):
+            print("Neg",i-3+1,"lane: ",end="")
+            for car in self.East.lanesSet[i].getArray():
+                print("car",end=" ")
+            print("\n")
+
+        print("North\n")
+        for i in range(3):
+            print("Pos",i+1,"lane: ",end="")
+            for car in self.North.lanesSet[i].getArray():
+                print("car",end=" ")
+            print("\n")
+
+        print("\n")
+
+        for i in range(3,6):
+            print("Neg",i-3+1,"lane: ",end="")
+            for car in self.North.lanesSet[i].getArray():
+                print("car",end=" ")
+            print("\n")
+
+        print("West\n")
+        for i in range(3):
+            print("Pos",i+1,"lane: ",end="")
+            for car in self.West.lanesSet[i].getArray():
+                print("car",end=" ")
+            print("\n")
+
+        print("\n")
+
+        for i in range(3,6):
+            print("Neg",i-3+1,"lane: ",end="")
+            for car in self.West.lanesSet[i].getArray():
+                print("car",end=" ")
+            print("\n")
+
+        print("South\n")
+        for i in range(3):
+            print("Pos",i+1,"lane: ",end="")
+            for car in self.South.lanesSet[i].getArray():
+                print("car",end=" ")
+            print("\n")
+
+        print("\n")
+
+        for i in range(3,6):
+            print("Neg",i-3+1,"lane: ",end="")
+            for car in self.South.lanesSet[i].getArray():
+                print("car",end=" ")
+            print("\n")
 
 
 def main():
@@ -377,11 +436,11 @@ def main():
         i+=1
     sim.display()
 
-    print("------------------------------------------")
-    sim.move()
-    print("------------------------------------------")
-    sim.display()
+    # print("------------------------------------------")
+    # sim.move()
+    # print("------------------------------------------")
+    # sim.display()
 
-    print(sim.West.laneNeg1.pop().getSource())
+    # print(sim.West.laneNeg1.pop().getSource())
 
 main()
