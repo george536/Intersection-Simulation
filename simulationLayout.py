@@ -268,10 +268,14 @@ class Intersection:
             for i in range(3):
                 for vehicle in self.East.lanesSet[i].getArray():
                     if(vehicle.getDestination()==Destination.West and vehicle.getLane()==LaneType.rightMost):
-                        print("moving from", vehicle.getSource(), "To ",vehicle.getDestination())
                         self.West.laneNeg1.add(self.East.lanesSet[i].pop())
-                        self.West.update()
-                        self.East.update()
+
+                    if(vehicle.getDestination()==Destination.South and vehicle.getLane()==LaneType.rightMost):
+                        self.North.lanePos1.add(self.East.lanesSet[i].pop())
+
+
+            self.West.update()
+            self.East.update()
             
 
     def SarahsComments():
