@@ -274,7 +274,6 @@ class Intersection:
                     #self driven cars in right lane going right in order to turn left later
                     if(vehicle.getDestination()==Destination.South and vehicle.getLane()==LaneType.rightMost and vehicle.isSelfDriven()==VehcileType.Self_Driven):
                         if(self.canTakeMore(self.North.lanePos3)):
-                            print("moved")
                             self.North.lanePos3.add(self.East.lanesSet[i].pop())
 
         self.update()
