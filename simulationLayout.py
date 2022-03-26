@@ -34,22 +34,20 @@ class Traffic(Enum):
 class PriorityQueue:
     def __init__(self,size):
         self.size=size
-        self.Array=[]
+        self.Array=[0 for i in range(size)]
         self.count=0
-        for i in range(0,size):
-            self.Array[i]=0  
+ 
     
     def add(self,element):
         if(self.count<=self.size):
-            for i in range(0,self.Array):
-                if(i<self.size and i==0):
+            for i in range(self.size):
+                if(0==self.Array[i]):
                     self.Array[i]=element
                     self.count+=1
                     break
 
     def pop(self):
         if(self.count>0):
-            #self.Array[0]=0
             for i in range(1,self.count):
                 self.Array[i-1]=self.Array[i]
             self.Array[self.count-1]=0
