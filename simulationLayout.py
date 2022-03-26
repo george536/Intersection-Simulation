@@ -1,6 +1,6 @@
-
 import random
 from enum import Enum
+
 
 
 
@@ -267,8 +267,14 @@ class Intersection:
             #loop over PQ (positive ones) from east and west
             for i in range(3):
                 for vehicle in self.East.lanesSet[i].getArray():
+                    #cars in right lane going straight
                     if(vehicle.getDestination()==Destination.West and vehicle.getLane()==LaneType.rightMost):
                         self.West.laneNeg1.add(self.East.lanesSet[i].pop())
+
+                    #self driven cars in right lane going right in order to turn left later
+                    if(vehicle.getDestination()==Destination.South and vehicle.getLane()==LaneType.rightMost and vehicle.isSelfDriven()==VehcileType.Self_Driven):
+                        self.North.lanePos1.add(self.East.lanesSet[i].pop())
+
 
                     if(vehicle.getDestination()==Destination.South and vehicle.getLane()==LaneType.rightMost):
                         self.North.lanePos1.add(self.East.lanesSet[i].pop())
