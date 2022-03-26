@@ -262,26 +262,22 @@ class Intersection:
                 self.addToSouth(Type,origion,destination)
 
     def move(self):
-        self.East.update()
+        self.update()
         if(self.currentTrafic==Traffic.EastWest):
             #loop over PQ (positive ones) from east and west
             for i in range(3):
                 for vehicle in self.East.lanesSet[i].getArray():
                     #cars in right lane going straight
-                    if(vehicle.getDestination()==Destination.West and vehicle.getLane()==LaneType.rightMost):
+                    if(vehicle.getDestination()==Destination.West and (vehicle.getLane()==LaneType.rightMost or vehicle.getLane()==LaneType.leftMost)):
                         self.West.laneNeg1.add(self.East.lanesSet[i].pop())
 
                     #self driven cars in right lane going right in order to turn left later
                     if(vehicle.getDestination()==Destination.South and vehicle.getLane()==LaneType.rightMost and vehicle.isSelfDriven()==VehcileType.Self_Driven):
-                        self.North.lanePos1.add(self.East.lanesSet[i].pop())
+                        if(self.canTakeMore(self.North.lanePos3)):
+                            print("moved")
+                            self.North.lanePos3.add(self.East.lanesSet[i].pop())
 
-
-                    if(vehicle.getDestination()==Destination.South and vehicle.getLane()==LaneType.rightMost):
-                        self.North.lanePos1.add(self.East.lanesSet[i].pop())
-
-
-            self.West.update()
-            self.East.update()
+        self.update()
             
 
     def SarahsComments():
