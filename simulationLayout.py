@@ -48,10 +48,12 @@ class PriorityQueue:
 
     def pop(self):
         if(self.count>0):
+            out=self.Array[0]
             for i in range(1,self.count):
                 self.Array[i-1]=self.Array[i]
             self.Array[self.count-1]=0
             self.count-=1
+            return out
 
 
 currentTrafic=Traffic.EastWest
@@ -109,24 +111,24 @@ class Lanes:
     
 class Intersection:
     def __init__(self):
-        self.West=Lanes()
+        self.East=Lanes()
         self.West=Lanes()
         self.North=Lanes()
         self.South=Lanes()
         self.currentTrafic=currentTrafic
 
-        self.fourWay=[self.West,
+        self.fourWay=[self.East,
                     self.West,
                     self.North,
                     self.South]
 
     def update(self):
-        self.West.update()
+        self.East.update()
         self.North.update()
         self.West.update()
         self.South.update()
 
-        self.fourWay=[self.West,
+        self.fourWay=[self.East,
                     self.West,
                     self.North,
                     self.South]
@@ -148,26 +150,26 @@ class Intersection:
     def addToEast(self,Type,origion,destination):
         #car turning right or self-driven car turning right to go left
         if(destination==Destination.North or (destination==Destination.South and Type==VehcileType.Self_Driven)):
-            if(self.canTakeMore(self.West.lanePos1)):
-                self.West.lanePos1.add(Car(Type,origion,destination,LaneType.rightMost))
+            if(self.canTakeMore(self.East.lanePos1)):
+                self.East.lanePos1.add(Car(Type,origion,destination,LaneType.rightMost))
 
         #Human-driven car turning left
         elif(destination==Destination.South and Type==VehcileType.Human_Driven):
-            if(self.canTakeMore(self.West.lanePos2)):
-                self.West.lanePos2.add(Car(Type,origion,destination,LaneType.middle))
+            if(self.canTakeMore(self.East.lanePos2)):
+                self.East.lanePos2.add(Car(Type,origion,destination,LaneType.middle))
 
         #self-driven car going straight
         elif(destination==Destination.West and Type==VehcileType.Self_Driven):
-            if(self.canTakeMore(self.West.lanePos1)):
-                self.West.lanePos1.add(Car(Type,origion,destination,LaneType.rightMost))
+            if(self.canTakeMore(self.East.lanePos1)):
+                self.East.lanePos1.add(Car(Type,origion,destination,LaneType.rightMost))
 
-            elif(self.canTakeMore(self.West.lanePos3)):
-                self.West.lanePos3.add(Car(Type,origion,destination,LaneType.leftMost))
+            elif(self.canTakeMore(self.East.lanePos3)):
+                self.East.lanePos3.add(Car(Type,origion,destination,LaneType.leftMost))
 
         #human-driev car going straight
         elif(destination==Destination.West and Type==VehcileType.Human_Driven):
-            if(self.canTakeMore(self.West.lanePos1)):
-                self.West.lanePos1.add(Car(Type,origion,destination,LaneType.rightMost))
+            if(self.canTakeMore(self.East.lanePos1)):
+                self.East.lanePos1.add(Car(Type,origion,destination,LaneType.rightMost))
 
 
     def addToNorth(self,Type,origion,destination):
@@ -247,9 +249,8 @@ class Intersection:
         destination=random.choice(list(Destination))
         Type=random.choice(list(VehcileType))
 
-
         if(destination.value!=origion.value):
-            if(origion==Source.West):
+            if(origion==Source.East):
                 self.addToEast(Type,origion,destination)
             if(origion==Source.North):
                 self.addToNorth(Type,origion,destination)
@@ -257,6 +258,11 @@ class Intersection:
                 self.addToWest(Type,origion,destination)
             if(origion==Source.South):
                 self.addToSouth(Type,origion,destination)
+
+    def move(self,car):
+        if(self.currentTrafic==Traffic.EastWest):
+            #loop over PQ (positive ones) from east and west
+            for vehicle in self.fourWay.
 
     def SarahsComments():
 
