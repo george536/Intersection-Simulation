@@ -55,6 +55,11 @@ class PriorityQueue:
             self.count-=1
             return out
 
+    def getFirst(self):
+        if (self.count > 0): 
+            first = self.Array[0]
+        return first
+
     def getArray(self):
         return self.Array[:self.count]
 
@@ -328,6 +333,35 @@ class Intersection:
                     #cars in right lane turning right (self driven or human)
                     if (vehicle.getDestination()==Destination.East and vehicle.getLane()==LaneType.rightMost):
                         self.East.laneNeg1.add(self.South.lanesSet[i].pop())
+
+        if (self.currentTrafic==Traffic.EastWestLeftTurn):
+            #East lanes 
+            #human-driven cars making left turn from middle
+            for vehicle in self.East.lanePos2.getArray():
+                self.South.laneNeg2.add(self.East.lanePos2.pop())
+            
+            #cars making a right turn (only human)
+            firstVehicle = self.East.lanePos1.getFirst()
+            while (firstVehicle.isSelfDriven()==VehcileType.Human_Driven):
+                self.North.laneNeg1.add(self.East.lanePos1.pop())
+                firstVehicle = self.East.lanePos1.getFirst()
+
+            #West lanes
+            #human-driven cars making left turn from middle
+            for vehicle in self.West.lanePos2.getArray():
+                self.North.laneNeg2.add(self.West.lanePos2.pop())
+
+            #cars making a right turn (only human)
+            firstVehicle = self.West.lanePos1.getFirst()
+            while (firstVehicle.isSelfDriven()==VehcileType.Human_Driven):
+                self.South.laneNeg1.add(self.West.lanePos1.pop())
+                firstVehicle = self.West.lanePos1.getFirst()
+
+            #North lanes
+            #cars making right turn to make u-turn
+
+            #South lanes
+            #cars making right turn to make u-turn
 
 
         self.update()
