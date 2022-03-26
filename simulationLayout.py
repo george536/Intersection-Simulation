@@ -173,6 +173,7 @@ class Intersection:
 
 
     def addToNorth(self,Type,origion,destination):
+        ## 
         pass
     def addToWest(self,Type,origion,destination):
         pass
