@@ -1,6 +1,7 @@
 
 import random
 from enum import Enum
+from re import A
 
 
 class Destination(Enum):
@@ -31,26 +32,25 @@ class Traffic(Enum):
     EastWestLeftTurn=4
 
 class PriorityQueue:
-    Array=[]
     def __init__(self,size):
         self.size=size
+        self.Array=[]
         self.count=0
         for i in range(0,size):
-            Array[i]=0  
-        self.Array=Array
+            self.Array[i]=0  
     
     def add(self,element):
         if(self.count<=self.size):
-            for i in self.Array:
+            for i in range(0,self.Array):
                 if(i<self.size and i==0):
                     self.Array[i]=element
                     self.count+=1
                     break
 
-    def remove(self):
+    def pop(self):
         if(self.count>0):
-            self.Array[0]=0
-            for i in range(1,self.size):
+            #self.Array[0]=0
+            for i in range(1,self.count):
                 self.Array[i-1]=self.Array[i]
             self.Array[self.count-1]=0
             self.count-=1
@@ -173,7 +173,6 @@ class Intersection:
 
 
     def addToNorth(self,Type,origion,destination):
-        ## asdklasddas d
         pass
     def addToWest(self,Type,origion,destination):
         pass
@@ -297,6 +296,18 @@ def main():
     while(i<100):
         sim.randomCarGenerater()
         i+=1
-    sim.display()
+    #sim.display()
+
+    lane =PriorityQueue(5)
+    lane.add(1)
+    lane.add(2)
+    lane.add(3)
+    for i in lane.Array:
+        print(i)
+
+    lane.pop()
+
+    for i in lane.Array:
+        print(i)
 
 main()
