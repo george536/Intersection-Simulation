@@ -266,6 +266,7 @@ class Intersection:
         if(self.currentTrafic==Traffic.EastWest):
             #loop over PQ (positive ones) from east and west
             for i in range(3):
+                #East lanes
                 for vehicle in self.East.lanesSet[i].getArray():
                     #cars in right lane going straight
                     if(vehicle.getDestination()==Destination.West and (vehicle.getLane()==LaneType.rightMost or vehicle.getLane()==LaneType.leftMost)):
@@ -275,6 +276,59 @@ class Intersection:
                     if(vehicle.getDestination()==Destination.South and vehicle.getLane()==LaneType.rightMost and vehicle.isSelfDriven()==VehcileType.Self_Driven):
                         if(self.canTakeMore(self.North.lanePos3)):
                             self.North.lanePos3.add(self.East.lanesSet[i].pop())
+
+                    #cars in right lane turning right (self driven or human)
+                    if (vehicle.getDestination()==Destination.North and vehicle.getLane()==LaneType.rightMost):
+                        self.North.laneNeg1.add(self.East.lanesSet[i].pop())
+
+                #West lanes 
+                for vehicle in self.West.lanesSet[i].getArray():
+                    #cars going straight
+                    #wasnt sure about this one since above is different, 
+                    # all vehicles w/ destination East should be moved no? rightMost -> Neg1 , middle -> Neg2 , leftMost -> Neg3? 
+
+                    #self-driven cars in right lane going right in order to turn left later
+                    if(vehicle.getDestination()==Destination.North and vehicle.getLane()==LaneType.rightMost and vehicle.isSelfDriven()==VehcileType.Self_Driven):
+                        if(self.canTakeMore(self.South.lanePos3)):
+                            self.South.lanePos3.add(self.West.lanesSet[i].pop())
+                    
+                    #cars in right lane turning right (self driven or human)
+                    if (vehicle.getDestination()==Destination.South and vehicle.getLane()==LaneType.rightMost):
+                        self.South.laneNeg1.add(self.West.lanesSet[i].pop())
+
+        if (self.currentTrafic==Traffic.NorthSouth):
+            #loop over pos PQs from North and South
+            for j in range(3):
+                #North lanes
+                for vehicle in self.North.lanesSet[i].getArray():
+                    #cars going straight
+                    #wasnt sure 
+                    #all vehicles w/ destination South should be moved no? rightMost -> Neg1 , middle -> Neg2 , leftMost -> Neg3? 
+
+                    #self-driven cars in right lane going right in order to turn left later
+                    if(vehicle.getDestination()==Destination.East and vehicle.getLane()==LaneType.rightMost and vehicle.isSelfDriven()==VehcileType.Self_Driven):
+                        if(self.canTakeMore(self.West.lanePos3)):
+                            self.West.lanePos3.add(self.North.lanesSet[i].pop())
+                    
+                    #cars in right lane turning right (self driven or human)
+                    if (vehicle.getDestination()==Destination.West and vehicle.getLane()==LaneType.rightMost):
+                        self.West.laneNeg1.add(self.North.lanesSet[i].pop())
+                
+                #South lanes
+                for vehicle in self.South.lanesSet[i].getArray():
+                     #cars going straight
+                    #wasnt sure
+                    #all vehicles w/ destination North should be moved no? rightMost -> Neg1 , middle -> Neg2 , leftMost -> Neg3? 
+
+                    #self-driven cars in right lane going right in order to turn left later
+                    if(vehicle.getDestination()==Destination.West and vehicle.getLane()==LaneType.rightMost and vehicle.isSelfDriven()==VehcileType.Self_Driven):
+                        if(self.canTakeMore(self.East.lanePos3)):
+                            self.East.lanePos3.add(self.South.lanesSet[i].pop())
+                    
+                    #cars in right lane turning right (self driven or human)
+                    if (vehicle.getDestination()==Destination.East and vehicle.getLane()==LaneType.rightMost):
+                        self.East.laneNeg1.add(self.South.lanesSet[i].pop())
+
 
         self.update()
             
