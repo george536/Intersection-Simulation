@@ -1,8 +1,7 @@
-from calendar import c
-from multiprocessing.dummy import Array
+
 import random
 from enum import Enum
-from re import A
+
 
 class Destination(Enum):
     East=1,
@@ -174,6 +173,7 @@ class Intersection:
 
 
     def addToNorth(self,Type,origion,destination):
+        ##hi
         pass
     def addToWest(self,Type,origion,destination):
         pass
@@ -288,7 +288,7 @@ class Intersection:
         for laneSet in self.fourWay:
             for lane in laneSet.lanesSet:
                 for car in lane:
-                    print("Is it self-driven: ",car.isSelfDriven(),"\nSource: ",car.getSource(),"\ndestination: ",car.getDestination(), "\nin lane number: ", car.getLane(),"\n")
+                    print("Is it self-driven: ",car.isSelfDriven(),"\nSource: ",car.getSource(),"\ndestination: ",car.getDestination(), "\nin lane: ", car.getLane(),"\n")
 
 
 def main():
