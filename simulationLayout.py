@@ -82,14 +82,14 @@ class Lanes:
     def __init__(self):
         #pos means positive lane, cars are entering the intersection 
         #and exiting the lane (this is the right side of the road)
-        self.lanePos1=[]
-        self.lanePos2=[]
-        self.lanePos3=[]
+        self.lanePos1=PriorityQueue(maxNumber)
+        self.lanePos2=PriorityQueue(maxNumber)
+        self.lanePos3=PriorityQueue(maxNumber)
         #neg means negative lane, cars are exiting the intersection 
         #and entering the lane (this is the left side of the road)
-        self.laneNeg1=[]
-        self.laneNeg2=[]
-        self.laneNeg3=[]
+        self.laneNeg1=PriorityQueue(maxNumber)
+        self.laneNeg2=PriorityQueue(maxNumber)
+        self.laneNeg3=PriorityQueue(maxNumber)
 
         self.lanesSet=[self.lanePos1,
                     self.lanePos2,
@@ -149,98 +149,98 @@ class Intersection:
         #car turning right or self-driven car turning right to go left
         if(destination==Destination.North or (destination==Destination.South and Type==VehcileType.Self_Driven)):
             if(self.canTakeMore(self.West.lanePos1)):
-                self.West.lanePos1.append(Car(Type,origion,destination,LaneType.rightMost))
+                self.West.lanePos1.add(Car(Type,origion,destination,LaneType.rightMost))
 
         #Human-driven car turning left
         elif(destination==Destination.South and Type==VehcileType.Human_Driven):
             if(self.canTakeMore(self.West.lanePos2)):
-                self.West.lanePos2.append(Car(Type,origion,destination,LaneType.middle))
+                self.West.lanePos2.add(Car(Type,origion,destination,LaneType.middle))
 
         #self-driven car going straight
         elif(destination==Destination.West and Type==VehcileType.Self_Driven):
             if(self.canTakeMore(self.West.lanePos1)):
-                self.West.lanePos1.append(Car(Type,origion,destination,LaneType.rightMost))
+                self.West.lanePos1.add(Car(Type,origion,destination,LaneType.rightMost))
 
             elif(self.canTakeMore(self.West.lanePos3)):
-                self.West.lanePos3.append(Car(Type,origion,destination,LaneType.leftMost))
+                self.West.lanePos3.add(Car(Type,origion,destination,LaneType.leftMost))
 
         #human-driev car going straight
         elif(destination==Destination.West and Type==VehcileType.Human_Driven):
             if(self.canTakeMore(self.West.lanePos1)):
-                self.West.lanePos1.append(Car(Type,origion,destination,LaneType.rightMost))
+                self.West.lanePos1.add(Car(Type,origion,destination,LaneType.rightMost))
 
 
     def addToNorth(self,Type,origion,destination):
        #car turning right or self-driven car turning right to go left
         if(destination==Destination.West or (destination==Destination.West and Type==VehcileType.Self_Driven)):
             if(self.canTakeMore(self.North.lanePos1)):
-                self.North.lanePos1.append(Car(Type,origion,destination,LaneType.rightMost))
+                self.North.lanePos1.add(Car(Type,origion,destination,LaneType.rightMost))
 
         #Human-driven car turning left
         elif(destination==Destination.West and Type==VehcileType.Human_Driven):
             if(self.canTakeMore(self.North.lanePos2)):
-                self.North.lanePos2.append(Car(Type,origion,destination,LaneType.middle))
+                self.North.lanePos2.add(Car(Type,origion,destination,LaneType.middle))
 
         #self-driven car going straight
         elif(destination==Destination.South and Type==VehcileType.Self_Driven):
             if(self.canTakeMore(self.North.lanePos1)):
-                self.North.lanePos1.append(Car(Type,origion,destination,LaneType.rightMost))
+                self.North.lanePos1.add(Car(Type,origion,destination,LaneType.rightMost))
 
             elif(self.canTakeMore(self.North.lanePos3)):
-                self.North.lanePos3.append(Car(Type,origion,destination,LaneType.leftMost))
+                self.North.lanePos3.add(Car(Type,origion,destination,LaneType.leftMost))
 
         #human-driev car going straight
         elif(destination==Destination.South and Type==VehcileType.Human_Driven):
             if(self.canTakeMore(self.North.lanePos1)):
-                self.North.lanePos1.append(Car(Type,origion,destination,LaneType.rightMost))
+                self.North.lanePos1.add(Car(Type,origion,destination,LaneType.rightMost))
 
     def addToWest(self,Type,origion,destination):
         #car turning right or self-driven car turning right to go left
         if(destination==Destination.South or (destination==Destination.North and Type==VehcileType.Self_Driven)):
             if(self.canTakeMore(self.West.lanePos1)):
-                self.West.lanePos1.append(Car(Type,origion,destination,LaneType.rightMost))
+                self.West.lanePos1.add(Car(Type,origion,destination,LaneType.rightMost))
 
         #Human-driven car turning left
         elif(destination==Destination.North and Type==VehcileType.Human_Driven):
             if(self.canTakeMore(self.West.lanePos2)):
-                self.West.lanePos2.append(Car(Type,origion,destination,LaneType.middle))
+                self.West.lanePos2.add(Car(Type,origion,destination,LaneType.middle))
 
         #self-driven car going straight
         elif(destination==Destination.South and Type==VehcileType.Self_Driven):
             if(self.canTakeMore(self.West.lanePos1)):
-                self.West.lanePos1.append(Car(Type,origion,destination,LaneType.rightMost))
+                self.West.lanePos1.add(Car(Type,origion,destination,LaneType.rightMost))
 
             elif(self.canTakeMore(self.West.lanePos3)):
-                self.West.lanePos3.append(Car(Type,origion,destination,LaneType.leftMost))
+                self.West.lanePos3.add(Car(Type,origion,destination,LaneType.leftMost))
 
         #human-driev car going straight
         elif(destination==Destination.South and Type==VehcileType.Human_Driven):
             if(self.canTakeMore(self.West.lanePos1)):
-                self.West.lanePos1.append(Car(Type,origion,destination,LaneType.rightMost))
+                self.West.lanePos1.add(Car(Type,origion,destination,LaneType.rightMost))
 
     def addToSouth(self,Type,origion,destination):
         #car turning right or self-driven car turning right to go left
         if(destination==Destination.East or (destination==Destination.West and Type==VehcileType.Self_Driven)):
             if(self.canTakeMore(self.South.lanePos1)):
-                self.South.lanePos1.append(Car(Type,origion,destination,LaneType.rightMost))
+                self.South.lanePos1.add(Car(Type,origion,destination,LaneType.rightMost))
 
         #Human-driven car turning left
         elif(destination==Destination.West and Type==VehcileType.Human_Driven):
             if(self.canTakeMore(self.South.lanePos2)):
-                self.South.lanePos2.append(Car(Type,origion,destination,LaneType.middle))
+                self.South.lanePos2.add(Car(Type,origion,destination,LaneType.middle))
 
         #self-driven car going straight
         elif(destination==Destination.North and Type==VehcileType.Self_Driven):
             if(self.canTakeMore(self.South.lanePos1)):
-                self.South.lanePos1.append(Car(Type,origion,destination,LaneType.rightMost))
+                self.South.lanePos1.add(Car(Type,origion,destination,LaneType.rightMost))
 
             elif(self.canTakeMore(self.South.lanePos3)):
-                self.South.lanePos3.append(Car(Type,origion,destination,LaneType.leftMost))
+                self.South.lanePos3.add(Car(Type,origion,destination,LaneType.leftMost))
 
         #human-driev car going straight
         elif(destination==Destination.North and Type==VehcileType.Human_Driven):
             if(self.canTakeMore(self.South.lanePos1)):
-                self.South.lanePos1.append(Car(Type,origion,destination,LaneType.rightMost))
+                self.South.lanePos1.add(Car(Type,origion,destination,LaneType.rightMost))
 
     def randomCarGenerater(self):
         origion=random.choice(list(Source))
