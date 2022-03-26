@@ -271,9 +271,9 @@ class Intersection:
             #loop over PQ (positive ones) from east and west
             for i in range(3):
                 for vehicle in self.East.lanesSet[i].getArray():
-                    if(vehicle.getDestination()==Destination.West and vehicle.getLane()==LaneType.leftMost):
-                        print("moving from", vehicle.getsource(), "To ",vehicle.getDestination())
-                        self.West.laneNeg3.add(self.East.lanesSet[i].pop())
+                    if(vehicle.getDestination()==Destination.West and vehicle.getLane()==LaneType.rightMost):
+                        print("moving from", vehicle.getSource(), "To ",vehicle.getDestination())
+                        self.West.laneNeg1.add(self.East.lanesSet[i].pop())
                         self.West.update()
                         self.East.update()
             
@@ -385,5 +385,7 @@ def main():
     sim.move()
     print("------------------------------------------")
     sim.display()
+
+    print(sim.West.laneNeg1.pop().getSource())
 
 main()
