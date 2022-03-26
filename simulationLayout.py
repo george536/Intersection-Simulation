@@ -1,17 +1,17 @@
 
 import random
 from enum import Enum
-from re import A
+
 
 
 class Destination(Enum):
-    West=1,
+    East=1,
     North=2,
     West=3,
     South=4
 
 class Source(Enum):
-    West=1,
+    East=1,
     North=2,
     West=3,
     South=4
@@ -173,10 +173,7 @@ class Intersection:
 
 
     def addToNorth(self,Type,origion,destination):
-<<<<<<< HEAD
-        pass
-=======
-        #car turning right or self-driven car turning right to go left
+       #car turning right or self-driven car turning right to go left
         if(destination==Destination.West or (destination==Destination.West and Type==VehcileType.Self_Driven)):
             if(self.canTakeMore(self.North.lanePos1)):
                 self.North.lanePos1.append(Car(Type,origion,destination,LaneType.rightMost))
@@ -198,8 +195,7 @@ class Intersection:
         elif(destination==Destination.South and Type==VehcileType.Human_Driven):
             if(self.canTakeMore(self.North.lanePos1)):
                 self.North.lanePos1.append(Car(Type,origion,destination,LaneType.rightMost))
-    
->>>>>>> 2b737b0e05aab893960051af61d7e5687b9ff94c
+
     def addToWest(self,Type,origion,destination):
         #car turning right or self-driven car turning right to go left
         if(destination==Destination.South or (destination==Destination.North and Type==VehcileType.Self_Driven)):
