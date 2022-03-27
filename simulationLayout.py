@@ -303,8 +303,12 @@ class Intersection:
                     self.cleanNegLanes(self.South.laneNeg1)
                     self.South.laneNeg1.add(self.West.lanePos1.pop())
                 elif(self.West.lanePos1.getFirst().getDestination()==Destination.East):
-                    self.cleanNegLanes(self.East.laneNeg1)
-                    self.East.laneNeg1.add(self.West.lanePos1.pop())
+                    if(self.West.lanePos1.getFirst().isSelfDriven==VehcileType.Human_Driven):
+                        self.cleanNegLanes(self.East.laneNeg1)
+                        self.East.laneNeg1.add(self.West.lanePos1.pop())
+                    elif(self.West.lanePos1.getFirst().isSelfDriven==VehcileType.Self_Driven):
+                        self.cleanNegLanes(self.East.laneNeg2)
+                        self.East.laneNeg2.add(self.West.lanePos1.pop())
                 elif(self.West.lanePos1.getFirst().getDestination()==Destination.North):
                     if(self.canTakeMore(self.South.lanePos3)):
                         temp=self.West.lanePos1.pop()
