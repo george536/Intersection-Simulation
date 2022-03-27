@@ -292,8 +292,10 @@ class Intersection:
             #West Movements
             if(self.West.lanePos1.getSize()>0):
                 if(self.West.lanePos1.getFirst().getDestination()==Destination.South):
+                    self.South.laneNeg1.pop()
                     self.South.laneNeg1.add(self.West.lanePos1.pop())
                 elif(self.West.lanePos1.getFirst().getDestination()==Destination.East):
+                    self.East.laneNeg1.pop()
                     self.East.laneNeg1.add(self.West.lanePos1.pop())
                 elif(self.West.lanePos1.getFirst().getDestination()==Destination.North):
                     if(self.canTakeMore(self.South.lanePos3)):
@@ -302,6 +304,7 @@ class Intersection:
                         self.South.lanePos3.add(temp)
 
             if(self.West.lanePos3.getSize()>0):
+                self.East.laneNeg3.pop()
                 self.East.laneNeg3.add(self.West.lanePos3.pop())
 
             '''
