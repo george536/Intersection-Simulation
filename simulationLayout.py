@@ -367,7 +367,7 @@ class Intersection:
                     elif(self.South.lanePos1.getFirst().isSelfDriven==VehcileType.Self_Driven):
                         self.cleanNegLanes(self.North.laneNeg2)
                         self.North.laneNeg2.add(self.North.lanePos1.pop())
-                        
+
                 elif(self.East.lanePos1.getFirst().getDestination()==Destination.West):
                     if(self.canTakeMore(self.East.lanePos3)):
                         temp=self.South.lanePos1.pop()
@@ -377,7 +377,25 @@ class Intersection:
             if(self.North.lanePos3.getSize()>0):
                 self.cleanNegLanes(self.South.laneNeg3)
                 self.South.laneNeg3.add(self.North.lanePos3.pop())
+
+        if(self.currentTrafic==Traffic.NorthSouthLeftTurn):
+            #cars turning left from North (will go east)
+            self.cleanNegLanes(self.East.laneNeg2)
+            self.East.laneNeg2.add(self.North.lanePos2.pop())
+
+            #cars turning left from South (will go west)
+            self.cleanNegLanes(self.West.laneNeg2)
+            self.West.laneNeg2.add(self.South.lanePos2.pop())
             
+
+        if(self.currentTrafic==Traffic.EastWestLeftTurn):
+            #cars turning left from east (will go south)
+            self.cleanNegLanes(self.South.laneNeg2)
+            self.South.laneNeg2.add(self.East.lanePos2.pop())
+
+            #cars turning left from west (will go north)
+            self.cleanNegLanes(self.North.laneNeg2)
+            self.North.laneNeg2.add(self.West.lanePos2.pop())
 
         self.update()
             
