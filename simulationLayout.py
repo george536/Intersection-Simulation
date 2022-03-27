@@ -289,8 +289,8 @@ class Intersection:
                 #West lanes 
                 for vehicle in self.West.lanesSet[i].getArray():
                     #cars going straight
-                    #wasnt sure about this one since above is different, 
-                    # all vehicles w/ destination East should be moved no? rightMost -> Neg1 , middle -> Neg2 , leftMost -> Neg3? 
+                    if(vehicle.getDestination()==Destination.East and (vehicle.getLane()==LaneType.rightMost or vehicle.getLane()==LaneType.leftMost)):
+                        self.East.laneNeg1.add(self.West.lanesSet[i].pop())
 
                     #self-driven cars in right lane going right in order to turn left later
                     if(vehicle.getDestination()==Destination.North and vehicle.getLane()==LaneType.rightMost and vehicle.isSelfDriven()==VehcileType.Self_Driven):
@@ -307,8 +307,8 @@ class Intersection:
                 #North lanes
                 for vehicle in self.North.lanesSet[i].getArray():
                     #cars going straight
-                    #wasnt sure 
-                    #all vehicles w/ destination South should be moved no? rightMost -> Neg1 , middle -> Neg2 , leftMost -> Neg3? 
+                    if(vehicle.getDestination()==Destination.South and (vehicle.getLane()==LaneType.rightMost or vehicle.getLane()==LaneType.leftMost)):
+                        self.South.laneNeg1.add(self.North.lanesSet[i].pop())
 
                     #self-driven cars in right lane going right in order to turn left later
                     if(vehicle.getDestination()==Destination.East and vehicle.getLane()==LaneType.rightMost and vehicle.isSelfDriven()==VehcileType.Self_Driven):
@@ -322,8 +322,8 @@ class Intersection:
                 #South lanes
                 for vehicle in self.South.lanesSet[i].getArray():
                      #cars going straight
-                    #wasnt sure
-                    #all vehicles w/ destination North should be moved no? rightMost -> Neg1 , middle -> Neg2 , leftMost -> Neg3? 
+                    if(vehicle.getDestination()==Destination.North and (vehicle.getLane()==LaneType.rightMost or vehicle.getLane()==LaneType.leftMost)):
+                        self.North.laneNeg1.add(self.South.lanesSet[i].pop())
 
                     #self-driven cars in right lane going right in order to turn left later
                     if(vehicle.getDestination()==Destination.West and vehicle.getLane()==LaneType.rightMost and vehicle.isSelfDriven()==VehcileType.Self_Driven):
