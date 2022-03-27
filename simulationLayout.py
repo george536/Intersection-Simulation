@@ -343,7 +343,7 @@ class Intersection:
                 self.East.laneNeg3.add(self.West.lanePos3.pop())
 
         
-        if(self.currentTrafic==Traffic.NorthSouth):
+        elif(self.currentTrafic==Traffic.NorthSouth):
             #North movements
             if(self.North.lanePos1.getSize()>0):
                 if(self.North.lanePos1.getFirst().getDestination()==Destination.West):
@@ -396,7 +396,7 @@ class Intersection:
                 self.South.laneNeg3.add(self.North.lanePos3.pop())
 
 
-        if(self.currentTrafic==Traffic.NorthSouthLeftTurn):
+        elif(self.currentTrafic==Traffic.NorthSouthLeftTurn):
             #cars turning left from North (will go east)
             if(self.North.lanePos2.getSize()>0):
                 self.cleanNegLanes(self.East.laneNeg2)
@@ -408,7 +408,7 @@ class Intersection:
                 self.West.laneNeg2.add(self.South.lanePos2.pop())
             
 
-        if(self.currentTrafic==Traffic.EastWestLeftTurn):
+        elif(self.currentTrafic==Traffic.EastWestLeftTurn):
             #cars turning left from east (will go south)
             if(self.East.lanePos2.getSize()>0):
                 self.cleanNegLanes(self.South.laneNeg2)
