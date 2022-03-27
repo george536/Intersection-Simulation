@@ -63,6 +63,13 @@ class PriorityQueue:
     def getArray(self):
         return self.Array[:self.count]
 
+    def getSize(self):
+        return self.count
+
+    def getTop(self):
+        if(self.count>0):
+            return self.getArray()[0]
+
 
 currentTrafic=Traffic.EastWest
 maxNumber=5
@@ -269,6 +276,9 @@ class Intersection:
     def move(self):
         self.update()
         if(self.currentTrafic==Traffic.EastWest):
+            if()
+
+            '''
             #loop over PQ (positive ones) from east and west
             for i in range(3):
                 #East lanes
@@ -276,13 +286,13 @@ class Intersection:
                     #cars that are going straight
                     if(vehicle.getDestination()==Destination.West):
                         #let self driven vehicles going straight switch to middle lane
-                        if(vehicle.getLan()==LaneType.rightMost and vehicle.isSelfDriven()==VehcileType.Self_Driven):
+                        if(vehicle.getLane()==LaneType.rightMost and vehicle.isSelfDriven()==VehcileType.Self_Driven):
                             self.West.laneNeg2.add(self.East.lanesSet[i].pop())
                         #let human driven cars going straight stay in right most lane
-                        elif (vehicle.getLan()==LaneType.rightMost and vehicle.isSelfDriven()==VehcileType.Human_Driven):
+                        elif (vehicle.getLane()==LaneType.rightMost and vehicle.isSelfDriven()==VehcileType.Human_Driven):
                             self.West.laneNeg1.add(self.East.lanesSet[i].pop())
                         #let cars in left most lane going straight still go straight
-                        elif (vehicle.getLan()==LaneType.leftMost):
+                        elif (vehicle.getLane()==LaneType.leftMost):
                             self.West.laneNeg3.add(self.East.lanesSet[i].pop())
 
                     #self driven cars in right lane going right in order to turn left later
@@ -293,7 +303,7 @@ class Intersection:
                     #cars in right lane turning right (self driven or human)
                     if (vehicle.getDestination()==Destination.North and vehicle.getLane()==LaneType.rightMost):
                         self.North.laneNeg1.add(self.East.lanesSet[i].pop())
-                '''
+                
 
                 #West lanes 
                 for vehicle in self.West.lanesSet[i].getArray():
@@ -525,7 +535,7 @@ class Intersection:
         for i in range(3):
             print("Pos",i+1,"lane: ",end="")
             for car in self.East.lanesSet[i].getArray():
-                print("car",end=" ")
+                print("car ",car.getDestination(),end=" ")
             print("\n")
 
         print("\n")
@@ -533,14 +543,14 @@ class Intersection:
         for i in range(3,6):
             print("Neg",i-3+1,"lane: ",end="")
             for car in self.East.lanesSet[i].getArray():
-                print("car",end=" ")
+                print("car ",car.getDestination(),end=" ")
             print("\n")
 
         print("North\n")
         for i in range(3):
             print("Pos",i+1,"lane: ",end="")
             for car in self.North.lanesSet[i].getArray():
-                print("car",end=" ")
+                print("car ",car.getDestination(),end=" ")
             print("\n")
 
         print("\n")
@@ -548,14 +558,14 @@ class Intersection:
         for i in range(3,6):
             print("Neg",i-3+1,"lane: ",end="")
             for car in self.North.lanesSet[i].getArray():
-                print("car",end=" ")
+                print("car ",car.getDestination(),end=" ")
             print("\n")
 
         print("West\n")
         for i in range(3):
             print("Pos",i+1,"lane: ",end="")
             for car in self.West.lanesSet[i].getArray():
-                print("car",end=" ")
+                print("car ",car.getDestination(),end=" ")
             print("\n")
 
         print("\n")
@@ -563,14 +573,14 @@ class Intersection:
         for i in range(3,6):
             print("Neg",i-3+1,"lane: ",end="")
             for car in self.West.lanesSet[i].getArray():
-                print("car",end=" ")
+                print("car ",car.getDestination(),end=" ")
             print("\n")
 
         print("South\n")
         for i in range(3):
             print("Pos",i+1,"lane: ",end="")
             for car in self.South.lanesSet[i].getArray():
-                print("car",end=" ")
+                print("car ",car.getDestination(),end=" ")
             print("\n")
 
         print("\n")
@@ -578,14 +588,14 @@ class Intersection:
         for i in range(3,6):
             print("Neg",i-3+1,"lane: ",end="")
             for car in self.South.lanesSet[i].getArray():
-                print("car",end=" ")
+                print("car ",car.getDestination(),end=" ")
             print("\n")
 
 
 def main():
     sim = Intersection()
     i=0
-    while(i<100):
+    while(i<50):
         sim.randomCarGenerater()
         i+=1
     sim.display()
