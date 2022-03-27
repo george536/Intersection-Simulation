@@ -391,9 +391,10 @@ class Intersection:
                         temp.lane=LaneType.leftMost
                         self.East.lanePos3.add(temp)
 
-            if(self.North.lanePos3.getSize()>0):
+            if(self.South.lanePos3.getSize()>0):
                 self.cleanNegLanes(self.South.laneNeg3)
                 self.South.laneNeg3.add(self.North.lanePos3.pop())
+
 
         if(self.currentTrafic==Traffic.NorthSouthLeftTurn):
             #cars turning left from North (will go east)
