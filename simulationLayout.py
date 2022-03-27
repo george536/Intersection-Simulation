@@ -55,18 +55,13 @@ class PriorityQueue:
             self.count-=1
             return out
 
-    def getFirst(self):
-        if (self.count > 0): 
-            first = self.Array[0]
-        return first
-
     def getArray(self):
         return self.Array[:self.count]
 
     def getSize(self):
         return self.count
 
-    def getTop(self):
+    def getFirst(self):
         if(self.count>0):
             return self.getArray()[0]
 
@@ -278,13 +273,13 @@ class Intersection:
         if(self.currentTrafic==Traffic.EastWest):
             #East movements
             if(self.East.lanePos1.getSize()>0):
-                if(self.East.lanePos1.getTop().getDestination()==Destination.North):
+                if(self.East.lanePos1.getFirst().getDestination()==Destination.North):
                     self.North.laneNeg1.pop()
                     self.North.laneNeg1.add(self.East.lanePos1.pop())
-                elif(self.East.lanePos1.getTop().getDestination()==Destination.West):
+                elif(self.East.lanePos1.getFirst().getDestination()==Destination.West):
                     self.West.laneNeg1.pop()
                     self.West.laneNeg1.add(self.East.lanePos1.pop())
-                elif(self.East.lanePos1.getTop().getDestination()==Destination.South):
+                elif(self.East.lanePos1.getFirst().getDestination()==Destination.South):
                     if(self.canTakeMore(self.North.lanePos3)):
                         temp=self.East.lanePos1.pop()
                         temp.lane=LaneType.leftMost
@@ -296,11 +291,11 @@ class Intersection:
 
             #West Movements
             if(self.West.lanePos1.getSize()>0):
-                if(self.West.lanePos1.getTop().getDestination()==Destination.South):
+                if(self.West.lanePos1.getFirst().getDestination()==Destination.South):
                     self.South.laneNeg1.add(self.West.lanePos1.pop())
-                elif(self.West.lanePos1.getTop().getDestination()==Destination.East):
+                elif(self.West.lanePos1.getFirst().getDestination()==Destination.East):
                     self.East.laneNeg1.add(self.West.lanePos1.pop())
-                elif(self.West.lanePos1.getTop().getDestination()==Destination.North):
+                elif(self.West.lanePos1.getFirst().getDestination()==Destination.North):
                     if(self.canTakeMore(self.South.lanePos3)):
                         temp=self.West.lanePos1.pop()
                         temp.lane=LaneType.leftMost
