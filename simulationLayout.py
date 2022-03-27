@@ -530,11 +530,9 @@ def main():
         i+=1
     sim.display()
 
-    print("------------------------------------------")
     sim.move()
     print("------------------------------------------")
     sim.display()
 
-    #print(sim.West.laneNeg1.pop().getSource())
 
 main()
