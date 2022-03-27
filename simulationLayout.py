@@ -5,30 +5,30 @@ import time
 
 
 class Destination(Enum):
-    East=1,
-    North=2,
-    West=3,
+    East=1
+    North=2
+    West=3
     South=4
 
 class Source(Enum):
-    East=1,
-    North=2,
-    West=3,
+    East=1
+    North=2
+    West=3
     South=4
 
 class VehcileType(Enum):
-    Self_Driven=0,
+    Self_Driven=0
     Human_Driven=1
 
 class LaneType(Enum):
-    rightMost=1,
-    middle=2,
-    leftMost=3,
+    rightMost=1
+    middle=2
+    leftMost=3
 
 class Traffic(Enum):
-    EastWest=1,
-    NorthSouth=2,
-    NorthSouthLeftTurn=3,
+    EastWest=1
+    NorthSouth=2
+    NorthSouthLeftTurn=3
     EastWestLeftTurn=4
 
 class PriorityQueue:
@@ -153,7 +153,7 @@ class Intersection:
     def controlTraffic(self):
         global currentTrafic,timeAllocated,timer
         if(timer==timeAllocated):
-            nextTraffic=self.currentTrafic.value
+            nextTraffic=int(self.currentTrafic.value + 1)
             if nextTraffic ==5:
                 nextTraffic=1
             self.currentTrafic=Traffic(nextTraffic)
