@@ -67,7 +67,6 @@ class PriorityQueue:
 
 
 #global vars
-currentTrafic=Traffic.EastWest
 timer=0
 maxNumber=5
 timeAllocated=10
@@ -131,7 +130,7 @@ class Intersection:
         self.West=Lanes()
         self.North=Lanes()
         self.South=Lanes()
-        self.currentTrafic=currentTrafic
+        self.currentTrafic=Traffic.EastWest
 
         self.fourWay=[self.East,
                     self.West,
@@ -151,7 +150,7 @@ class Intersection:
 
 
     def controlTraffic(self):
-        global currentTrafic,timeAllocated,timer
+        global timeAllocated,timer
         if(timer==timeAllocated):
             nextTraffic=int(self.currentTrafic.value + 1)
             if nextTraffic ==5:
@@ -546,17 +545,18 @@ class Intersection:
 def main():
 
     sim = Intersection()
-    i=0
     sim.currentTrafic=Traffic.NorthSouth
-    while(i<50):
-        sim.randomCarGenerater()
-        i+=1
-    sim.display()
-    sim.update()
-    sim.move()
-    print("------------------------------------------")
-    sim.display()
-    '''
+
+    # i=0
+    # while(i<50):
+    #     sim.randomCarGenerater()
+    #     i+=1
+    # sim.display()
+    # sim.update()
+    # sim.move()
+    # print("------------------------------------------")
+    # sim.display()
+    
     global timer,timeAllocated, runTime
     timer=0
     timePassed=0
@@ -568,6 +568,6 @@ def main():
         sim.move()
         sim.controlTraffic()
         sim.carsLeaving()
-    '''
+    
     
 main()
