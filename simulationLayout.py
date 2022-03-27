@@ -71,6 +71,7 @@ currentTrafic=Traffic.EastWest
 timer=0
 maxNumber=5
 timeAllocated=10
+runTime=200
 
 
 class Car:
@@ -281,6 +282,12 @@ class Intersection:
     def cleanNegLanes(self,lane):
         if lane.getSize()==maxNumber:
             lane.pop()
+
+    def carsLeaving(self):
+        for laneSet in self.fourWay:
+            for i in range (3,6):
+                laneSet.lanesSet[i].pop()
+
 
     def move(self):
         self.update()
@@ -545,16 +552,16 @@ def main():
     # print("------------------------------------------")
     # sim.display()
 
-    global timer,timeAllocated
+    global timer,timeAllocated, runTime
     timer=0
-    
-    while(True):
+    timePassed=0
+    while(timePassed<=runTime):
+        sim.display()
         sim.randomCarGenerater()
         time.sleep(0.5)
         timer+=0.5
         sim.move()
         sim.controlTraffic()
-        sim.display()
-        #function to clean negative lanes by time stamps
+        sim.carsLeaving()
     
 main()
