@@ -398,40 +398,8 @@ class Intersection:
             self.North.laneNeg2.add(self.West.lanePos2.pop())
 
         self.update()
-            
 
-    def SarahsComments():
-
-        ################### Sarah's Comments ######################            
-
-                #if origin%2 == destination%2 #going straight
-                #positive 2 lane
-                #goign neg 2 lane
-            #else
-                #if abs(origin-destination)==1
-                    #if origin > destination #turning right
-                        #positive 1 lane
-                        #going neg 1 lane
-                    #else #turning left
-                        #if self driving
-                            #positive 1 lane
-                            #going neg 1 lane (more needs to be done here)
-                        #else human
-                            #positive 3 lane
-                            #going into neg 3 lane
-                #else
-                    #if origin > destination #turning left
-                        #if self driving
-                            #positive 1 lane
-                            #going neg 1 lane (more needs to be done here)
-                        #else human
-                            #positive 3 lane
-                            #going into neg 3 lane
-                    #else #turning right
-                        #positive 1 lane
-                        #going neg 1 lane
-
-        pass
+        
     ############# ignore the draw function for now ###################
     def draw():
         width=36
