@@ -276,7 +276,35 @@ class Intersection:
     def move(self):
         self.update()
         if(self.currentTrafic==Traffic.EastWest):
-            if()
+            #East movements
+            if(self.East.lanePos1.getSize()>0):
+                if(self.East.lanePos1.getTop().getDestination()==Destination.North):
+                    self.North.laneNeg1.add(self.East.lanePos1.pop())
+                elif(self.East.lanePos1.getTop().getDestination()==Destination.West):
+                    self.West.laneNeg1.add(self.East.lanePos1.pop())
+                elif(self.East.lanePos1.getTop().getDestination()==Destination.South):
+                    if(self.canTakeMore(self.North.lanePos3)):
+                        temp=self.East.lanePos1.pop()
+                        temp.lane=LaneType.leftMost
+                        self.North.lanePos3.add(temp)
+
+            if(self.East.lanePos3.getSize()>0):
+                self.West.laneNeg3.add(self.East.lanePos3.pop())
+
+            #West Movements
+            if(self.West.lanePos1.getSize()>0):
+                if(self.West.lanePos1.getTop().getDestination()==Destination.South):
+                    self.South.laneNeg1.add(self.West.lanePos1.pop())
+                elif(self.West.lanePos1.getTop().getDestination()==Destination.East):
+                    self.East.laneNeg1.add(self.West.lanePos1.pop())
+                elif(self.West.lanePos1.getTop().getDestination()==Destination.North):
+                    if(self.canTakeMore(self.South.lanePos3)):
+                        temp=self.West.lanePos1.pop()
+                        temp.lane=LaneType.leftMost
+                        self.South.lanePos3.add(temp)
+
+            if(self.West.lanePos3.getSize()>0):
+                self.East.laneNeg3.add(self.West.lanePos3.pop())
 
             '''
             #loop over PQ (positive ones) from east and west
