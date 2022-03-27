@@ -153,7 +153,7 @@ class Intersection:
     def controlTraffic(self):
         global currentTrafic,timeAllocated,timer
         if(timer==timeAllocated):
-            nextTraffic=self.currentTrafic.value+1
+            nextTraffic=self.currentTrafic.value
             if nextTraffic ==5:
                 nextTraffic=1
             self.currentTrafic=Traffic(nextTraffic)
@@ -535,25 +535,26 @@ class Intersection:
 def main():
 
     sim = Intersection()
-    i=0
-    while(i<50):
-        sim.randomCarGenerater()
-        i+=1
-    sim.display()
+    # i=0
+    # while(i<50):
+    #     sim.randomCarGenerater()
+    #     i+=1
+    # sim.display()
 
-    sim.move()
-    print("------------------------------------------")
-    sim.display()
+    # sim.move()
+    # print("------------------------------------------")
+    # sim.display()
 
     global timer,timeAllocated
     timer=0
-    '''
+    
     while(True):
         sim.randomCarGenerater()
         time.sleep(0.5)
         timer+=0.5
         sim.move()
         sim.controlTraffic()
+        sim.display()
         #function to clean negative lanes by time stamps
-    '''
+    
 main()
