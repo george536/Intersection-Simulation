@@ -273,9 +273,17 @@ class Intersection:
             for i in range(3):
                 #East lanes
                 for vehicle in self.East.lanesSet[i].getArray():
-                    #cars in right lane going straight
-                    if(vehicle.getDestination()==Destination.West and (vehicle.getLane()==LaneType.rightMost or vehicle.getLane()==LaneType.leftMost)):
-                        self.West.laneNeg1.add(self.East.lanesSet[i].pop())
+                    #cars that are going straight
+                    if(vehicle.getDestination()==Destination.West):
+                        #let self driven vehicles going straight switch to middle lane
+                        if(vehicle.getLan()==LaneType.rightMost and vehicle.isSelfDriven()==VehcileType.Self_Driven):
+                            self.West.laneNeg2.add(self.East.lanesSet[i].pop())
+                        #let human driven cars going straight stay in right most lane
+                        elif (vehicle.getLan()==LaneType.rightMost and vehicle.isSelfDriven()==VehcileType.Human_Driven):
+                            self.West.laneNeg1.add(self.East.lanesSet[i].pop())
+                        #let cars in left most lane going straight still go straight
+                        elif (vehicle.getLan()==LaneType.leftMost):
+                            self.West.laneNeg3.add(self.East.lanesSet[i].pop())
 
                     #self driven cars in right lane going right in order to turn left later
                     if(vehicle.getDestination()==Destination.South and vehicle.getLane()==LaneType.rightMost and vehicle.isSelfDriven()==VehcileType.Self_Driven):
@@ -285,6 +293,7 @@ class Intersection:
                     #cars in right lane turning right (self driven or human)
                     if (vehicle.getDestination()==Destination.North and vehicle.getLane()==LaneType.rightMost):
                         self.North.laneNeg1.add(self.East.lanesSet[i].pop())
+                '''
 
                 #West lanes 
                 for vehicle in self.West.lanesSet[i].getArray():
@@ -415,7 +424,7 @@ class Intersection:
                     self.South.lanePos3.add(self.West.lanePos1.pop())
                 else: break
                 firstVehicle = self.West.lanePos1.getFirst()
-
+        '''
         self.update()
             
 
