@@ -149,7 +149,6 @@ class Intersection:
                     self.North,
                     self.South]
 
-        self.currentTrafic=currentTrafic
 
     def controlTraffic(self):
         global currentTrafic,timeAllocated,timer
@@ -547,16 +546,17 @@ class Intersection:
 def main():
 
     sim = Intersection()
-    # i=0
-    # while(i<50):
-    #     sim.randomCarGenerater()
-    #     i+=1
-    # sim.display()
-
-    # sim.move()
-    # print("------------------------------------------")
-    # sim.display()
-
+    i=0
+    sim.currentTrafic=Traffic.NorthSouth
+    while(i<50):
+        sim.randomCarGenerater()
+        i+=1
+    sim.display()
+    sim.update()
+    sim.move()
+    print("------------------------------------------")
+    sim.display()
+    '''
     global timer,timeAllocated, runTime
     timer=0
     timePassed=0
@@ -568,5 +568,6 @@ def main():
         sim.move()
         sim.controlTraffic()
         sim.carsLeaving()
+    '''
     
 main()
