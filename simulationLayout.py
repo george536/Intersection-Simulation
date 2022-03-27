@@ -327,17 +327,44 @@ class Intersection:
                     self.cleanNegLanes(self.West.laneNeg1)
                     self.West.laneNeg1.add(self.North.lanePos1.pop())
                 elif(self.North.lanePos1.getFirst().getDestination()==Destination.South):
-                    self.cleanNegLanes(self.South.laneNeg1)
-                    self.South.laneNeg1.add(self.North.lanePos1.pop())
-                elif(self.East.lanePos1.getFirst().getDestination()==Destination.South):
-                    if(self.canTakeMore(self.North.lanePos3)):
-                        temp=self.East.lanePos1.pop()
+                    if(self.North.lanePos1.getFirst().isSelfDriven==VehcileType.Human_Driven):
+                        self.cleanNegLanes(self.South.laneNeg1)
+                        self.South.laneNeg1.add(self.North.lanePos1.pop())
+                    elif(self.North.lanePos1.getFirst().isSelfDriven==VehcileType.Self_Driven):
+                        self.cleanNegLanes(self.South.laneNeg2)
+                        self.South.laneNeg2.add(self.North.lanePos1.pop())
+                elif(self.East.lanePos1.getFirst().getDestination()==Destination.East):
+                    if(self.canTakeMore(self.West.lanePos3)):
+                        temp=self.North.lanePos1.pop()
                         temp.lane=LaneType.leftMost
-                        self.North.lanePos3.add(temp)
+                        self.West.lanePos3.add(temp)
 
-            if(self.East.lanePos3.getSize()>0):
-                self.cleanNegLanes(self.West.laneNeg3)
-                self.West.laneNeg3.add(self.East.lanePos3.pop())
+            if(self.North.lanePos3.getSize()>0):
+                self.cleanNegLanes(self.South.laneNeg3)
+                self.South.laneNeg3.add(self.North.lanePos3.pop())
+
+
+            #West movements
+            if(self.North.lanePos1.getSize()>0):
+                if(self.North.lanePos1.getFirst().getDestination()==Destination.West):
+                    self.cleanNegLanes(self.West.laneNeg1)
+                    self.West.laneNeg1.add(self.North.lanePos1.pop())
+                elif(self.North.lanePos1.getFirst().getDestination()==Destination.South):
+                    if(self.North.lanePos1.getFirst().isSelfDriven==VehcileType.Human_Driven):
+                        self.cleanNegLanes(self.South.laneNeg1)
+                        self.South.laneNeg1.add(self.North.lanePos1.pop())
+                    elif(self.North.lanePos1.getFirst().isSelfDriven==VehcileType.Self_Driven):
+                        self.cleanNegLanes(self.South.laneNeg2)
+                        self.South.laneNeg2.add(self.North.lanePos1.pop())
+                elif(self.East.lanePos1.getFirst().getDestination()==Destination.East):
+                    if(self.canTakeMore(self.West.lanePos3)):
+                        temp=self.North.lanePos1.pop()
+                        temp.lane=LaneType.leftMost
+                        self.West.lanePos3.add(temp)
+
+            if(self.North.lanePos3.getSize()>0):
+                self.cleanNegLanes(self.South.laneNeg3)
+                self.South.laneNeg3.add(self.North.lanePos3.pop())
 
 
         self.update()
