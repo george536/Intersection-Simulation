@@ -1,6 +1,6 @@
 import random
 from enum import Enum
-
+import time
 
 
 
@@ -66,8 +66,13 @@ class PriorityQueue:
             return self.getArray()[0]
 
 
+#global vars
 currentTrafic=Traffic.EastWest
+timer=0
 maxNumber=5
+timeAllocated=10
+
+
 class Car:
     def __init__(self,Type, source, destination, lane):
         self.Type=Type
@@ -146,10 +151,15 @@ class Intersection:
         self.currentTrafic=currentTrafic
 
     def controlTraffic(self):
-        global currentTrafic
-        #put code here
-        self.currentTrafic=currentTrafic
-        pass
+        global currentTrafic,timeAllocated,timer
+        if(timer==timeAllocated):
+            nextTraffic=self.currentTrafic.value+1
+            if nextTraffic ==5:
+                nextTraffic=1
+            self.currentTrafic=Traffic(nextTraffic)
+            timer=0
+
+
 
     def canTakeMore(self,lane):
         if(len(lane.Array)<=maxNumber):
@@ -523,6 +533,7 @@ class Intersection:
 
 
 def main():
+
     sim = Intersection()
     i=0
     while(i<50):
@@ -534,5 +545,15 @@ def main():
     print("------------------------------------------")
     sim.display()
 
-
+    global timer,timeAllocated
+    timer=0
+    '''
+    while(True):
+        sim.randomCarGenerater()
+        time.sleep(0.5)
+        timer+=0.5
+        sim.move()
+        sim.controlTraffic()
+        #function to clean negative lanes by time stamps
+    '''
 main()
