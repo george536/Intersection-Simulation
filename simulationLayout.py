@@ -281,8 +281,12 @@ class Intersection:
                     self.cleanNegLanes(self.North.laneNeg1)
                     self.North.laneNeg1.add(self.East.lanePos1.pop())
                 elif(self.East.lanePos1.getFirst().getDestination()==Destination.West):
-                    self.cleanNegLanes(self.West.laneNeg1)
-                    self.West.laneNeg1.add(self.East.lanePos1.pop())
+                    if(self.East.lanePos1.getFirst().isSelfDriven==VehcileType.Human_Driven):
+                        self.cleanNegLanes(self.West.laneNeg1)
+                        self.West.laneNeg1.add(self.East.lanePos1.pop())
+                    elif (self.East.lanePos1.getFirst().isSelfDriven==VehcileType.Self_Driven):
+                        self.cleanNegLanes(self.West.laneNeg2)
+                        self.West.laneNeg2.add(self.East.lanePos1.pop())
                 elif(self.East.lanePos1.getFirst().getDestination()==Destination.South):
                     if(self.canTakeMore(self.North.lanePos3)):
                         temp=self.East.lanePos1.pop()
@@ -311,163 +315,27 @@ class Intersection:
                 self.cleanNegLanes(self.East.laneNeg3)
                 self.East.laneNeg3.add(self.West.lanePos3.pop())
 
-            '''
-            #loop over PQ (positive ones) from east and west
-            for i in range(3):
-                #East lanes
-                for vehicle in self.East.lanesSet[i].getArray():
-                    #cars that are going straight
-                    if(vehicle.getDestination()==Destination.West):
-                        #let self driven vehicles going straight switch to middle lane
-                        if(vehicle.getLane()==LaneType.rightMost and vehicle.isSelfDriven()==VehcileType.Self_Driven):
-                            self.West.laneNeg2.add(self.East.lanesSet[i].pop())
-                        #let human driven cars going straight stay in right most lane
-                        elif (vehicle.getLane()==LaneType.rightMost and vehicle.isSelfDriven()==VehcileType.Human_Driven):
-                            self.West.laneNeg1.add(self.East.lanesSet[i].pop())
-                        #let cars in left most lane going straight still go straight
-                        elif (vehicle.getLane()==LaneType.leftMost):
-                            self.West.laneNeg3.add(self.East.lanesSet[i].pop())
+        
+        if(self.currentTrafic==Traffic.NorthSouth):
+            #North movements
+            if(self.North.lanePos1.getSize()>0):
+                if(self.North.lanePos1.getFirst().getDestination()==Destination.West):
+                    self.cleanNegLanes(self.West.laneNeg1)
+                    self.West.laneNeg1.add(self.North.lanePos1.pop())
+                elif(self.North.lanePos1.getFirst().getDestination()==Destination.South):
+                    self.cleanNegLanes(self.South.laneNeg1)
+                    self.South.laneNeg1.add(self.North.lanePos1.pop())
+                elif(self.East.lanePos1.getFirst().getDestination()==Destination.South):
+                    if(self.canTakeMore(self.North.lanePos3)):
+                        temp=self.East.lanePos1.pop()
+                        temp.lane=LaneType.leftMost
+                        self.North.lanePos3.add(temp)
 
-                    #self driven cars in right lane going right in order to turn left later
-                    if(vehicle.getDestination()==Destination.South and vehicle.getLane()==LaneType.rightMost and vehicle.isSelfDriven()==VehcileType.Self_Driven):
-                        if(self.canTakeMore(self.North.lanePos3)):
-                            self.North.lanePos3.add(self.East.lanesSet[i].pop())
+            if(self.East.lanePos3.getSize()>0):
+                self.cleanNegLanes(self.West.laneNeg3)
+                self.West.laneNeg3.add(self.East.lanePos3.pop())
 
-                    #cars in right lane turning right (self driven or human)
-                    if (vehicle.getDestination()==Destination.North and vehicle.getLane()==LaneType.rightMost):
-                        self.North.laneNeg1.add(self.East.lanesSet[i].pop())
-                
 
-                #West lanes 
-                for vehicle in self.West.lanesSet[i].getArray():
-                    #cars going straight
-                    if(vehicle.getDestination()==Destination.East and (vehicle.getLane()==LaneType.rightMost or vehicle.getLane()==LaneType.leftMost)):
-                        self.East.laneNeg1.add(self.West.lanesSet[i].pop())
-
-                    #self-driven cars in right lane going right in order to turn left later
-                    if(vehicle.getDestination()==Destination.North and vehicle.getLane()==LaneType.rightMost and vehicle.isSelfDriven()==VehcileType.Self_Driven):
-                        if(self.canTakeMore(self.South.lanePos3)):
-                            self.South.lanePos3.add(self.West.lanesSet[i].pop())
-                    
-                    #cars in right lane turning right (self driven or human)
-                    if (vehicle.getDestination()==Destination.South and vehicle.getLane()==LaneType.rightMost):
-                        self.South.laneNeg1.add(self.West.lanesSet[i].pop())
-
-        if (self.currentTrafic==Traffic.NorthSouth):
-            #loop over pos PQs from North and South
-            for j in range(3):
-                #North lanes
-                for vehicle in self.North.lanesSet[i].getArray():
-                    #cars going straight
-                    if(vehicle.getDestination()==Destination.South and (vehicle.getLane()==LaneType.rightMost or vehicle.getLane()==LaneType.leftMost)):
-                        self.South.laneNeg1.add(self.North.lanesSet[i].pop())
-
-                    #self-driven cars in right lane going right in order to turn left later
-                    if(vehicle.getDestination()==Destination.East and vehicle.getLane()==LaneType.rightMost and vehicle.isSelfDriven()==VehcileType.Self_Driven):
-                        if(self.canTakeMore(self.West.lanePos3)):
-                            self.West.lanePos3.add(self.North.lanesSet[i].pop())
-                    
-                    #cars in right lane turning right (self driven or human)
-                    if (vehicle.getDestination()==Destination.West and vehicle.getLane()==LaneType.rightMost):
-                        self.West.laneNeg1.add(self.North.lanesSet[i].pop())
-                
-                #South lanes
-                for vehicle in self.South.lanesSet[i].getArray():
-                     #cars going straight
-                    if(vehicle.getDestination()==Destination.North and (vehicle.getLane()==LaneType.rightMost or vehicle.getLane()==LaneType.leftMost)):
-                        self.North.laneNeg1.add(self.South.lanesSet[i].pop())
-
-                    #self-driven cars in right lane going right in order to turn left later
-                    if(vehicle.getDestination()==Destination.West and vehicle.getLane()==LaneType.rightMost and vehicle.isSelfDriven()==VehcileType.Self_Driven):
-                        if(self.canTakeMore(self.East.lanePos3)):
-                            self.East.lanePos3.add(self.South.lanesSet[i].pop())
-                    
-                    #cars in right lane turning right (self driven or human)
-                    if (vehicle.getDestination()==Destination.East and vehicle.getLane()==LaneType.rightMost):
-                        self.East.laneNeg1.add(self.South.lanesSet[i].pop())
-
-        if (self.currentTrafic==Traffic.EastWestLeftTurn):
-            #East lanes 
-            #human-driven cars making left turn from middle
-            for vehicle in self.East.lanePos2.getArray():
-                self.South.laneNeg2.add(self.East.lanePos2.pop())
-            
-            #cars making a right turn (only human)
-            firstVehicle = self.East.lanePos1.getFirst()
-            while (firstVehicle.isSelfDriven()==VehcileType.Human_Driven):
-                self.North.laneNeg1.add(self.East.lanePos1.pop())
-                firstVehicle = self.East.lanePos1.getFirst()
-
-            #West lanes
-            #human-driven cars making left turn from middle
-            for vehicle in self.West.lanePos2.getArray():
-                self.North.laneNeg2.add(self.West.lanePos2.pop())
-
-            #cars making a right turn (only human)
-            firstVehicle = self.West.lanePos1.getFirst()
-            while (firstVehicle.isSelfDriven()==VehcileType.Human_Driven):
-                self.South.laneNeg1.add(self.West.lanePos1.pop())
-                firstVehicle = self.West.lanePos1.getFirst()
-
-            #North lanes
-            #cars making right turn to make u-turn
-            firstVehicle = self.North.lanePos1.getFirst()
-            while (firstVehicle.isSelfDriven()==VehcileType.Self_Driven and firstVehicle.getDestination()==Destination.East):
-                if (self.canTakeMore(self.West.lanePos3)):
-                    self.West.lanePos3.add(self.North.lanePos1.pop())
-                else: break
-                firstVehicle = self.North.lanePos1.getFirst()
-
-            #South lanes
-            #cars making right turn to make u-turn
-            firstVehicle = self.South.lanePos1.getFirst()
-            while (firstVehicle.isSelfDriven()==VehcileType.Self_Driven and firstVehicle.getDestination()==Destination.West):
-                if (self.canTakeMore(self.East.lanePos3)):
-                    self.East.lanePos3.add(self.South.lanePos1.pop())
-                else: break
-                firstVehicle = self.South.lanePos1.getFirst()
-
-        if (self.currentTrafic==Traffic.NorthSouthLeftTurn):
-            #North lanes 
-            #human-driven cars making left turn from middle
-            for vehicle in self.North.lanePos2.getArray():
-                self.East.laneNeg2.add(self.North.lanePos2.pop())
-            
-            #cars making a right turn (only human)
-            firstVehicle = self.North.lanePos1.getFirst()
-            while (firstVehicle.isSelfDriven()==VehcileType.Human_Driven):
-                self.West.laneNeg1.add(self.North.lanePos1.pop())
-                firstVehicle = self.North.lanePos1.getFirst()
-
-            #South lanes
-            #human-driven cars making left turn from middle
-            for vehicle in self.South.lanePos2.getArray():
-                self.West.laneNeg2.add(self.South.lanePos2.pop())
-
-            #cars making a right turn (only human)
-            firstVehicle = self.South.lanePos1.getFirst()
-            while (firstVehicle.isSelfDriven()==VehcileType.Human_Driven):
-                self.East.laneNeg1.add(self.South.lanePos1.pop())
-                firstVehicle = self.South.lanePos1.getFirst()
-
-            #East lanes
-            #cars making right turn to make u-turn
-            firstVehicle = self.East.lanePos1.getFirst()
-            while (firstVehicle.isSelfDriven()==VehcileType.Self_Driven and firstVehicle.getDestination()==Destination.South):
-                if (self.canTakeMore(self.North.lanePos3)):
-                    self.North.lanePos3.add(self.East.lanePos1.pop())
-                else: break
-                firstVehicle = self.East.lanePos1.getFirst()
-
-            #West lanes
-            #cars making right turn to make u-turn
-            firstVehicle = self.West.lanePos1.getFirst()
-            while (firstVehicle.isSelfDriven()==VehcileType.Self_Driven and firstVehicle.getDestination()==Destination.North):
-                if (self.canTakeMore(self.South.lanePos3)):
-                    self.South.lanePos3.add(self.West.lanePos1.pop())
-                else: break
-                firstVehicle = self.West.lanePos1.getFirst()
-        '''
         self.update()
             
 
