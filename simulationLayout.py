@@ -567,7 +567,9 @@ def main():
         timer+=0.5
         sim.move()
         sim.controlTraffic()
-        sim.carsLeaving()
+        randomDelete=random.randint(0,5)
+        if randomDelete==0:
+            sim.carsLeaving()
     
     
 main()
