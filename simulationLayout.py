@@ -450,78 +450,89 @@ class Intersection:
             print("")
 
     def display(self):
-        os.system('cls')
-        self.update()
-        # for laneSet in self.fourWay:
-        #     for lane in laneSet.lanesSet:
-        #         for car in lane.getArray():
-        #             print("Is it self-driven: ",car.isSelfDriven(),"\nSource: ",car.getSource(),"\ndestination: ",car.getDestination(), "\nin lane: ", car.getLane(),"\n")
-        print("East\n")
-        for i in range(3):
-            print("Pos",i+1,"lane: ",end="")
-            for car in self.East.lanesSet[i].getArray():
-                print("car ",car.getDestination(),end=" ")
+        try:
+            os.system('cls')
+            self.update()
+            # for laneSet in self.fourWay:
+            #     for lane in laneSet.lanesSet:
+            #         for car in lane.getArray():
+            #             print("Is it self-driven: ",car.isSelfDriven(),"\nSource: ",car.getSource(),"\ndestination: ",car.getDestination(), "\nin lane: ", car.getLane(),"\n")
+            print("East\n")
+            for i in range(3):
+                print("Pos",i+1,"lane: ",end="")
+                if(self.East.lanesSet[i].getSize()>0):
+                    for car in self.East.lanesSet[i].getArray():
+                        print("car ",car.getDestination(),end=" ")
+                print("\n")
+
             print("\n")
 
-        print("\n")
+            for i in range(3,6):
+                print("Neg",i-3+1,"lane: ",end="")
+                if(self.East.lanesSet[i].getSize()>0):
+                    for car in self.East.lanesSet[i].getArray():
+                        print("car ",car.getDestination(),end=" ")
+                print("\n")
 
-        for i in range(3,6):
-            print("Neg",i-3+1,"lane: ",end="")
-            for car in self.East.lanesSet[i].getArray():
-                print("car ",car.getDestination(),end=" ")
+            print("North\n")
+            for i in range(3):
+                print("Pos",i+1,"lane: ",end="")
+                if(self.North.lanesSet[i].getSize()>0):
+                    for car in self.North.lanesSet[i].getArray():
+                        print("car ",car.getDestination(),end=" ")
+                print("\n")
+
             print("\n")
 
-        print("North\n")
-        for i in range(3):
-            print("Pos",i+1,"lane: ",end="")
-            for car in self.North.lanesSet[i].getArray():
-                print("car ",car.getDestination(),end=" ")
+            for i in range(3,6):
+                print("Neg",i-3+1,"lane: ",end="")
+                if(self.North.lanesSet[i].getSize()>0):
+                    for car in self.North.lanesSet[i].getArray():
+                        print("car ",car.getDestination(),end=" ")
+                print("\n")
+
+            print("West\n")
+            for i in range(3):
+                print("Pos",i+1,"lane: ",end="")
+                if(self.West.lanesSet[i].getSize()>0):
+                    for car in self.West.lanesSet[i].getArray():
+                        print("car ",car.getDestination(),end=" ")
+                print("\n")
+
             print("\n")
 
-        print("\n")
+            for i in range(3,6):
+                print("Neg",i-3+1,"lane: ",end="")
+                if(self.West.lanesSet[i].getSize()>0):
+                    for car in self.West.lanesSet[i].getArray():
+                        print("car ",car.getDestination(),end=" ")
+                print("\n")
 
-        for i in range(3,6):
-            print("Neg",i-3+1,"lane: ",end="")
-            for car in self.North.lanesSet[i].getArray():
-                print("car ",car.getDestination(),end=" ")
+            print("South\n")
+            for i in range(3):
+                print("Pos",i+1,"lane: ",end="")
+                if(self.South.lanesSet[i].getSize()>0):
+                    for car in self.South.lanesSet[i].getArray():
+                        print("car ",car.getDestination(),end=" ")
+                print("\n")
+
             print("\n")
 
-        print("West\n")
-        for i in range(3):
-            print("Pos",i+1,"lane: ",end="")
-            for car in self.West.lanesSet[i].getArray():
-                print("car ",car.getDestination(),end=" ")
-            print("\n")
+            for i in range(3,6):
+                print("Neg",i-3+1,"lane: ",end="")
+                if(self.South.lanesSet[i].getSize()>0):
+                    for car in self.South.lanesSet[i].getArray():
+                        print("car ",car.getDestination(),end=" ")
+                print("\n")
 
-        print("\n")
-
-        for i in range(3,6):
-            print("Neg",i-3+1,"lane: ",end="")
-            for car in self.West.lanesSet[i].getArray():
-                print("car ",car.getDestination(),end=" ")
-            print("\n")
-
-        print("South\n")
-        for i in range(3):
-            print("Pos",i+1,"lane: ",end="")
-            for car in self.South.lanesSet[i].getArray():
-                print("car ",car.getDestination(),end=" ")
-            print("\n")
-
-        print("\n")
-
-        for i in range(3,6):
-            print("Neg",i-3+1,"lane: ",end="")
-            for car in self.South.lanesSet[i].getArray():
-                print("car ",car.getDestination(),end=" ")
-            print("\n")
+        except:
+            pass
 
 
 def main():
 
     sim = Intersection()
-    sim.currentTrafic=Traffic.NorthSouth
-
+    sim.currentTrafic=Traffic.EastWest
     # i=0
     # while(i<50):
     #     sim.randomCarGenerater()
@@ -535,16 +546,18 @@ def main():
     global timer,timeAllocated, runTime
     timer=0
     timePassed=0
-    while(timePassed<=runTime):
+    while(timePassed<=runTime):    
         sim.display()
         sim.randomCarGenerater()
-        time.sleep(0.5)
-        timer+=0.5
+        print(sim.currentTrafic)
+        time.sleep(1)
+        timer+=1
         sim.move()
         sim.controlTraffic()
         randomDelete=random.randint(0,5)
         if randomDelete==0:
             sim.carsLeaving()
+        
     
     
 main()
