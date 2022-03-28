@@ -357,7 +357,7 @@ class Intersection:
                         self.cleanNegLanes(self.South.laneNeg2)
                         self.South.laneNeg2.add(self.North.lanePos1.pop())
 
-                elif(self.East.lanePos1.getFirst().getDestination()==Destination.East):
+                elif(self.North.lanePos1.getFirst().getDestination()==Destination.East):
                     if(self.canTakeMore(self.West.lanePos3)):
                         temp=self.North.lanePos1.pop()
                         temp.lane=LaneType.leftMost
@@ -383,7 +383,7 @@ class Intersection:
                         self.cleanNegLanes(self.North.laneNeg2)
                         self.North.laneNeg2.add(self.North.lanePos1.pop())
 
-                elif(self.East.lanePos1.getFirst().getDestination()==Destination.West):
+                elif(self.South.lanePos1.getFirst().getDestination()==Destination.West):
                     if(self.canTakeMore(self.East.lanePos3)):
                         temp=self.South.lanePos1.pop()
                         temp.lane=LaneType.leftMost
