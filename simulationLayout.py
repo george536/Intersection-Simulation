@@ -1,7 +1,7 @@
 import random
 from enum import Enum
 import time
-
+import os
 
 
 class Destination(Enum):
@@ -450,6 +450,7 @@ class Intersection:
             print("")
 
     def display(self):
+        os.system('cls')
         self.update()
         # for laneSet in self.fourWay:
         #     for lane in laneSet.lanesSet:
