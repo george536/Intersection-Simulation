@@ -297,11 +297,11 @@ class Intersection:
                     self.North.laneNeg1.add(self.East.lanePos1.pop())
 
                 elif(self.East.lanePos1.getFirst().getDestination()==Destination.West):
-                    if(self.East.lanePos1.getFirst().isSelfDriven==VehcileType.Human_Driven):
+                    if(self.East.lanePos1.getFirst().isSelfDriven()==VehcileType.Human_Driven):
                         self.cleanNegLanes(self.West.laneNeg1)
                         self.West.laneNeg1.add(self.East.lanePos1.pop())
 
-                    elif (self.East.lanePos1.getFirst().isSelfDriven==VehcileType.Self_Driven):
+                    elif (self.East.lanePos1.getFirst().isSelfDriven()==VehcileType.Self_Driven):
                         self.cleanNegLanes(self.West.laneNeg2)
                         self.West.laneNeg2.add(self.East.lanePos1.pop())
 
@@ -322,11 +322,11 @@ class Intersection:
                     self.South.laneNeg1.add(self.West.lanePos1.pop())
 
                 elif(self.West.lanePos1.getFirst().getDestination()==Destination.East):
-                    if(self.West.lanePos1.getFirst().isSelfDriven==VehcileType.Human_Driven):
+                    if(self.West.lanePos1.getFirst().isSelfDriven()==VehcileType.Human_Driven):
                         self.cleanNegLanes(self.East.laneNeg1)
                         self.East.laneNeg1.add(self.West.lanePos1.pop())
 
-                    elif(self.West.lanePos1.getFirst().isSelfDriven==VehcileType.Self_Driven):
+                    elif(self.West.lanePos1.getFirst().isSelfDriven()==VehcileType.Self_Driven):
                         self.cleanNegLanes(self.East.laneNeg2)
                         self.East.laneNeg2.add(self.West.lanePos1.pop())
 
@@ -349,11 +349,11 @@ class Intersection:
                     self.West.laneNeg1.add(self.North.lanePos1.pop())
 
                 elif(self.North.lanePos1.getFirst().getDestination()==Destination.South):
-                    if(self.North.lanePos1.getFirst().isSelfDriven==VehcileType.Human_Driven):
+                    if(self.North.lanePos1.getFirst().isSelfDriven()==VehcileType.Human_Driven):
                         self.cleanNegLanes(self.South.laneNeg1)
                         self.South.laneNeg1.add(self.North.lanePos1.pop())
 
-                    elif(self.North.lanePos1.getFirst().isSelfDriven==VehcileType.Self_Driven):
+                    elif(self.North.lanePos1.getFirst().isSelfDriven()==VehcileType.Self_Driven):
                         self.cleanNegLanes(self.South.laneNeg2)
                         self.South.laneNeg2.add(self.North.lanePos1.pop())
 
@@ -375,11 +375,11 @@ class Intersection:
                     self.East.laneNeg1.add(self.South.lanePos1.pop())
 
                 elif(self.South.lanePos1.getFirst().getDestination()==Destination.North):
-                    if(self.South.lanePos1.getFirst().isSelfDriven==VehcileType.Human_Driven):
+                    if(self.South.lanePos1.getFirst().isSelfDriven()==VehcileType.Human_Driven):
                         self.cleanNegLanes(self.North.laneNeg1)
                         self.North.laneNeg1.add(self.South.lanePos1.pop())
 
-                    elif(self.South.lanePos1.getFirst().isSelfDriven==VehcileType.Self_Driven):
+                    elif(self.South.lanePos1.getFirst().isSelfDriven()==VehcileType.Self_Driven):
                         self.cleanNegLanes(self.North.laneNeg2)
                         self.North.laneNeg2.add(self.North.lanePos1.pop())
 
@@ -532,17 +532,17 @@ class Intersection:
 def main():
 
     sim = Intersection()
-    sim.currentTrafic=Traffic.EastWest
-    # i=0
-    # while(i<50):
-    #     sim.randomCarGenerater()
-    #     i+=1
-    # sim.display()
-    # sim.update()
-    # sim.move()
-    # print("------------------------------------------")
-    # sim.display()
-    
+    sim.currentTrafic=Traffic.NorthSouth
+    i=0
+    while(i<50):
+        sim.randomCarGenerater()
+        i+=1
+    sim.display()
+    sim.update()
+    sim.move()
+    print("------------------------------------------")
+    sim.display()
+    '''
     global timer,timeAllocated, runTime
     timer=0
     timePassed=0
@@ -557,7 +557,7 @@ def main():
         randomDelete=random.randint(0,5)
         if randomDelete==0:
             sim.carsLeaving()
-        
+    '''
     
     
 main()
