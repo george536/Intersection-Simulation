@@ -381,7 +381,7 @@ class Intersection:
 
                     elif(self.South.lanePos1.getFirst().isSelfDriven()==VehcileType.Self_Driven):
                         self.cleanNegLanes(self.North.laneNeg2)
-                        self.North.laneNeg2.add(self.North.lanePos1.pop())
+                        self.North.laneNeg2.add(self.South.lanePos1.pop())
 
                 elif(self.South.lanePos1.getFirst().getDestination()==Destination.West):
                     if(self.canTakeMore(self.East.lanePos3)):
@@ -391,7 +391,7 @@ class Intersection:
 
             if(self.South.lanePos3.getSize()>0):
                 self.cleanNegLanes(self.South.laneNeg3)
-                self.South.laneNeg3.add(self.North.lanePos3.pop())
+                self.North.laneNeg3.add(self.South.lanePos3.pop())
 
 
         elif(self.currentTrafic==Traffic.NorthSouthLeftTurn):
