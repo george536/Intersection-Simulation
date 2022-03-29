@@ -420,7 +420,9 @@ class Intersection:
         self.update()
 
         
-    def draw():
+    def draw(self):
+        os.system('cls')
+        self.update()
         width=24
         height=24
         #y for height
@@ -546,7 +548,7 @@ def main():
     timer=0
     timePassed=0
     while(timePassed<=runTime):    
-        sim.display()
+        sim.draw()
         sim.randomCarGenerater()
         print(sim.currentTrafic)
         sim.move()
