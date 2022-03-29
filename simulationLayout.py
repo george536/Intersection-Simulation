@@ -483,14 +483,14 @@ class Intersection:
             print("\n")
 
         print("\n")
-        '''
+        
         for i in range(3,6):
             print("Neg",i-3+1,"lane: ",end="")
             if(self.North.lanesSet[i].getSize()>0):
                 for car in self.North.lanesSet[i].getArray():
                     print("car ",car.getDestination(),end=" ")
             print("\n")
-        '''
+        
         print("West\n")
         for i in range(3):
             print("Pos",i+1,"lane: ",end="")
@@ -517,14 +517,14 @@ class Intersection:
             print("\n")
 
         print("\n")
-        '''
+        
         for i in range(3,6):
             print("Neg",i-3+1,"lane: ",end="")
             if(self.South.lanesSet[i].getSize()>0):
                 for car in self.South.lanesSet[i].getArray():
                     print("car ",car.getDestination(),end=" ")
             print("\n")
-        '''
+        
 
 
 def main():
