@@ -132,7 +132,7 @@ class Intersection:
         self.North=Lanes()
         self.South=Lanes()
         self.currentTrafic=Traffic.EastWest
-
+        self.coord=[[]]
         self.fourWay=[self.East,
                     self.West,
                     self.North,
@@ -206,6 +206,10 @@ class Intersection:
                 self.sortCarsInLanes(self.West,origion,Type, destination,Destination.South,Destination.East,Destination.North)
             if(origion==Source.South):
                 self.sortCarsInLanes(self.South,origion,Type, destination,Destination.East,Destination.North,Destination.West)
+
+            if(origion==Destination.East and destination==Destination.North):
+                self.coord.append([18-self.East.getSize()+1,7])
+
 
     def cleanNegLanes(self,lane):
         if lane.getSize()==maxNumber:
@@ -303,7 +307,7 @@ class Intersection:
                 elif((6>y>=0 or y>18) and x<6):
                     print(" ",end="  ")
                 elif ((y==6 or y==18) and (x<6 or 18>x>11)):
-                    print("",end=" ")
+                    print("=",end="  ")
                 elif (y==12 and (1<x<7 or 20>x>14)):
                     print("-",end=" ")
                 elif ((x<7 or 22>x>14) and (y==8 or y==10 or y==14 or y==16)):
@@ -397,7 +401,7 @@ def main():
     timer=0
     timePassed=0
     while(timePassed<=runTime):    
-        sim.display()
+        sim.draw()
         sim.randomCarGenerater()
         print(sim.currentTrafic)
         sim.move()
