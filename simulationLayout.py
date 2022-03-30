@@ -287,6 +287,33 @@ class Intersection:
                 laneSet.lanesSet[i].pop()
 
 
+    def perfomrMove(self, source, rightDestination, right, straightDestination,straight, 
+    leftSelfDrivenDestination,leftSelfDriven, leftHumanDriven):
+        if(source.lanePos1.getSize()>0):
+            if(source.lanePos1.getFirst().getDestination()==rightDestination):
+                self.cleanNegLanes(right.laneNeg1)
+                right.laneNeg1.add(source.lanePos1.pop())
+
+            elif(source.lanePos1.getFirst().getDestination()==straightDestination):
+                if(source.lanePos1.getFirst().isSelfDriven()==VehcileType.Human_Driven):
+                    self.cleanNegLanes(straight.laneNeg1)
+                    straight.laneNeg1.add(source.lanePos1.pop())
+
+                elif (source.lanePos1.getFirst().isSelfDriven()==VehcileType.Self_Driven):
+                    self.cleanNegLanes(straight.laneNeg2)
+                    straight.laneNeg2.add(source.lanePos1.pop())
+
+            elif(source.lanePos1.getFirst().getDestination()==leftSelfDrivenDestination):
+                if(self.canTakeMore(leftSelfDriven.lanePos3)):
+                    temp=source.lanePos1.pop()
+                    temp.lane=LaneType.leftMost
+                    leftSelfDriven.lanePos3.add(temp)
+
+        if(source.lanePos3.getSize()>0):
+            self.cleanNegLanes(leftHumanDriven.laneNeg3)
+            leftHumanDriven.laneNeg3.add(source.lanePos3.pop())
+
+
     def move(self):
         self.update()
         if(self.currentTrafic==Traffic.EastWest):
