@@ -2,7 +2,7 @@ import random
 from enum import Enum
 import time
 import os
-from tkinter import W
+
 
 
 class Destination(Enum):
