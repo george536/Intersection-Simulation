@@ -287,7 +287,7 @@ class Intersection:
                 laneSet.lanesSet[i].pop()
 
 
-    def perfomeMove(self, source, rightDestination, right, straightDestination,straight, 
+    def perfomMove(self, source, rightDestination, right, straightDestination,straight, 
     leftSelfDrivenDestination,leftSelfDriven, HumanDrivenOnLeftGoingStraight):
         if(source.lanePos1.getSize()>0):
             if(source.lanePos1.getFirst().getDestination()==rightDestination):
@@ -313,70 +313,44 @@ class Intersection:
             self.cleanNegLanes(HumanDrivenOnLeftGoingStraight.laneNeg3)
             HumanDrivenOnLeftGoingStraight.laneNeg3.add(source.lanePos3.pop())
 
+    def performLeftTurn(self,origion,destination):
+        if(origion.lanePos2.getSize()>0):
+                self.cleanNegLanes(destination.laneNeg2)
+                destination.laneNeg2.add(origion.lanePos2.pop())
+
 
     def move(self):
         self.update()
         if(self.currentTrafic==Traffic.EastWest):
             #East movements
-            self.perfomeMove(self.East,Destination.North,self.North,Destination.West,self.West,Destination.South,self.North,self.West)
+            self.perfomMove(self.East,Destination.North,self.North,Destination.West,self.West,Destination.South,self.North,self.West)
 
             #West Movements
-            self.perfomeMove(self.West,Destination.South,self.South,Destination.East,self.East,Destination.North,self.South,self.East)
+            self.perfomMove(self.West,Destination.South,self.South,Destination.East,self.East,Destination.North,self.South,self.East)
 
         
         elif(self.currentTrafic==Traffic.NorthSouth):
             #North movements
-            self.perfomeMove(self.North,Destination.West,self.West,Destination.South,self.South,Destination.East,self.West,self.South)
+            self.perfomMove(self.North,Destination.West,self.West,Destination.South,self.South,Destination.East,self.West,self.South)
 
             
             #South movements
-            if(self.South.lanePos1.getSize()>0):
-                if(self.South.lanePos1.getFirst().getDestination()==Destination.East):
-                    self.cleanNegLanes(self.East.laneNeg1)
-                    self.East.laneNeg1.add(self.South.lanePos1.pop())
-
-                elif(self.South.lanePos1.getFirst().getDestination()==Destination.North):
-                    if(self.South.lanePos1.getFirst().isSelfDriven()==VehcileType.Human_Driven):
-                        self.cleanNegLanes(self.North.laneNeg1)
-                        self.North.laneNeg1.add(self.South.lanePos1.pop())
-
-                    elif(self.South.lanePos1.getFirst().isSelfDriven()==VehcileType.Self_Driven):
-                        self.cleanNegLanes(self.North.laneNeg2)
-                        self.North.laneNeg2.add(self.South.lanePos1.pop())
-
-                elif(self.South.lanePos1.getFirst().getDestination()==Destination.West):
-                    if(self.canTakeMore(self.East.lanePos3)):
-                        temp=self.South.lanePos1.pop()
-                        temp.lane=LaneType.leftMost
-                        self.East.lanePos3.add(temp)
-
-            if(self.South.lanePos3.getSize()>0):
-                self.cleanNegLanes(self.South.laneNeg3)
-                self.North.laneNeg3.add(self.South.lanePos3.pop())
+            self.perfomMove(self.South,Destination.East,self.East,Destination.North,self.North,Destination.West,self.East,self.North)
 
 
         elif(self.currentTrafic==Traffic.NorthSouthLeftTurn):
             #cars turning left from North (will go east)
-            if(self.North.lanePos2.getSize()>0):
-                self.cleanNegLanes(self.East.laneNeg2)
-                self.East.laneNeg2.add(self.North.lanePos2.pop())
+            self.performLeftTurn(self.North,self.East)
 
             #cars turning left from South (will go west)
-            if(self.South.lanePos2.getSize()>0):
-                self.cleanNegLanes(self.West.laneNeg2)
-                self.West.laneNeg2.add(self.South.lanePos2.pop())
-            
+            self.performLeftTurn(self.South,self.West)
 
         elif(self.currentTrafic==Traffic.EastWestLeftTurn):
             #cars turning left from east (will go south)
-            if(self.East.lanePos2.getSize()>0):
-                self.cleanNegLanes(self.South.laneNeg2)
-                self.South.laneNeg2.add(self.East.lanePos2.pop())
+            self.performLeftTurn(self.East,self.South)
 
             #cars turning left from west (will go north)
-            if(self.West.lanePos2.getSize()>0):
-                self.cleanNegLanes(self.North.laneNeg2)
-                self.North.laneNeg2.add(self.West.lanePos2.pop())
+            self.performLeftTurn(self.West,self.North)
 
         self.update()
 
