@@ -166,7 +166,34 @@ class Intersection:
         else:
             return False
 
+    def sortCarsInLanes(self, source, origion, Type, destination, right, straight, left):
+        #car turning right or self-driven car turning right to go left
+        if(destination==right or (destination==left and Type==VehcileType.Self_Driven)):
+            if(self.canTakeMore(source.lanePos1)):
+                source.lanePos1.add(Car(Type,origion,destination,LaneType.rightMost))
+
+        #Human-driven car turning left
+        elif(destination==left and Type==VehcileType.Human_Driven):
+            if(self.canTakeMore(source.lanePos2)):
+                source.lanePos2.add(Car(Type,origion,destination,LaneType.middle))
+
+        #self-driven car going straight
+        elif(destination==straight and Type==VehcileType.Self_Driven):
+            if(self.canTakeMore(source.lanePos1)):
+                source.lanePos1.add(Car(Type,origion,destination,LaneType.rightMost))
+
+            elif(self.canTakeMore(source.lanePos3)):
+                source.lanePos3.add(Car(Type,origion,destination,LaneType.leftMost))
+
+        #human-driev car going straight
+        elif(destination==straight and Type==VehcileType.Human_Driven):
+            if(self.canTakeMore(source.lanePos1)):
+                source.lanePos1.add(Car(Type,origion,destination,LaneType.rightMost))
+
+
+
     def addToEast(self,Type,origion,destination):
+        self.sortCarsInLanes()
         #car turning right or self-driven car turning right to go left
         if(destination==Destination.North or (destination==Destination.South and Type==VehcileType.Self_Driven)):
             if(self.canTakeMore(self.East.lanePos1)):
