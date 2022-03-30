@@ -319,54 +319,9 @@ class Intersection:
         if(self.currentTrafic==Traffic.EastWest):
             #East movements
             self.perfomeMove(self.East,Destination.North,self.North,Destination.West,self.West,Destination.South,self.North,self.West)
-            # if(self.East.lanePos1.getSize()>0):
-            #     if(self.East.lanePos1.getFirst().getDestination()==Destination.North):
-            #         self.cleanNegLanes(self.North.laneNeg1)
-            #         self.North.laneNeg1.add(self.East.lanePos1.pop())
-
-            #     elif(self.East.lanePos1.getFirst().getDestination()==Destination.West):
-            #         if(self.East.lanePos1.getFirst().isSelfDriven()==VehcileType.Human_Driven):
-            #             self.cleanNegLanes(self.West.laneNeg1)
-            #             self.West.laneNeg1.add(self.East.lanePos1.pop())
-
-            #         elif (self.East.lanePos1.getFirst().isSelfDriven()==VehcileType.Self_Driven):
-            #             self.cleanNegLanes(self.West.laneNeg2)
-            #             self.West.laneNeg2.add(self.East.lanePos1.pop())
-
-            #     elif(self.East.lanePos1.getFirst().getDestination()==Destination.South):
-            #         if(self.canTakeMore(self.North.lanePos3)):
-            #             temp=self.East.lanePos1.pop()
-            #             temp.lane=LaneType.leftMost
-            #             self.North.lanePos3.add(temp)
-
-            # if(self.East.lanePos3.getSize()>0):
-            #     self.cleanNegLanes(self.West.laneNeg3)
-            #     self.West.laneNeg3.add(self.East.lanePos3.pop())
 
             #West Movements
-            if(self.West.lanePos1.getSize()>0):
-                if(self.West.lanePos1.getFirst().getDestination()==Destination.South):
-                    self.cleanNegLanes(self.South.laneNeg1)
-                    self.South.laneNeg1.add(self.West.lanePos1.pop())
-
-                elif(self.West.lanePos1.getFirst().getDestination()==Destination.East):
-                    if(self.West.lanePos1.getFirst().isSelfDriven()==VehcileType.Human_Driven):
-                        self.cleanNegLanes(self.East.laneNeg1)
-                        self.East.laneNeg1.add(self.West.lanePos1.pop())
-
-                    elif(self.West.lanePos1.getFirst().isSelfDriven()==VehcileType.Self_Driven):
-                        self.cleanNegLanes(self.East.laneNeg2)
-                        self.East.laneNeg2.add(self.West.lanePos1.pop())
-
-                elif(self.West.lanePos1.getFirst().getDestination()==Destination.North):
-                    if(self.canTakeMore(self.South.lanePos3)):
-                        temp=self.West.lanePos1.pop()
-                        temp.lane=LaneType.leftMost
-                        self.South.lanePos3.add(temp)
-
-            if(self.West.lanePos3.getSize()>0):
-                self.cleanNegLanes(self.East.laneNeg3)
-                self.East.laneNeg3.add(self.West.lanePos3.pop())
+            self.perfomeMove(self.West,Destination.South,self.South,Destination.East,self.East,Destination.North,self.South,self.East)
 
         
         elif(self.currentTrafic==Traffic.NorthSouth):
@@ -587,6 +542,5 @@ def main():
         time.sleep(0.1)
         timer+=0.5
     
-    
-    
+
 main()
