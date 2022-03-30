@@ -212,6 +212,7 @@ class Intersection:
             lane.pop()
 
     def carsLeaving(self):
+        self.update()
         for laneSet in self.fourWay:
             for i in range (3,6):
                 laneSet.lanesSet[i].pop()
@@ -250,7 +251,6 @@ class Intersection:
 
 
     def move(self):
-        self.update()
         if(self.currentTrafic==Traffic.EastWest):
             #East movements
             self.perfomMove(self.East,Destination.North,self.North,Destination.West,self.West,Destination.South,self.North,self.West)
@@ -282,12 +282,10 @@ class Intersection:
             #cars turning left from west (will go north)
             self.performLeftTurn(self.West,self.North)
 
-        self.update()
 
         
     def draw(self):
         os.system('cls')
-        self.update()
         width=24
         height=24
         #y for height
@@ -316,10 +314,10 @@ class Intersection:
                     print(" ",end="") 
             print("")
 
+    #temporary
     def display(self):
 
         os.system('cls')
-        self.update()
         print("East\n")
         for i in range(3):
             print("Pos",i+1,"lane: ",end="")
