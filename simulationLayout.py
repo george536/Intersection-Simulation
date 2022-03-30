@@ -326,29 +326,7 @@ class Intersection:
         
         elif(self.currentTrafic==Traffic.NorthSouth):
             #North movements
-            if(self.North.lanePos1.getSize()>0):
-                if(self.North.lanePos1.getFirst().getDestination()==Destination.West):
-                    self.cleanNegLanes(self.West.laneNeg1)
-                    self.West.laneNeg1.add(self.North.lanePos1.pop())
-
-                elif(self.North.lanePos1.getFirst().getDestination()==Destination.South):
-                    if(self.North.lanePos1.getFirst().isSelfDriven()==VehcileType.Human_Driven):
-                        self.cleanNegLanes(self.South.laneNeg1)
-                        self.South.laneNeg1.add(self.North.lanePos1.pop())
-
-                    elif(self.North.lanePos1.getFirst().isSelfDriven()==VehcileType.Self_Driven):
-                        self.cleanNegLanes(self.South.laneNeg2)
-                        self.South.laneNeg2.add(self.North.lanePos1.pop())
-
-                elif(self.North.lanePos1.getFirst().getDestination()==Destination.East):
-                    if(self.canTakeMore(self.West.lanePos3)):
-                        temp=self.North.lanePos1.pop()
-                        temp.lane=LaneType.leftMost
-                        self.West.lanePos3.add(temp)
-
-            if(self.North.lanePos3.getSize()>0):
-                self.cleanNegLanes(self.South.laneNeg3)
-                self.South.laneNeg3.add(self.North.lanePos3.pop())
+            self.perfomeMove(self.North,Destination.West,self.West,Destination.South,self.South,Destination.East,self.West,self.South)
 
             
             #South movements
@@ -438,10 +416,6 @@ class Intersection:
 
         os.system('cls')
         self.update()
-        # for laneSet in self.fourWay:
-        #     for lane in laneSet.lanesSet:
-        #         for car in lane.getArray():
-        #             print("Is it self-driven: ",car.isSelfDriven(),"\nSource: ",car.getSource(),"\ndestination: ",car.getDestination(), "\nin lane: ", car.getLane(),"\n")
         print("East\n")
         for i in range(3):
             print("Pos",i+1,"lane: ",end="")
@@ -516,17 +490,7 @@ def main():
 
     sim = Intersection()
     sim.currentTrafic=Traffic.EastWest
-    '''
-    i=0
-    while(i<50):
-        sim.randomCarGenerater()
-        i+=1
-    sim.display()
-    sim.update()
-    sim.move()
-    print("------------------------------------------")
-    sim.display()
-    '''
+    
     global timer,timeAllocated, runTime
     timer=0
     timePassed=0
