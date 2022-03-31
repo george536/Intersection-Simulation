@@ -409,7 +409,7 @@ def main():
         randomDelete=random.randint(0,2)
         if randomDelete==0:
             sim.carsLeaving()
-        time.sleep(0.1)
+        time.sleep(0.5)
         timer+=0.5
     
 
