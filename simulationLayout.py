@@ -132,7 +132,6 @@ class Intersection:
         self.North=Lanes()
         self.South=Lanes()
         self.currentTrafic=Traffic.EastWest
-        self.coord=[[]]
         self.fourWay=[self.East,
                     self.West,
                     self.North,
@@ -207,8 +206,6 @@ class Intersection:
             if(origion==Source.South):
                 self.sortCarsInLanes(self.South,origion,Type, destination,Destination.East,Destination.North,Destination.West)
 
-            if(origion==Destination.East and destination==Destination.North):
-                self.coord.append([18-self.East.getSize()+1,7])
 
 
     def cleanNegLanes(self,lane):
