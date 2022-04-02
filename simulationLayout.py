@@ -75,11 +75,13 @@ runTime=200
 
 
 class Car:
-    def __init__(self,Type, source, destination, lane):
+    def __init__(self,Type, source, destination, lane, x, y):
         self.Type=Type
         self.source=source
         self.destination=destination
         self.lane=lane
+        self.x=x
+        self.y=y
 
     def getX(self):
         return self.x
@@ -161,34 +163,34 @@ class Intersection:
 
 
     def canTakeMore(self,lane):
-        if(len(lane.Array)<=maxNumber):
+        if(lane.getSize()<maxNumber):
             return True
         else:
             return False
 
-    def sortCarsInLanes(self, source, origion, Type, destination, right, straight, left):
+    def sortCarsInLanes(self, source, origion, Type, destination, right, straight, left, x, y):
         #car turning right or self-driven car turning right to go left
         if(destination==right or (destination==left and Type==VehcileType.Self_Driven)):
             if(self.canTakeMore(source.lanePos1)):
-                source.lanePos1.add(Car(Type,origion,destination,LaneType.rightMost))
+                source.lanePos1.add(Car(Type,origion,destination,LaneType.rightMost, x[source.lanePos1.getSize()], y[0]))
 
         #Human-driven car turning left
         elif(destination==left and Type==VehcileType.Human_Driven):
             if(self.canTakeMore(source.lanePos2)):
-                source.lanePos2.add(Car(Type,origion,destination,LaneType.middle))
+                source.lanePos2.add(Car(Type,origion,destination,LaneType.middle, x[source.lanePos2.getSize()], y[1]))
 
         #self-driven car going straight
         elif(destination==straight and Type==VehcileType.Self_Driven):
             if(self.canTakeMore(source.lanePos1)):
-                source.lanePos1.add(Car(Type,origion,destination,LaneType.rightMost))
+                source.lanePos1.add(Car(Type,origion,destination,LaneType.rightMost, x[source.lanePos1.getSize()], y[0]))
 
             elif(self.canTakeMore(source.lanePos3)):
-                source.lanePos3.add(Car(Type,origion,destination,LaneType.leftMost))
+                source.lanePos3.add(Car(Type,origion,destination,LaneType.leftMost, x[source.lanePos3.getSize()], y[2]))
 
         #human-driev car going straight
         elif(destination==straight and Type==VehcileType.Human_Driven):
             if(self.canTakeMore(source.lanePos1)):
-                source.lanePos1.add(Car(Type,origion,destination,LaneType.rightMost))
+                source.lanePos1.add(Car(Type,origion,destination,LaneType.rightMost, x[source.lanePos1.getSize()], y[0]))
 
 
     def randomCarGenerater(self):
@@ -198,13 +200,13 @@ class Intersection:
 
         if(destination.value!=origion.value):
             if(origion==Source.East):
-                self.sortCarsInLanes(self.East,origion,Type, destination,Destination.North,Destination.West,Destination.South)
-            if(origion==Source.North):
-                self.sortCarsInLanes(self.North,origion,Type, destination,Destination.West, Destination.South, Destination.East)
-            if(origion==Source.West):
-                self.sortCarsInLanes(self.West,origion,Type, destination,Destination.South,Destination.East,Destination.North)
-            if(origion==Source.South):
-                self.sortCarsInLanes(self.South,origion,Type, destination,Destination.East,Destination.North,Destination.West)
+                self.sortCarsInLanes(self.East,origion,Type, destination,Destination.North,Destination.West,Destination.South,[15,17,19,21,23],[7,9,11])
+            # if(origion==Source.North):
+            #     self.sortCarsInLanes(self.North,origion,Type, destination,Destination.West, Destination.South, Destination.East)
+            # if(origion==Source.West):
+            #     self.sortCarsInLanes(self.West,origion,Type, destination,Destination.South,Destination.East,Destination.North)
+            # if(origion==Source.South):
+            #     self.sortCarsInLanes(self.South,origion,Type, destination,Destination.East,Destination.North,Destination.West)
 
 
 
@@ -220,20 +222,27 @@ class Intersection:
 
 
     def perfomMove(self, source, rightDestination, right, straightDestination,straight, 
-    leftSelfDrivenDestination,leftSelfDriven, HumanDrivenOnLeftGoingStraight):
+    leftSelfDrivenDestination,leftSelfDriven, HumanDrivenOnLeftGoingStraight,x,y):
         if(source.lanePos1.getSize()>0):
             if(source.lanePos1.getFirst().getDestination()==rightDestination):
                 self.cleanNegLanes(right.laneNeg1)
-                right.laneNeg1.add(source.lanePos1.pop())
+                car=source.lanePos1.pop()
+                car.x=x[right.laneNeg1.getSize()]
+                right.laneNeg1.add(car)
 
             elif(source.lanePos1.getFirst().getDestination()==straightDestination):
                 if(source.lanePos1.getFirst().isSelfDriven()==VehcileType.Human_Driven):
                     self.cleanNegLanes(straight.laneNeg1)
-                    straight.laneNeg1.add(source.lanePos1.pop())
+                    car=source.lanePos1.pop()
+                    car.x=x[straight.laneNeg1.getSize()]
+                    straight.laneNeg1.add(car)
 
                 elif (source.lanePos1.getFirst().isSelfDriven()==VehcileType.Self_Driven):
                     self.cleanNegLanes(straight.laneNeg2)
-                    straight.laneNeg2.add(source.lanePos1.pop())
+                    car=source.lanePos1.pop()
+                    car.x=x[straight.laneNeg2.getSize()]
+                    car.y=y[1]
+                    straight.laneNeg2.add(car)
 
             elif(source.lanePos1.getFirst().getDestination()==leftSelfDrivenDestination):
                 if(self.canTakeMore(leftSelfDriven.lanePos3)):
@@ -243,7 +252,11 @@ class Intersection:
 
         if(source.lanePos3.getSize()>0):
             self.cleanNegLanes(HumanDrivenOnLeftGoingStraight.laneNeg3)
-            HumanDrivenOnLeftGoingStraight.laneNeg3.add(source.lanePos3.pop())
+            car=source.lanePos3.pop()
+            car.x=x[HumanDrivenOnLeftGoingStraight.laneNeg3.getSize()]
+            HumanDrivenOnLeftGoingStraight.laneNeg3.add(car)
+
+
 
     def performLeftTurn(self,origion,destination):
         if(origion.lanePos2.getSize()>0):
@@ -254,27 +267,35 @@ class Intersection:
     def move(self):
         if(self.currentTrafic==Traffic.EastWest):
             #East movements
-            self.perfomMove(self.East,Destination.North,self.North,Destination.West,self.West,Destination.South,self.North,self.West)
+            self.perfomMove(self.East,Destination.North,self.North,Destination.West,self.West,Destination.South,self.North,self.West,[0,1,2,3,4],[7,9,11])
+            for car in self.East.lanePos1.getArray():
+                if(self.East.lanePos1.getSize()>=0):
+                    car.x=car.x-2
+            for car in self.East.lanePos3.getArray():
+                if(self.East.lanePos3.getSize()>=0):
+                    car.x=car.x-2
 
             #West Movements
-            self.perfomMove(self.West,Destination.South,self.South,Destination.East,self.East,Destination.North,self.South,self.East)
+            #self.perfomMove(self.West,Destination.South,self.South,Destination.East,self.East,Destination.North,self.South,self.East)
 
         
         elif(self.currentTrafic==Traffic.NorthSouth):
+            pass
             #North movements
-            self.perfomMove(self.North,Destination.West,self.West,Destination.South,self.South,Destination.East,self.West,self.South)
+            #self.perfomMove(self.North,Destination.West,self.West,Destination.South,self.South,Destination.East,self.West,self.South)
 
             
             #South movements
-            self.perfomMove(self.South,Destination.East,self.East,Destination.North,self.North,Destination.West,self.East,self.North)
+            #self.perfomMove(self.South,Destination.East,self.East,Destination.North,self.North,Destination.West,self.East,self.North)
 
 
         elif(self.currentTrafic==Traffic.NorthSouthLeftTurn):
+            pass
             #cars turning left from North (will go east)
-            self.performLeftTurn(self.North,self.East)
+            #self.performLeftTurn(self.North,self.East)
 
             #cars turning left from South (will go west)
-            self.performLeftTurn(self.South,self.West)
+            #self.performLeftTurn(self.South,self.West)
 
         elif(self.currentTrafic==Traffic.EastWestLeftTurn):
             #cars turning left from east (will go south)
@@ -284,7 +305,15 @@ class Intersection:
             self.performLeftTurn(self.West,self.North)
 
 
-        
+    def isIn(self,x,y):
+        for lane in self.fourWay:
+            for innerLane in lane.lanesSet:
+                for car in innerLane.getArray():
+                    if(car.getX()==x and car.getY()==y):
+                        return True
+                        
+        return False
+
     def draw(self):
         os.system('cls')
         width=24
@@ -309,6 +338,9 @@ class Intersection:
                     print("-",end=" ")
                 elif ((x<7 or 22>x>14) and (y==8 or y==10 or y==14 or y==16)):
                     print("--",end="")
+                
+                elif self.isIn(x,y):
+                    print("C",end="")
                 elif(y>5 and y<19):
                     print(" ",end=" ")
                 else:
@@ -406,7 +438,7 @@ def main():
         randomDelete=random.randint(0,2)
         if randomDelete==0:
             sim.carsLeaving()
-        time.sleep(0.5)
+        time.sleep(0.3)
         timer+=0.5
     
 
