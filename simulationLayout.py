@@ -42,6 +42,22 @@ class SouthCoord:
     x=[16,14,12]
     y=[19,20,21,22,23]
 
+class EastNegCoord:
+    x=[23,21,19,17,15]
+    y=[13,15,17]
+
+class WestNegCoord:
+    x=[0,2,4,6,8]
+    y=[11,7,9]
+
+class NorthNegCoord:
+    x=[12,14,16]
+    y=[1,2,3,4,5]
+
+class SouthNegCoord:
+    x=[6,8,10]
+    y=[23,22,21,20,19]
+
 
 
 class Lane:
