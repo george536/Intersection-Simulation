@@ -43,13 +43,7 @@ class SouthCoord:
     x=[16,14,12]
     y=[19,20,21,22,23]
 
-class EastMoves:
-    right=[[16,7],[17,7],[17,8]]
 
-class CarTuple():
-    def __init__(self,car,coord):
-        self.car=car
-        self.coord=coord
 
 class Lane:
     def __init__(self,size):
@@ -69,13 +63,13 @@ class Lane:
     def pop(self):
         if self.count>0:
             carObject=self.Array[0]
-            for i in (1,maxNumber):
+            for i in range (1,self.size):
                 self.Array[i-1]=self.Array[i]
             self.count-=1
             return carObject
 
     def add(self,obj):
-        if self.count<maxNumber:
+        if self.count<self.size:
             self.Array[self.count]=obj
             self.count+=1
 
@@ -129,7 +123,6 @@ class Intersection:
         self.North=Lanes()
         self.South=Lanes()
         self.currentTrafic=Traffic.EastWest
-        self.carsMiddleTuples=[]
         self.fourWay=[self.East,
                     self.West,
                     self.North,
@@ -188,20 +181,6 @@ class Intersection:
 
     
 
-    def moveToMiddle(self):
-        if(self.currentTrafic==Traffic.EastWest):
-            if self.East.lanePos1.getCount()>0:
-                self.East.lanePos1.pop()
-            
-
-
-        elif(self.currentTrafic==Traffic.NorthSouth):
-            pass
-        elif(self.currentTrafic==Traffic.NorthSouthLeftTurn):
-            pass
-        elif(self.currentTrafic==Traffic.EastWestLeftTurn):
-            pass
-
     def randomCarGenerater(self):
         origion=random.choice(list(Directions))
         turn=random.choice(list(Destination))
@@ -222,8 +201,7 @@ class Intersection:
                 for car in innerLane.getArray():
                     if(car!=0):
                         if(car.getX()==x and car.getY()==y):
-                            return True      
-        return False
+                            return True    
 
     def draw(self):
         os.system('cls')
@@ -243,11 +221,11 @@ class Intersection:
                     print("¦",end="")
                 elif((6>y>=0 or y>18) and x<6):
                     print(" ",end="  ")
-                elif ((y==6 or y==18) and (x<6 or 18>x>11)):
+                elif ((y==6 or y==18) and (x<5 or 18>x>11)):
                     print("=",end="  ")
-                elif (y==12 and (1<x<7 or 20>x>14)):
+                elif (y==12 and (1<x<8 or 20>x>14)):
                     print("-",end=" ")
-                elif ((x<7 or 22>x>14) and (y==8 or y==10 or y==14 or y==16)):
+                elif ((x<8 or 22>x>14) and (y==8 or y==10 or y==14 or y==16)):
                     print("--",end="")
                 elif self.isIn(x,y):
                     print("C",end="")
@@ -273,7 +251,7 @@ def main():
         # randomDelete=random.randint(0,2)
         # if randomDelete==0:
         #     sim.carsLeaving()
-        time.sleep(0.1)
+        time.sleep(0.5)
         #timer+=0.5
     
 
