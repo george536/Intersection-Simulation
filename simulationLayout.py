@@ -39,6 +39,10 @@ class NorthCoord:
     x=[6,8,10]
     y=[5,4,3,2,1]
 
+class SouthCoord:
+    x=[16,14,12]
+    y=[19,20,21,22,23]
+
 # class EastLaneSorting(Enum):
 #     Right:2
 #     Straight:3
@@ -205,8 +209,7 @@ class Intersection:
         if(origion==Directions.West):
             self.addToLanes(type,turn,self.West,WestCoord)
         if(origion==Directions.South):
-            pass
-            #self.addToLanes(type,turn,self.South,EastCoord)
+            self.addToLanes(type,turn,self.South,SouthCoord)
 
     def isIn(self,x,y):
         for lane in self.fourWay:
