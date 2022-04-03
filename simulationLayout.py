@@ -169,7 +169,7 @@ class Intersection:
     def addToLanes(self,type,turn,lane,directionEnum):
         global maxNumber
         if lane==self.East or lane==self.West:
-            if(turn==Destination.right and lane.lanePos1.getCount()<maxNumber):
+            if((turn==Destination.right and lane.lanePos1.getCount()<maxNumber) or (turn==Destination.left and lane.lanePos1.getCount()<maxNumber and type==VehcileType.Self_Driven)):
                 count=lane.lanePos1.getCount()
                 lane.lanePos1.add(Car(type,turn,directionEnum.x[count],directionEnum.y[0]))
 
@@ -182,14 +182,14 @@ class Intersection:
                     count=lane.lanePos3.getCount()       
                     lane.lanePos3.add(Car(type,turn,directionEnum.x[count],directionEnum.y[2]))
 
-            elif(turn==Destination.left and lane.lanePos2.getCount()<maxNumber):
+            elif(turn==Destination.left and lane.lanePos2.getCount()<maxNumber and type==VehcileType.Human_Driven):
                 count=lane.lanePos2.getCount()
                 lane.lanePos2.add(Car(type,turn,directionEnum.x[count],directionEnum.y[1]))
 
 
 
         else:
-            if(turn==Destination.right and lane.lanePos1.getCount()<maxNumber):
+            if((turn==Destination.right and lane.lanePos1.getCount()<maxNumber) or (turn==Destination.left and lane.lanePos1.getCount()<maxNumber and type==VehcileType.Self_Driven)):
                 count=lane.lanePos1.getCount()
                 lane.lanePos1.add(Car(type,turn,directionEnum.x[0],directionEnum.y[count]))
 
@@ -202,7 +202,7 @@ class Intersection:
                     count=lane.lanePos3.getCount()       
                     lane.lanePos3.add(Car(type,turn,directionEnum.x[2],directionEnum.y[count]))
 
-            elif(turn==Destination.left and lane.lanePos2.getCount()<maxNumber):
+            elif(turn==Destination.left and lane.lanePos2.getCount()<maxNumber and type==VehcileType.Human_Driven):
                 count=lane.lanePos2.getCount()
                 lane.lanePos2.add(Car(type,turn,directionEnum.x[1],directionEnum.y[count]))
 
@@ -223,9 +223,18 @@ class Intersection:
             self.addToLanes(type,turn,self.South,SouthCoord)
 
         
-    def performLeftTurn(self,origion,destination):
-        if(origion.lanePos2.getSize()>0):
-            destination.laneNeg2.add(origion.lanePos2.pop())
+    def performLeftTurn(self,origion,destination,destCoord):
+        if(origion.lanePos2.getCount()>0 and (origion==self.East or origion==self.West)):
+            car=origion.lanePos2.pop()
+            car.x=destCoord.x[1]
+            car.y=destCoord.y[destination.laneNeg2.getCount()]
+            destination.laneNeg2.add(car)
+        elif(origion.lanePos2.getCount()>0 and (origion==self.South or origion==self.North)):
+            car=origion.lanePos2.pop()
+            print(destination.laneNeg2.getCount())
+            car.x=destCoord.x[destination.laneNeg2.getCount()]
+            car.y=destCoord.y[1]
+            destination.laneNeg2.add(car)
 
     def move(self):
         if(self.currentTrafic==Traffic.EastWest):
@@ -277,17 +286,33 @@ class Intersection:
             
         elif(self.currentTrafic==Traffic.NorthSouthLeftTurn):
             #cars turning left from North (will go east)
-            self.performLeftTurn(self.North,self.South)
+            self.performLeftTurn(self.North,self.East,EastNegCoord)
 
             #cars turning left from South (will go west)
-            self.performLeftTurn(self.South,self.East)
+            self.performLeftTurn(self.South,self.West,WestNegCoord)
 
         elif(self.currentTrafic==Traffic.EastWestLeftTurn):
             #cars turning left from east (will go south)
-            self.performLeftTurn(self.East,self.South)
+            self.performLeftTurn(self.East,self.South,SouthNegCoord)
             
             #cars turning left from west (will go north)
-            self.performLeftTurn(self.West,self.North)
+            self.performLeftTurn(self.West,self.North, NorthNegCoord)
+
+
+    def clearNegativeLanes(self):
+        for i in range(3,6):
+            for car in self.East.lanesSet[i].getArray():
+                if car!=0:car.x+=1
+            #self.East.lanesSet[i].pop()
+            for car in self.North.lanesSet[i].getArray():
+                if car!=0:car.y-=1
+            #self.North.lanesSet[i].pop()
+            for car in self.West.lanesSet[i].getArray():
+                if car!=0:car.x-=1
+            #self.West.lanesSet[i].pop()
+            for car in self.South.lanesSet[i].getArray():
+                if car!=0:car.y+=1
+            #self.South.lanesSet[i].pop()
 
     def isIn(self,x,y):
         for lane in self.fourWay:
@@ -346,10 +371,11 @@ def main():
         print(sim.currentTrafic)
         sim.move()
         sim.controlTraffic()
+        sim.clearNegativeLanes()
         # randomDelete=random.randint(0,2)
         # if randomDelete==0:
         #     sim.carsLeaving()
-        time.sleep(0.5)
+        time.sleep(0.3)
         timer+=0.5
     
 
