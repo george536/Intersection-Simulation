@@ -201,7 +201,7 @@ class Intersection:
                 for car in innerLane.getArray():
                     if(car!=0):
                         if(car.getX()==x and car.getY()==y):
-                            return True    
+                            return car   
 
     def draw(self):
         os.system('cls')
@@ -227,8 +227,12 @@ class Intersection:
                     print("-",end=" ")
                 elif ((x<8 or 22>x>14) and (y==8 or y==10 or y==14 or y==16)):
                     print("--",end="")
-                elif self.isIn(x,y):
-                    print("C",end="")
+                elif self.isIn(x,y)!=None:
+                    car=self.isIn(x,y)
+                    if car.getType()==VehcileType.Self_Driven:
+                        print("S",end="")
+                    if car.getType()==VehcileType.Human_Driven:
+                        print("H",end="")
                 elif(y>5 and y<19):
                     print(" ",end=" ")
                 else:
