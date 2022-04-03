@@ -231,7 +231,7 @@ class Intersection:
             if(self.East.lanePos3.getCount()>0):
                 car=self.East.lanePos3.pop()
                 car.x
-                
+                #i am here
             #West Movements
             
         
