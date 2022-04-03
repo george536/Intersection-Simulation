@@ -156,6 +156,18 @@ class Intersection:
                     self.North,
                     self.South]
 
+    def controlTraffic(self):
+        #global timeAllocated,timer
+        global timeAllocated
+        timeAllocated = 10
+        #if(timer==timeAllocated):
+        if(timer%timeAllocated==0 and timer!=0):
+            nextTraffic=int(self.currentTrafic.value + 1)
+            if nextTraffic ==5:
+                nextTraffic=1
+            self.currentTrafic=Traffic(nextTraffic)
+            #timer=0
+
     def addToLanes(self,type,turn,lane,directionEnum):
         global maxNumber
         if lane==self.East or lane==self.West:
@@ -328,19 +340,19 @@ def main():
     sim = Intersection()
     sim.currentTrafic=Traffic.EastWest
     
-    #global timer
+    global timer
     timer=0
     while(True):    
         sim.draw()
         sim.randomCarGenerater()
         print(sim.currentTrafic)
         sim.move()
-        # sim.controlTraffic()
+        sim.controlTraffic()
         # randomDelete=random.randint(0,2)
         # if randomDelete==0:
         #     sim.carsLeaving()
-        time.sleep(0.1)
-        #timer+=0.5
+        time.sleep(0.5)
+        timer+=0.5
     
 
 main()
