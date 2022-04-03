@@ -47,11 +47,12 @@ class EastNegCoord:
     y=[13,15,17]
 
 class WestNegCoord:
-    x=[0,2,4,6,8]
+    x=[8,6,4,2,0]
+    #x=[0,2,4,6,8]
     y=[11,7,9]
 
 class NorthNegCoord:
-    x=[12,14,16]
+    x=[16,14,12]
     y=[1,2,3,4,5]
 
 class SouthNegCoord:
@@ -223,8 +224,8 @@ class Intersection:
                 if(self.East.lanePos1.getTop().getDestination()==Destination.right):
                     if(self.North.laneNeg1.getCount()<maxNumber):
                         car=self.East.lanePos1.pop()
-                        car.x=NorthNegCoord.x[self.North.laneNeg1.getCount()]
-                        car.y=NorthNegCoord.y[0]
+                        car.x=NorthNegCoord.x[0]
+                        car.y=NorthNegCoord.y[self.North.laneNeg1.getCount()]
                         self.North.laneNeg1.add(car)
 
                 elif(self.East.lanePos1.getTop().getDestination()==Destination.straight):
@@ -338,7 +339,7 @@ def main():
         # randomDelete=random.randint(0,2)
         # if randomDelete==0:
         #     sim.carsLeaving()
-        time.sleep(0.5)
+        time.sleep(0.1)
         #timer+=0.5
     
 
