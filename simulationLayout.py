@@ -246,8 +246,10 @@ class Intersection:
 
             if(self.East.lanePos3.getCount()>0):
                 car=self.East.lanePos3.pop()
-                car.x
-                #i am here
+                car.x=WestNegCoord[self.West.laneNeg3.getCount()]
+                car.y=WestNegCoord[0]
+                self.West.laneNeg3.add(car)
+
             #West Movements
             
         
@@ -326,7 +328,7 @@ def main():
         sim.draw()
         sim.randomCarGenerater()
         print(sim.currentTrafic)
-        # sim.move()
+        sim.move()
         # sim.controlTraffic()
         # randomDelete=random.randint(0,2)
         # if randomDelete==0:
