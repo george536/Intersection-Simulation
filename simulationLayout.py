@@ -157,7 +157,6 @@ class Intersection:
                     self.South]
 
     def controlTraffic(self):
-        #global timeAllocated,timer
         global timeAllocated
         timeAllocated = 10
         #if(timer==timeAllocated):
@@ -166,7 +165,6 @@ class Intersection:
             if nextTraffic ==5:
                 nextTraffic=1
             self.currentTrafic=Traffic(nextTraffic)
-            #timer=0
 
     def addToLanes(self,type,turn,lane,directionEnum):
         global maxNumber
