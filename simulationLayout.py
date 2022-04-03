@@ -195,6 +195,61 @@ class Intersection:
         if(origion==Directions.South):
             self.addToLanes(type,turn,self.South,SouthCoord)
 
+        
+    def performLeftTurn(self,origion,destination):
+        if(origion.lanePos2.getSize()>0):
+            destination.laneNeg2.add(origion.lanePos2.pop())
+
+    def move(self):
+        if(self.currentTrafic==Traffic.EastWest):
+            #East movements
+            if(self.East.lanePos1.getCount()>0):
+                if(self.East.lanePos1.getTop().getDestination()==Destination.right):
+                    car=self.East.lanePos1.pop()
+                    car.x=NorthNegCoord[self.North.laneNeg1.getCount()]
+                    car.y=NorthNegCoord[0]
+                    self.North.laneNeg1.add(car)
+
+                elif(self.East.lanePos1.getTop().getDestination()==Destination.straight):
+                    if self.East.lanePos1.getTop().getType()==VehcileType.Human_Driven:
+                        car=self.East.lanePos1.pop()
+                        car.x=WestNegCoord[self.West.laneNeg1.getCount()]
+                        car.y=WestNegCoord[0]
+                        self.West.laneNeg1.add(car)
+                    else:
+                        car=self.East.lanePos1.pop()
+                        car.x=WestNegCoord[self.West.laneNeg2.getCount()]
+                        car.y=WestNegCoord[1]
+                        self.West.laneNeg2.add(car)
+
+                elif(self.East.lanePos1.getTop().getDestination()==Destination.left):
+                    car=self.East.lanePos1.pop()
+                    car.x=NorthCoord[0]
+                    car.y=NorthCoord[self.North.lanePos3.getCount()]
+                
+            #West Movements
+            
+        
+        elif(self.currentTrafic==Traffic.NorthSouth):
+            pass
+            #North movements
+            
+            #South movements
+            
+        elif(self.currentTrafic==Traffic.NorthSouthLeftTurn):
+            #cars turning left from North (will go east)
+            self.performLeftTurn(self.North,self.South)
+
+            #cars turning left from South (will go west)
+            self.performLeftTurn(self.South,self.East)
+
+        elif(self.currentTrafic==Traffic.EastWestLeftTurn):
+            #cars turning left from east (will go south)
+            self.performLeftTurn(self.East,self.South)
+            
+            #cars turning left from west (will go north)
+            self.performLeftTurn(self.West,self.North)
+
     def isIn(self,x,y):
         for lane in self.fourWay:
             for innerLane in lane.lanesSet:
