@@ -43,27 +43,13 @@ class SouthCoord:
     x=[16,14,12]
     y=[19,20,21,22,23]
 
-# class EastLaneSorting(Enum):
-#     Right:2
-#     Straight:3
-#     Left:4
+class EastMoves:
+    right=[[16,7],[17,7],[17,8]]
 
-
-# class NorthLaneSorting(Enum):
-#     Right:3
-#     Straight:4
-#     Left:1
-
-# class WestLaneSorting(Enum):
-#     Right:4
-#     Straight:1
-#     Left:2
-    
-
-# class SouthLaneSorting(Enum):
-#     Right:1
-#     Straight:2
-#     Left:3
+class CarTuple():
+    def __init__(self,car,coord):
+        self.car=car
+        self.coord=coord
 
 class Lane:
     def __init__(self,size):
@@ -71,17 +57,27 @@ class Lane:
         self.Array=[0 for i in range(size)]
         self.count=0
 
-    def increaseCount(self):
-        self.count+=1
-
-    def decreaseCount(self):
-        self.count-=1
-
     def getCount(self):
         return self.count
     
     def getArray(self):
         return self.Array
+
+    def getTop(self):
+        return self.Array[0]
+
+    def pop(self):
+        if self.count>0:
+            carObject=self.Array[0]
+            for i in (1,maxNumber):
+                self.Array[i-1]=self.Array[i]
+            self.count-=1
+            return carObject
+
+    def add(self,obj):
+        if self.count<maxNumber:
+            self.Array[self.count]=obj
+            self.count+=1
 
 maxNumber=5
 
@@ -133,6 +129,7 @@ class Intersection:
         self.North=Lanes()
         self.South=Lanes()
         self.currentTrafic=Traffic.EastWest
+        self.carsMiddleTuples=[]
         self.fourWay=[self.East,
                     self.West,
                     self.North,
@@ -154,48 +151,56 @@ class Intersection:
         if lane==self.East or lane==self.West:
             if(turn==Destination.right and lane.lanePos1.getCount()<maxNumber):
                 count=lane.lanePos1.getCount()
-                lane.lanePos1.getArray()[count]=Car(type,turn,directionEnum.x[count],directionEnum.y[0])
-                lane.lanePos1.increaseCount()
+                lane.lanePos1.add(Car(type,turn,directionEnum.x[count],directionEnum.y[0]))
 
             elif(turn==Destination.straight):
                 count=lane.lanePos1.getCount()
                 if(count<maxNumber):
-                    lane.lanePos1.getArray()[count]=Car(type,turn,directionEnum.x[count],directionEnum.y[0])
-                    lane.lanePos1.increaseCount()
+                    lane.lanePos1.add(Car(type,turn,directionEnum.x[count],directionEnum.y[0]))
 
                 elif (count==maxNumber and type==VehcileType.Self_Driven and lane.lanePos3.getCount()<maxNumber):
                     count=lane.lanePos3.getCount()       
-                    lane.lanePos3.getArray()[count]=Car(type,turn,directionEnum.x[count],directionEnum.y[2])
-                    lane.lanePos3.increaseCount()
+                    lane.lanePos3.add(Car(type,turn,directionEnum.x[count],directionEnum.y[2]))
 
             elif(turn==Destination.left and lane.lanePos2.getCount()<maxNumber):
                 count=lane.lanePos2.getCount()
-                lane.lanePos2.getArray()[count]=Car(type,turn,directionEnum.x[count],directionEnum.y[1])
-                lane.lanePos2.increaseCount()
+                lane.lanePos2.add(Car(type,turn,directionEnum.x[count],directionEnum.y[1]))
 
 
 
         else:
             if(turn==Destination.right and lane.lanePos1.getCount()<maxNumber):
                 count=lane.lanePos1.getCount()
-                lane.lanePos1.getArray()[count]=Car(type,turn,directionEnum.x[0],directionEnum.y[count])
-                lane.lanePos1.increaseCount()
+                lane.lanePos1.add(Car(type,turn,directionEnum.x[0],directionEnum.y[count]))
 
             elif(turn==Destination.straight):
                 count=lane.lanePos1.getCount()
                 if(count<maxNumber):
-                    lane.lanePos1.getArray()[count]=Car(type,turn,directionEnum.x[0],directionEnum.y[count])
-                    lane.lanePos1.increaseCount()
+                    lane.lanePos1.add(Car(type,turn,directionEnum.x[0],directionEnum.y[count]))
 
                 elif (count==maxNumber and type==VehcileType.Self_Driven and lane.lanePos3.getCount()<maxNumber):
                     count=lane.lanePos3.getCount()       
-                    lane.lanePos3.getArray()[count]=Car(type,turn,directionEnum.x[2],directionEnum.y[count])
-                    lane.lanePos3.increaseCount()
+                    lane.lanePos3.add(Car(type,turn,directionEnum.x[2],directionEnum.y[count]))
 
             elif(turn==Destination.left and lane.lanePos2.getCount()<maxNumber):
                 count=lane.lanePos2.getCount()
-                lane.lanePos2.getArray()[count]=Car(type,turn,directionEnum.x[1],directionEnum.y[count])
-                lane.lanePos2.increaseCount()
+                lane.lanePos2.add(Car(type,turn,directionEnum.x[1],directionEnum.y[count]))
+
+    
+
+    def moveToMiddle(self):
+        if(self.currentTrafic==Traffic.EastWest):
+            if self.East.lanePos1.getCount()>0:
+                self.East.lanePos1.pop()
+            
+
+
+        elif(self.currentTrafic==Traffic.NorthSouth):
+            pass
+        elif(self.currentTrafic==Traffic.NorthSouthLeftTurn):
+            pass
+        elif(self.currentTrafic==Traffic.EastWestLeftTurn):
+            pass
 
     def randomCarGenerater(self):
         origion=random.choice(list(Directions))
@@ -217,8 +222,7 @@ class Intersection:
                 for car in innerLane.getArray():
                     if(car!=0):
                         if(car.getX()==x and car.getY()==y):
-                            return True
-                        
+                            return True      
         return False
 
     def draw(self):
