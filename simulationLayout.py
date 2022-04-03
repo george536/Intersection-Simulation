@@ -35,6 +35,10 @@ class WestCoord:
     x=[8,6,4,2,0]
     y=[17,15,13]
 
+class NorthCoord:
+    x=[6,8,10]
+    y=[5,4,3,2,1]
+
 # class EastLaneSorting(Enum):
 #     Right:2
 #     Straight:3
@@ -143,26 +147,51 @@ class Intersection:
 
     def addToLanes(self,type,turn,lane,directionEnum):
         global maxNumber
-        if(turn==Destination.right and lane.lanePos1.getCount()<maxNumber):
-            count=lane.lanePos1.getCount()
-            lane.lanePos1.getArray()[count]=Car(type,turn,directionEnum.x[count],directionEnum.y[0])
-            lane.lanePos1.increaseCount()
-
-        elif(turn==Destination.straight):
-            count=lane.lanePos1.getCount()
-            if(count<maxNumber):
+        if lane==self.East or lane==self.West:
+            if(turn==Destination.right and lane.lanePos1.getCount()<maxNumber):
+                count=lane.lanePos1.getCount()
                 lane.lanePos1.getArray()[count]=Car(type,turn,directionEnum.x[count],directionEnum.y[0])
                 lane.lanePos1.increaseCount()
 
-            elif (count==maxNumber and type==VehcileType.Self_Driven and lane.lanePos3.getCount()<maxNumber):
-                count=lane.lanePos3.getCount()       
-                lane.lanePos3.getArray()[count]=Car(type,turn,directionEnum.x[count],directionEnum.y[2])
-                lane.lanePos3.increaseCount()
+            elif(turn==Destination.straight):
+                count=lane.lanePos1.getCount()
+                if(count<maxNumber):
+                    lane.lanePos1.getArray()[count]=Car(type,turn,directionEnum.x[count],directionEnum.y[0])
+                    lane.lanePos1.increaseCount()
 
-        elif(turn==Destination.left and lane.lanePos2.getCount()<maxNumber):
-            count=lane.lanePos2.getCount()
-            lane.lanePos2.getArray()[count]=Car(type,turn,directionEnum.x[count],directionEnum.y[1])
-            lane.lanePos2.increaseCount()
+                elif (count==maxNumber and type==VehcileType.Self_Driven and lane.lanePos3.getCount()<maxNumber):
+                    count=lane.lanePos3.getCount()       
+                    lane.lanePos3.getArray()[count]=Car(type,turn,directionEnum.x[count],directionEnum.y[2])
+                    lane.lanePos3.increaseCount()
+
+            elif(turn==Destination.left and lane.lanePos2.getCount()<maxNumber):
+                count=lane.lanePos2.getCount()
+                lane.lanePos2.getArray()[count]=Car(type,turn,directionEnum.x[count],directionEnum.y[1])
+                lane.lanePos2.increaseCount()
+
+
+
+        else:
+            if(turn==Destination.right and lane.lanePos1.getCount()<maxNumber):
+                count=lane.lanePos1.getCount()
+                lane.lanePos1.getArray()[count]=Car(type,turn,directionEnum.x[0],directionEnum.y[count])
+                lane.lanePos1.increaseCount()
+
+            elif(turn==Destination.straight):
+                count=lane.lanePos1.getCount()
+                if(count<maxNumber):
+                    lane.lanePos1.getArray()[count]=Car(type,turn,directionEnum.x[0],directionEnum.y[count])
+                    lane.lanePos1.increaseCount()
+
+                elif (count==maxNumber and type==VehcileType.Self_Driven and lane.lanePos3.getCount()<maxNumber):
+                    count=lane.lanePos3.getCount()       
+                    lane.lanePos3.getArray()[count]=Car(type,turn,directionEnum.x[2],directionEnum.y[count])
+                    lane.lanePos3.increaseCount()
+
+            elif(turn==Destination.left and lane.lanePos2.getCount()<maxNumber):
+                count=lane.lanePos2.getCount()
+                lane.lanePos2.getArray()[count]=Car(type,turn,directionEnum.x[1],directionEnum.y[count])
+                lane.lanePos2.increaseCount()
 
     def randomCarGenerater(self):
         origion=random.choice(list(Directions))
@@ -172,11 +201,12 @@ class Intersection:
         if(origion==Directions.East):
             self.addToLanes(type,turn,self.East,EastCoord)
         if(origion==Directions.North):
-            self.addToLanes(type,turn,self.North,EastCoord)
+            self.addToLanes(type,turn,self.North,NorthCoord)
         if(origion==Directions.West):
             self.addToLanes(type,turn,self.West,WestCoord)
         if(origion==Directions.South):
-            self.addToLanes(type,turn,self.South,EastCoord)
+            pass
+            #self.addToLanes(type,turn,self.South,EastCoord)
 
     def isIn(self,x,y):
         for lane in self.fourWay:
@@ -219,7 +249,6 @@ class Intersection:
                 else:
                     print(" ",end="") 
             print("")
-
 
 def main():
 
