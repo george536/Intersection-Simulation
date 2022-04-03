@@ -212,7 +212,6 @@ class Intersection:
                     print("-",end=" ")
                 elif ((x<7 or 22>x>14) and (y==8 or y==10 or y==14 or y==16)):
                     print("--",end="")
-                
                 elif self.isIn(x,y):
                     print("C",end="")
                 elif(y>5 and y<19):
