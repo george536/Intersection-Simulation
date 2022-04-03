@@ -1,9 +1,8 @@
 from enum import Enum
-from msilib.schema import Extension
 import os
 import random
 import time
-from tkinter import E
+
 
 class Directions(Enum):
     East=1
@@ -65,6 +64,7 @@ class Lane:
             carObject=self.Array[0]
             for i in range (1,self.size):
                 self.Array[i-1]=self.Array[i]
+            self.Array[self.size-1]=0
             self.count-=1
             return carObject
 
