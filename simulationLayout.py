@@ -224,14 +224,13 @@ class Intersection:
 
         
     def performLeftTurn(self,origion,destination,destCoord):
-        if(origion.lanePos2.getCount()>0 and (origion==self.East or origion==self.West)):
+        if(origion.lanePos2.getCount()>0 and destination.laneNeg2.getCount()<maxNumber and (origion==self.East or origion==self.West)):
             car=origion.lanePos2.pop()
             car.x=destCoord.x[1]
             car.y=destCoord.y[destination.laneNeg2.getCount()]
             destination.laneNeg2.add(car)
-        elif(origion.lanePos2.getCount()>0 and (origion==self.South or origion==self.North)):
+        elif(origion.lanePos2.getCount()>0 and destination.laneNeg2.getCount()<maxNumber and (origion==self.South or origion==self.North)):
             car=origion.lanePos2.pop()
-            print(destination.laneNeg2.getCount())
             car.x=destCoord.x[destination.laneNeg2.getCount()]
             car.y=destCoord.y[1]
             destination.laneNeg2.add(car)
@@ -270,7 +269,7 @@ class Intersection:
             if(source.lanePos3.getCount()>0):
                 if(StraightLane.laneNeg3.getCount()<maxNumber):
                     car=source.lanePos3.pop()
-                    car.x=straightCoord.x[self.West.laneNeg3.getCount()]
+                    car.x=straightCoord.x[StraightLane.laneNeg3.getCount()]
                     car.y=straightCoord.y[0]
                     StraightLane.laneNeg3.add(car)
         else:
@@ -307,7 +306,7 @@ class Intersection:
                 if(StraightLane.laneNeg3.getCount()<maxNumber):
                     car=source.lanePos3.pop()
                     car.x=straightCoord.x[0]
-                    car.y=straightCoord.y[self.West.laneNeg3.getCount()]
+                    car.y=straightCoord.y[StraightLane.laneNeg3.getCount()]
                     StraightLane.laneNeg3.add(car)
 
     def move(self):
