@@ -410,9 +410,6 @@ def main():
         sim.move()
         sim.controlTraffic()
         sim.clearNegativeLanes()
-        # randomDelete=random.randint(0,2)
-        # if randomDelete==0:
-        #     sim.carsLeaving()
         time.sleep(0.3)
         timer+=0.5
     
