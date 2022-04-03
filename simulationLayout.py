@@ -226,6 +226,11 @@ class Intersection:
                     car=self.East.lanePos1.pop()
                     car.x=NorthCoord[0]
                     car.y=NorthCoord[self.North.lanePos3.getCount()]
+                    self.North.lanePos3.add(car)
+
+            if(self.East.lanePos3.getCount()>0):
+                car=self.East.lanePos3.pop()
+                car.x
                 
             #West Movements
             
