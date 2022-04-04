@@ -54,7 +54,8 @@ class WestNegCoord:
 
 class NorthNegCoord:
     x=[16,14,12]
-    y=[1,2,3,4,5]
+    #y=[1,2,3,4,5]
+    y=[5,4,3,2,1]
 
 class SouthNegCoord:
     x=[6,8,10]
@@ -341,18 +342,27 @@ class Intersection:
 
     def clearNegativeLanes(self):
         for i in range(3,6):
-            for car in self.East.lanesSet[i].getArray():
-                if car!=0:car.x+=1
-            #self.East.lanesSet[i].pop()
+            # for car in self.East.lanesSet[i].getArray():
+            #     if car!=0:car.x+=1
+            # #self.East.lanesSet[i].pop()
             for car in self.North.lanesSet[i].getArray():
-                if car!=0:car.y-=1
-            #self.North.lanesSet[i].pop()
+                if car!=0:
+                    car.y-=1
+                    if(car.y<=0):
+                        self.North.lanesSet[i].pop()
+                
+            # if(self.North.lanesSet[i].getCount()>0):
+            #     self.North.lanesSet[i].Array.pop(self.North.lanesSet[i].getCount()-1)
+            #     self.North.lanesSet[i].count-=1
+            
             for car in self.West.lanesSet[i].getArray():
-                if car!=0:car.x-=1
-            #self.West.lanesSet[i].pop()
-            for car in self.South.lanesSet[i].getArray():
-                if car!=0:car.y+=1
-            #self.South.lanesSet[i].pop()
+                if car!=0:
+                    car.x-=2
+                    if car.x<=0:
+                        self.West.lanesSet[i].pop()
+            # for car in self.South.lanesSet[i].getArray():
+            #     if car!=0:car.y+=1
+            # #self.South.lanesSet[i].pop()
 
     def isIn(self,x,y):
         for lane in self.fourWay:
@@ -413,12 +423,12 @@ def main():
         sim.randomCarGenerater()
         print(sim.currentTrafic)
         sim.move()
-        #sim.controlTraffic()
-        #sim.clearNegativeLanes()
+        sim.controlTraffic()
         print(sim.East.lanePos1.getCount())
         print(sim.East.lanePos2.getCount())
         print(sim.East.lanePos3.getCount())
-        time.sleep(0.1)
+        time.sleep(0.5)
+        sim.clearNegativeLanes()
         timer+=0.5
     
 
