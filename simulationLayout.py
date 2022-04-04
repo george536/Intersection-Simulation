@@ -2,6 +2,7 @@ from enum import Enum
 import os
 import random
 import time
+from traceback import print_tb
 
 
 class Directions(Enum):
@@ -209,18 +210,19 @@ class Intersection:
     
 
     def randomCarGenerater(self):
-        origion=random.choice(list(Directions))
+        #origion=random.choice(list(Directions))
+        origion=Directions.East
         turn=random.choice(list(Destination))
         type=random.choice(list(VehcileType))
 
         if(origion==Directions.East):
             self.addToLanes(type,turn,self.East,EastCoord)
-        if(origion==Directions.North):
-            self.addToLanes(type,turn,self.North,NorthCoord)
-        if(origion==Directions.West):
-            self.addToLanes(type,turn,self.West,WestCoord)
-        if(origion==Directions.South):
-            self.addToLanes(type,turn,self.South,SouthCoord)
+        # if(origion==Directions.North):
+        #     self.addToLanes(type,turn,self.North,NorthCoord)
+        # if(origion==Directions.West):
+        #     self.addToLanes(type,turn,self.West,WestCoord)
+        # if(origion==Directions.South):
+        #     self.addToLanes(type,turn,self.South,SouthCoord)
 
         
     def performLeftTurn(self,origion,destination,destCoord):
@@ -235,106 +237,106 @@ class Intersection:
             car.y=destCoord.y[1]
             destination.laneNeg2.add(car)
 
-    def performMove(self,source,rightLane,StraightLane,rightCoord,straightCoord):
+    def performMove(self,source,rightLane,StraightLane,rightNegCoord,rightCoord,straightNegCoord):
         if source==self.East or source==self.West:
             if(source.lanePos1.getCount()>0):
                     if(source.lanePos1.getTop().getDestination()==Destination.right):
                         if(rightLane.laneNeg1.getCount()<maxNumber):
                             car=source.lanePos1.pop()
-                            car.x=rightCoord.x[0]
-                            car.y=rightCoord.y[rightLane.laneNeg1.getCount()]
+                            car.x=rightNegCoord.x[0]
+                            car.y=rightNegCoord.y[rightLane.laneNeg1.getCount()]
                             rightLane.laneNeg1.add(car)
 
                     elif(source.lanePos1.getTop().getDestination()==Destination.straight):
                         if source.lanePos1.getTop().getType()==VehcileType.Human_Driven:
                             if(StraightLane.laneNeg1.getCount()<maxNumber):
                                 car=source.lanePos1.pop()
-                                car.x=straightCoord.x[StraightLane.laneNeg1.getCount()]
-                                car.y=straightCoord.y[0]
+                                car.x=straightNegCoord.x[StraightLane.laneNeg1.getCount()]
+                                car.y=straightNegCoord.y[0]
                                 StraightLane.laneNeg1.add(car)
                         else:
                             if(StraightLane.laneNeg2.getCount()<maxNumber):
                                 car=source.lanePos1.pop()
-                                car.x=straightCoord.x[StraightLane.laneNeg2.getCount()]
-                                car.y=straightCoord.y[1]
+                                car.x=straightNegCoord.x[StraightLane.laneNeg2.getCount()]
+                                car.y=straightNegCoord.y[1]
                                 StraightLane.laneNeg2.add(car)
 
                     elif(source.lanePos1.getTop().getDestination()==Destination.left):
                         if(rightLane.lanePos3.getCount()<maxNumber):
                             car=source.lanePos1.pop()
-                            car.x=rightCoord.x[0]
+                            car.x=rightCoord.x[2]
                             car.y=rightCoord.y[rightLane.lanePos3.getCount()]
                             rightLane.lanePos3.add(car)
             
             if(source.lanePos3.getCount()>0):
                 if(StraightLane.laneNeg3.getCount()<maxNumber):
                     car=source.lanePos3.pop()
-                    car.x=straightCoord.x[StraightLane.laneNeg3.getCount()]
-                    car.y=straightCoord.y[0]
+                    car.x=straightNegCoord.x[StraightLane.laneNeg3.getCount()]
+                    car.y=straightNegCoord.y[0]
                     StraightLane.laneNeg3.add(car)
         else:
             if(source.lanePos1.getCount()>0):
                     if(source.lanePos1.getTop().getDestination()==Destination.right):
                         if(rightLane.laneNeg1.getCount()<maxNumber):
                             car=source.lanePos1.pop()
-                            car.x=rightCoord.x[rightLane.laneNeg1.getCount()]
-                            car.y=rightCoord.y[0]
+                            car.x=rightNegCoord.x[rightLane.laneNeg1.getCount()]
+                            car.y=rightNegCoord.y[0]
                             rightLane.laneNeg1.add(car)
 
                     elif(source.lanePos1.getTop().getDestination()==Destination.straight):
                         if source.lanePos1.getTop().getType()==VehcileType.Human_Driven:
                             if(StraightLane.laneNeg1.getCount()<maxNumber):
                                 car=source.lanePos1.pop()
-                                car.x=straightCoord.x[0]
-                                car.y=straightCoord.y[StraightLane.laneNeg1.getCount()]
+                                car.x=straightNegCoord.x[0]
+                                car.y=straightNegCoord.y[StraightLane.laneNeg1.getCount()]
                                 StraightLane.laneNeg1.add(car)
                         else:
                             if(StraightLane.laneNeg2.getCount()<maxNumber):
                                 car=source.lanePos1.pop()
-                                car.x=straightCoord.x[1]
-                                car.y=straightCoord.y[StraightLane.laneNeg2.getCount()]
+                                car.x=straightNegCoord.x[1]
+                                car.y=straightNegCoord.y[StraightLane.laneNeg2.getCount()]
                                 StraightLane.laneNeg2.add(car)
 
                     elif(source.lanePos1.getTop().getDestination()==Destination.left):
                         if(rightLane.lanePos3.getCount()<maxNumber):
                             car=source.lanePos1.pop()
                             car.x=rightCoord.x[rightLane.lanePos3.getCount()]
-                            car.y=rightCoord.y[0]
+                            car.y=rightCoord.y[2]
                             rightLane.lanePos3.add(car)
             
             if(source.lanePos3.getCount()>0):
                 if(StraightLane.laneNeg3.getCount()<maxNumber):
                     car=source.lanePos3.pop()
-                    car.x=straightCoord.x[0]
-                    car.y=straightCoord.y[StraightLane.laneNeg3.getCount()]
+                    car.x=straightNegCoord.x[0]
+                    car.y=straightNegCoord.y[StraightLane.laneNeg3.getCount()]
                     StraightLane.laneNeg3.add(car)
 
     def move(self):
         if(self.currentTrafic==Traffic.EastWest):
             #East movements
-            self.performMove(self.East, self.North, self.West, NorthNegCoord, WestNegCoord)
+            self.performMove(self.East, self.North, self.West, NorthNegCoord,NorthCoord, WestNegCoord)
             #West Movements
-            self.performMove(self.West, self.South, self.East, SouthNegCoord, EastNegCoord)
+            #self.performMove(self.West, self.South, self.East, SouthNegCoord, EastNegCoord)
         
-        elif(self.currentTrafic==Traffic.NorthSouth):
-            #North movements
-            self.performMove(self.North, self.West, self.South, WestNegCoord, SouthNegCoord)
-            #South movements
-            self.performMove(self.South, self.East, self.North, EastNegCoord, NorthNegCoord)
+        # elif(self.currentTrafic==Traffic.NorthSouth):
+        #     #North movements
+        #     self.performMove(self.North, self.West, self.South, WestNegCoord, SouthNegCoord)
+        #     #South movements
+        #     self.performMove(self.South, self.East, self.North, EastNegCoord, NorthNegCoord)
 
-        elif(self.currentTrafic==Traffic.NorthSouthLeftTurn):
-            #cars turning left from North (will go east)
-            self.performLeftTurn(self.North,self.East,EastNegCoord)
+        # elif(self.currentTrafic==Traffic.NorthSouthLeftTurn):
+        #     #cars turning left from North (will go east)
+        #     self.performLeftTurn(self.North,self.East,EastNegCoord)
 
-            #cars turning left from South (will go west)
-            self.performLeftTurn(self.South,self.West,WestNegCoord)
+        #     #cars turning left from South (will go west)
+        #     self.performLeftTurn(self.South,self.West,WestNegCoord)
 
-        elif(self.currentTrafic==Traffic.EastWestLeftTurn):
-            #cars turning left from east (will go south)
-            self.performLeftTurn(self.East,self.South,SouthNegCoord)
+        # elif(self.currentTrafic==Traffic.EastWestLeftTurn):
+        #     #cars turning left from east (will go south)
+        #     self.performLeftTurn(self.East,self.South,SouthNegCoord)
             
-            #cars turning left from west (will go north)
-            self.performLeftTurn(self.West,self.North, NorthNegCoord)
+        #     #cars turning left from west (will go north)
+        #     self.performLeftTurn(self.West,self.North, NorthNegCoord)
 
 
     def clearNegativeLanes(self):
@@ -380,10 +382,13 @@ class Intersection:
                     print(" ",end="  ")
                 elif ((y==6 or y==18) and (x<5 or 18>x>11)):
                     print("=",end="  ")
-                elif (y==12 and (1<x<8 or 20>x>14)):
+                elif (y==12 and (1<x<8 or 20>x>13)):
                     print("-",end=" ")
-                elif ((x<8 or 22>x>14) and (y==8 or y==10 or y==14 or y==16)):
+                elif ((x<8 or 22>x>13) and (y==8 or y==10 or y==14 or y==16)):
                     print("--",end="")
+                #extra
+                elif (y>5 and y<19 and x>8 and x<14):
+                    print(" ",end=" ")
                 elif self.isIn(x,y)!=None:
                     car=self.isIn(x,y)
                     if car.getType()==VehcileType.Self_Driven:
@@ -408,9 +413,12 @@ def main():
         sim.randomCarGenerater()
         print(sim.currentTrafic)
         sim.move()
-        sim.controlTraffic()
-        sim.clearNegativeLanes()
-        time.sleep(0.3)
+        #sim.controlTraffic()
+        #sim.clearNegativeLanes()
+        print(sim.East.lanePos1.getCount())
+        print(sim.East.lanePos2.getCount())
+        print(sim.East.lanePos3.getCount())
+        time.sleep(0.1)
         timer+=0.5
     
 
