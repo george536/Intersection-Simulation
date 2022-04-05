@@ -4,7 +4,6 @@ import random
 import time
 
 
-
 class Directions(Enum):
     East=1
     North=2
@@ -454,6 +453,24 @@ class Intersection:
                     print(" ",end="") 
             print("")
 
+    def carsAvg(self):
+        sum=0
+        list=[0,2]
+        for i in list:
+            if self.currentTrafic!=Traffic.EastWest:
+                sum+=self.East.lanesSet[i].getCount()
+                sum+=self.West.lanesSet[i].getCount()
+            if self.currentTrafic!=Traffic.NorthSouth:
+                sum+=self.South.lanesSet[i].getCount()
+                sum+=self.North.lanesSet[i].getCount()
+        if self.currentTrafic!=Traffic.NorthSouthLeftTurn:
+            sum+=self.South.lanesSet[1].getCount()
+            sum+=self.North.lanesSet[1].getCount()
+        if self.currentTrafic!=Traffic.EastWestLeftTurn:
+            sum+=self.East.lanesSet[1].getCount()
+            sum+=self.West.lanesSet[1].getCount()
+        return sum/12
+
 def main():
 
     sim = Intersection()
@@ -481,6 +498,6 @@ def main():
         time.sleep(0.5)
         sim.clearNegativeLanes()
         timer+=1
-    
+
 
 main()
