@@ -2,7 +2,7 @@ from enum import Enum
 import os
 import random
 import time
-from traceback import print_tb
+
 
 
 class Directions(Enum):
@@ -467,16 +467,20 @@ def main():
     # sleep time which means speed
     # make a graph of max number of cars waiting in a lane from all 4 ways 
     # at a given time, and show for differnt allocated times
+    # 2 for different busy times, let generator work more than once
     while(True):    
         sim.draw()
         sim.randomCarGenerater()
+        # sim.randomCarGenerater()
+        # sim.randomCarGenerater()
+        # sim.randomCarGenerater()
         print(sim.currentTrafic)
         sim.update()
         sim.move()
         sim.controlTraffic()
         time.sleep(0.5)
         sim.clearNegativeLanes()
-        timer+=0.5
+        timer+=1
     
 
 main()
