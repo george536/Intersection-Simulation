@@ -97,6 +97,7 @@ class Lane:
             self.count+=1
 
 maxNumber=5
+timeAllocated=10
 
 class Car:
     def __init__(self,type, destination, x, y):
@@ -163,14 +164,20 @@ class Intersection:
                     self.South]
 
     def controlTraffic(self):
-        global timeAllocated
-        timeAllocated = 10
+        global timeAllocated,timer
         #if(timer==timeAllocated):
         if(timer%timeAllocated==0 and timer!=0):
             nextTraffic=int(self.currentTrafic.value + 1)
             if nextTraffic ==5:
                 nextTraffic=1
             self.currentTrafic=Traffic(nextTraffic)
+
+        if self.currentTrafic==Traffic.EastWestLeftTurn and self.East.lanePos2.getCount()==0 and self.West.lanePos2.getCount()==0:
+            self.currentTrafic=Traffic.NorthSouthLeftTurn
+            timer=0
+        elif self.currentTrafic==Traffic.NorthSouthLeftTurn and self.South.lanePos2.getCount()==0 and self.North.lanePos2.getCount()==0:
+            self.currentTrafic=Traffic.EastWest
+            timer=0
 
     def addToLanes(self,type,turn,lane,directionEnum):
         global maxNumber
@@ -452,14 +459,18 @@ def main():
     sim = Intersection()
     sim.currentTrafic=Traffic.EastWest
     
-    global timer
+    global timer, timeAllocated
+    timeAllocated = 5
     timer=0
     while(True):    
         sim.draw()
         sim.randomCarGenerater()
         print(sim.currentTrafic)
+        sim.update()
         sim.move()
         sim.controlTraffic()
+        print(sim.East.lanePos2.getCount())
+        print(sim.West.lanePos2.getCount())
         time.sleep(0.5)
         sim.clearNegativeLanes()
         timer+=0.5
