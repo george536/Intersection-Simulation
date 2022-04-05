@@ -213,13 +213,13 @@ class Intersection:
     
 
     def randomCarGenerater(self):
-        #origion=random.choice(list(Directions))
-        origion=Directions.West
+        origion=random.choice(list(Directions))
+        #origion=Directions.West
         turn=random.choice(list(Destination))
         type=random.choice(list(VehcileType))
 
-        # if(origion==Directions.East):
-        #     self.addToLanes(type,turn,self.East,EastCoord)
+        if(origion==Directions.East):
+            self.addToLanes(type,turn,self.East,EastCoord)
         # if(origion==Directions.North):
         #     self.addToLanes(type,turn,self.North,NorthCoord)
         if(origion==Directions.West):
@@ -336,7 +336,7 @@ class Intersection:
     def move(self):
         if(self.currentTrafic==Traffic.EastWest):
             #East movements
-            #self.performMove(self.East, self.North, self.West, NorthNegCoord,NorthCoord, WestNegCoord)
+            self.performMove(self.East, self.North, self.West, NorthNegCoord,NorthCoord, WestNegCoord)
             #West Movements
             self.performMove(self.West, self.South, self.East, SouthNegCoord, SouthCoord,EastNegCoord)
         
@@ -370,11 +370,11 @@ class Intersection:
                         self.East.lanesSet[i].pop()
 
 
-            # for car in self.North.lanesSet[i].getArray():
-            #     if car!=0:
-            #         car.y-=1
-            #         if(car.y<=0):
-            #             self.North.lanesSet[i].pop()
+            for car in self.North.lanesSet[i].getArray():
+                if car!=0:
+                    car.y-=1
+                    if(car.y<=0):
+                        self.North.lanesSet[i].pop()
                 
             for car in self.South.lanesSet[i].getArray():
                 if car!=0:
@@ -382,11 +382,11 @@ class Intersection:
                     if(car.y>=24):
                         self.South.lanesSet[i].pop()
             
-            # for car in self.West.lanesSet[i].getArray():
-            #     if car!=0:
-            #         car.x-=2
-            #         if car.x<=0:
-            #             self.West.lanesSet[i].pop()
+            for car in self.West.lanesSet[i].getArray():
+                if car!=0:
+                    car.x-=2
+                    if car.x<=0:
+                        self.West.lanesSet[i].pop()
 
 
     def isIn(self,x,y):
