@@ -46,8 +46,8 @@ class SouthCoord:
 class EastNegCoord:
     #x=[23,21,19,17,15]
     x=[15,17,19,21,23]
-    y=[13,15,17]
-
+    #y=[13,15,17]
+    y=[17,15,13]
 class WestNegCoord:
     
     x=[8,6,4,2,0]
@@ -215,18 +215,18 @@ class Intersection:
 
     def randomCarGenerater(self):
         #origion=random.choice(list(Directions))
-        origion=Directions.North
+        origion=Directions.West
         turn=random.choice(list(Destination))
         type=random.choice(list(VehcileType))
 
-        # if(origion==Directions.East):
-        #     self.addToLanes(type,turn,self.East,EastCoord)
+        if(origion==Directions.East):
+            self.addToLanes(type,turn,self.East,EastCoord)
         if(origion==Directions.North):
             self.addToLanes(type,turn,self.North,NorthCoord)
-        # if(origion==Directions.West):
-        #     self.addToLanes(type,turn,self.West,WestCoord)
-        # if(origion==Directions.South):
-        #     self.addToLanes(type,turn,self.South,SouthCoord)
+        if(origion==Directions.West):
+            self.addToLanes(type,turn,self.West,WestCoord)
+        if(origion==Directions.South):
+            self.addToLanes(type,turn,self.South,SouthCoord)
 
         
     def performLeftTurn(self,origion,destination,destCoord):
@@ -252,6 +252,9 @@ class Intersection:
         if source==self.North:
             for car in lane:
                 if car!=0:car.y+=1
+        if source==self.South:
+            for car in lane:
+                if car!=0:car.y-=1
 
     def performMove(self,source,rightLane,StraightLane,rightNegCoord,rightCoord,straightNegCoord):
         if source==self.East or source==self.West:
@@ -343,13 +346,14 @@ class Intersection:
             #East movements
             #self.performMove(self.East, self.North, self.West, NorthNegCoord,NorthCoord, WestNegCoord)
             #West Movements
-            #self.performMove(self.West, self.South, self.East, SouthNegCoord, SouthCoord,EastNegCoord)
+            self.performMove(self.West, self.South, self.East, SouthNegCoord, SouthCoord,EastNegCoord)
         
         elif(self.currentTrafic==Traffic.NorthSouth):
+            pass
             #North movements
-            self.performMove(self.North, self.West, self.South, WestNegCoord,WestCoord, SouthNegCoord)
+            #self.performMove(self.North, self.West, self.South, WestNegCoord,WestCoord, SouthNegCoord)
             #South movements
-            #self.performMove(self.South, self.East, self.North, EastNegCoord, NorthNegCoord)
+            #self.performMove(self.South, self.East, self.North, EastNegCoord,EastCoord, NorthNegCoord)
 
         # elif(self.currentTrafic==Traffic.NorthSouthLeftTurn):
         #     #cars turning left from North (will go east)
