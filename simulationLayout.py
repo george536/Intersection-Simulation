@@ -232,11 +232,13 @@ class Intersection:
     def performLeftTurn(self,origion,destination,destCoord):
         if(origion.lanePos2.getCount()>0 and destination.laneNeg2.getCount()<maxNumber and (origion==self.East or origion==self.West)):
             car=origion.lanePos2.pop()
+            self.shift(origion,origion.lanePos2.getArray())
             car.x=destCoord.x[1]
             car.y=destCoord.y[destination.laneNeg2.getCount()]
             destination.laneNeg2.add(car)
         elif(origion.lanePos2.getCount()>0 and destination.laneNeg2.getCount()<maxNumber and (origion==self.South or origion==self.North)):
             car=origion.lanePos2.pop()
+            self.shift(origion,origion.lanePos2.getArray())
             car.x=destCoord.x[destination.laneNeg2.getCount()]
             car.y=destCoord.y[1]
             destination.laneNeg2.add(car)
@@ -354,19 +356,19 @@ class Intersection:
             #South movements
             self.performMove(self.South, self.East, self.North, EastNegCoord,EastCoord, NorthNegCoord)
 
-        # elif(self.currentTrafic==Traffic.NorthSouthLeftTurn):
-        #     #cars turning left from North (will go east)
-        #     self.performLeftTurn(self.North,self.East,EastNegCoord)
+        elif(self.currentTrafic==Traffic.NorthSouthLeftTurn):
+            #cars turning left from North (will go east)
+            self.performLeftTurn(self.North,self.East,EastNegCoord)
 
-        #     #cars turning left from South (will go west)
-        #     self.performLeftTurn(self.South,self.West,WestNegCoord)
+            #cars turning left from South (will go west)
+            self.performLeftTurn(self.South,self.West,WestNegCoord)
 
-        # elif(self.currentTrafic==Traffic.EastWestLeftTurn):
-        #     #cars turning left from east (will go south)
-        #     self.performLeftTurn(self.East,self.South,SouthNegCoord)
+        elif(self.currentTrafic==Traffic.EastWestLeftTurn):
+            #cars turning left from east (will go south)
+            self.performLeftTurn(self.East,self.South,SouthNegCoord)
             
-        #     #cars turning left from west (will go north)
-        #     self.performLeftTurn(self.West,self.North, NorthNegCoord)
+            #cars turning left from west (will go north)
+            self.performLeftTurn(self.West,self.North, NorthNegCoord)
 
 
     def clearNegativeLanes(self):
