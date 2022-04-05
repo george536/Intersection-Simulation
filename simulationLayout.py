@@ -477,7 +477,7 @@ def main():
     sim.currentTrafic=Traffic.EastWest
     
     global timer, timeAllocated
-    timeAllocated = 20
+    timeAllocated = 5
     timer=0
     #parameters to be tested:
     # timeAllocated
@@ -488,11 +488,11 @@ def main():
     while(True):    
         sim.draw()
         sim.randomCarGenerater()
-        # sim.randomCarGenerater()
-        # sim.randomCarGenerater()
-        # sim.randomCarGenerater()
-        # sim.randomCarGenerater()
-        # sim.randomCarGenerater()
+        sim.randomCarGenerater()
+        sim.randomCarGenerater()
+        sim.randomCarGenerater()
+        sim.randomCarGenerater()
+        sim.randomCarGenerater()
         print(sim.currentTrafic)
         sim.update()
         sim.move()
