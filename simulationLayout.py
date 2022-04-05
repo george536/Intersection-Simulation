@@ -97,7 +97,7 @@ class Lane:
             self.count+=1
 
 maxNumber=5
-timeAllocated=10
+timeAllocated=5
 
 class Car:
     def __init__(self,type, destination, x, y):
@@ -469,8 +469,6 @@ def main():
         sim.update()
         sim.move()
         sim.controlTraffic()
-        print(sim.East.lanePos2.getCount())
-        print(sim.West.lanePos2.getCount())
         time.sleep(0.5)
         sim.clearNegativeLanes()
         timer+=0.5
