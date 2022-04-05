@@ -19,8 +19,9 @@ class VehcileType(Enum):
 class Traffic(Enum):
     EastWest=1
     NorthSouth=2
-    NorthSouthLeftTurn=3
-    EastWestLeftTurn=4
+    EastWestLeftTurn=3
+    NorthSouthLeftTurn=4
+    
 
 class Destination(Enum):
     right=1
