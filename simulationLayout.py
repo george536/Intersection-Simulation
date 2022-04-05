@@ -238,12 +238,19 @@ class Intersection:
             car.y=destCoord.y[1]
             destination.laneNeg2.add(car)
 
+
+    def shift(self,source,lane):
+        if source==self.East:
+            for car in lane:
+                if car!=0:car.x-=2
+
     def performMove(self,source,rightLane,StraightLane,rightNegCoord,rightCoord,straightNegCoord):
         if source==self.East or source==self.West:
             if(source.lanePos1.getCount()>0):
                     if(source.lanePos1.getTop().getDestination()==Destination.right):
                         if(rightLane.laneNeg1.getCount()<maxNumber):
                             car=source.lanePos1.pop()
+                            self.shift(source,source.lanePos1.getArray())
                             car.x=rightNegCoord.x[0]
                             car.y=rightNegCoord.y[rightLane.laneNeg1.getCount()]
                             rightLane.laneNeg1.add(car)
@@ -252,12 +259,14 @@ class Intersection:
                         if source.lanePos1.getTop().getType()==VehcileType.Human_Driven:
                             if(StraightLane.laneNeg1.getCount()<maxNumber):
                                 car=source.lanePos1.pop()
+                                self.shift(source,source.lanePos1.getArray())
                                 car.x=straightNegCoord.x[StraightLane.laneNeg1.getCount()]
                                 car.y=straightNegCoord.y[0]
                                 StraightLane.laneNeg1.add(car)
                         else:
                             if(StraightLane.laneNeg2.getCount()<maxNumber):
                                 car=source.lanePos1.pop()
+                                self.shift(source,source.lanePos1.getArray())
                                 car.x=straightNegCoord.x[StraightLane.laneNeg2.getCount()]
                                 car.y=straightNegCoord.y[1]
                                 StraightLane.laneNeg2.add(car)
@@ -265,6 +274,7 @@ class Intersection:
                     elif(source.lanePos1.getTop().getDestination()==Destination.left):
                         if(rightLane.lanePos3.getCount()<maxNumber):
                             car=source.lanePos1.pop()
+                            self.shift(source,source.lanePos1.getArray())
                             car.x=rightCoord.x[2]
                             car.y=rightCoord.y[rightLane.lanePos3.getCount()]
                             rightLane.lanePos3.add(car)
@@ -272,6 +282,7 @@ class Intersection:
             if(source.lanePos3.getCount()>0):
                 if(StraightLane.laneNeg3.getCount()<maxNumber):
                     car=source.lanePos3.pop()
+                    self.shift(source,source.lanePos3.getArray())
                     car.x=straightNegCoord.x[StraightLane.laneNeg3.getCount()]
                     car.y=straightNegCoord.y[0]
                     StraightLane.laneNeg3.add(car)
@@ -280,6 +291,7 @@ class Intersection:
                     if(source.lanePos1.getTop().getDestination()==Destination.right):
                         if(rightLane.laneNeg1.getCount()<maxNumber):
                             car=source.lanePos1.pop()
+                            self.shift(source,source.lanePos1.getArray())
                             car.x=rightNegCoord.x[rightLane.laneNeg1.getCount()]
                             car.y=rightNegCoord.y[0]
                             rightLane.laneNeg1.add(car)
@@ -288,12 +300,14 @@ class Intersection:
                         if source.lanePos1.getTop().getType()==VehcileType.Human_Driven:
                             if(StraightLane.laneNeg1.getCount()<maxNumber):
                                 car=source.lanePos1.pop()
+                                self.shift(source,source.lanePos1.getArray())
                                 car.x=straightNegCoord.x[0]
                                 car.y=straightNegCoord.y[StraightLane.laneNeg1.getCount()]
                                 StraightLane.laneNeg1.add(car)
                         else:
                             if(StraightLane.laneNeg2.getCount()<maxNumber):
                                 car=source.lanePos1.pop()
+                                self.shift(source,source.lanePos1.getArray())
                                 car.x=straightNegCoord.x[1]
                                 car.y=straightNegCoord.y[StraightLane.laneNeg2.getCount()]
                                 StraightLane.laneNeg2.add(car)
@@ -301,6 +315,7 @@ class Intersection:
                     elif(source.lanePos1.getTop().getDestination()==Destination.left):
                         if(rightLane.lanePos3.getCount()<maxNumber):
                             car=source.lanePos1.pop()
+                            self.shift(source,source.lanePos1.getArray())
                             car.x=rightCoord.x[rightLane.lanePos3.getCount()]
                             car.y=rightCoord.y[2]
                             rightLane.lanePos3.add(car)
@@ -308,6 +323,7 @@ class Intersection:
             if(source.lanePos3.getCount()>0):
                 if(StraightLane.laneNeg3.getCount()<maxNumber):
                     car=source.lanePos3.pop()
+                    self.shift(source,source.lanePos3.getArray())
                     car.x=straightNegCoord.x[0]
                     car.y=straightNegCoord.y[StraightLane.laneNeg3.getCount()]
                     StraightLane.laneNeg3.add(car)
