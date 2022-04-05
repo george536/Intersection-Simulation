@@ -214,8 +214,8 @@ class Intersection:
     
 
     def randomCarGenerater(self):
-        #origion=random.choice(list(Directions))
-        origion=Directions.West
+        origion=random.choice(list(Directions))
+        #origion=Directions.West
         turn=random.choice(list(Destination))
         type=random.choice(list(VehcileType))
 
@@ -342,18 +342,17 @@ class Intersection:
 
     def move(self):
         if(self.currentTrafic==Traffic.EastWest):
-            pass
             #East movements
-            #self.performMove(self.East, self.North, self.West, NorthNegCoord,NorthCoord, WestNegCoord)
+            self.performMove(self.East, self.North, self.West, NorthNegCoord,NorthCoord, WestNegCoord)
             #West Movements
             self.performMove(self.West, self.South, self.East, SouthNegCoord, SouthCoord,EastNegCoord)
         
         elif(self.currentTrafic==Traffic.NorthSouth):
             pass
             #North movements
-            #self.performMove(self.North, self.West, self.South, WestNegCoord,WestCoord, SouthNegCoord)
+            self.performMove(self.North, self.West, self.South, WestNegCoord,WestCoord, SouthNegCoord)
             #South movements
-            #self.performMove(self.South, self.East, self.North, EastNegCoord,EastCoord, NorthNegCoord)
+            self.performMove(self.South, self.East, self.North, EastNegCoord,EastCoord, NorthNegCoord)
 
         # elif(self.currentTrafic==Traffic.NorthSouthLeftTurn):
         #     #cars turning left from North (will go east)
@@ -458,10 +457,7 @@ def main():
         print(sim.currentTrafic)
         sim.move()
         sim.controlTraffic()
-        print(sim.East.laneNeg1.getCount())
-        print(sim.East.laneNeg2.getCount())
-        print(sim.East.laneNeg3.getCount())
-        time.sleep(0.3)
+        time.sleep(0.5)
         sim.clearNegativeLanes()
         timer+=0.5
     
