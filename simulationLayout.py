@@ -479,20 +479,14 @@ def main():
     global timer, timeAllocated
     timeAllocated = 5
     timer=0
-    #parameters to be tested:
-    # timeAllocated
-    # sleep time which means speed
-    # make a graph of max number of cars waiting in a lane from all 4 ways 
-    # at a given time, and show for differnt allocated times
-    # 2 for different busy times, let generator work more than once
     while(True):    
         sim.draw()
         sim.randomCarGenerater()
-        sim.randomCarGenerater()
-        sim.randomCarGenerater()
-        sim.randomCarGenerater()
-        sim.randomCarGenerater()
-        sim.randomCarGenerater()
+        # sim.randomCarGenerater()
+        # sim.randomCarGenerater()
+        # sim.randomCarGenerater()
+        # sim.randomCarGenerater()
+        # sim.randomCarGenerater()
         print(sim.currentTrafic)
         sim.update()
         sim.move()
