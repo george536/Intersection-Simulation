@@ -44,7 +44,8 @@ class SouthCoord:
     y=[19,20,21,22,23]
 
 class EastNegCoord:
-    x=[23,21,19,17,15]
+    #x=[23,21,19,17,15]
+    x=[15,17,19,21,23]
     y=[13,15,17]
 
 class WestNegCoord:
@@ -59,7 +60,8 @@ class NorthNegCoord:
 
 class SouthNegCoord:
     x=[6,8,10]
-    y=[23,22,21,20,19]
+    #y=[23,22,21,20,19]
+    y=[19,20,21,22,23]
 
 
 
@@ -212,16 +214,16 @@ class Intersection:
 
     def randomCarGenerater(self):
         #origion=random.choice(list(Directions))
-        origion=Directions.East
+        origion=Directions.West
         turn=random.choice(list(Destination))
         type=random.choice(list(VehcileType))
 
-        if(origion==Directions.East):
-            self.addToLanes(type,turn,self.East,EastCoord)
+        # if(origion==Directions.East):
+        #     self.addToLanes(type,turn,self.East,EastCoord)
         # if(origion==Directions.North):
         #     self.addToLanes(type,turn,self.North,NorthCoord)
-        # if(origion==Directions.West):
-        #     self.addToLanes(type,turn,self.West,WestCoord)
+        if(origion==Directions.West):
+            self.addToLanes(type,turn,self.West,WestCoord)
         # if(origion==Directions.South):
         #     self.addToLanes(type,turn,self.South,SouthCoord)
 
@@ -243,6 +245,9 @@ class Intersection:
         if source==self.East:
             for car in lane:
                 if car!=0:car.x-=2
+        if source==self.West:
+            for car in lane:
+                if car!=0:car.x+=2
 
     def performMove(self,source,rightLane,StraightLane,rightNegCoord,rightCoord,straightNegCoord):
         if source==self.East or source==self.West:
@@ -331,9 +336,9 @@ class Intersection:
     def move(self):
         if(self.currentTrafic==Traffic.EastWest):
             #East movements
-            self.performMove(self.East, self.North, self.West, NorthNegCoord,NorthCoord, WestNegCoord)
+            #self.performMove(self.East, self.North, self.West, NorthNegCoord,NorthCoord, WestNegCoord)
             #West Movements
-            #self.performMove(self.West, self.South, self.East, SouthNegCoord, EastNegCoord)
+            self.performMove(self.West, self.South, self.East, SouthNegCoord, SouthCoord,EastNegCoord)
         
         # elif(self.currentTrafic==Traffic.NorthSouth):
         #     #North movements
@@ -358,27 +363,31 @@ class Intersection:
 
     def clearNegativeLanes(self):
         for i in range(3,6):
-            # for car in self.East.lanesSet[i].getArray():
-            #     if car!=0:car.x+=1
-            # #self.East.lanesSet[i].pop()
-            for car in self.North.lanesSet[i].getArray():
+            for car in self.East.lanesSet[i].getArray():
                 if car!=0:
-                    car.y-=1
-                    if(car.y<=0):
-                        self.North.lanesSet[i].pop()
+                    car.x+=2
+                    if car.x>=24:
+                        self.East.lanesSet[i].pop()
+
+
+            # for car in self.North.lanesSet[i].getArray():
+            #     if car!=0:
+            #         car.y-=1
+            #         if(car.y<=0):
+            #             self.North.lanesSet[i].pop()
                 
-            # if(self.North.lanesSet[i].getCount()>0):
-            #     self.North.lanesSet[i].Array.pop(self.North.lanesSet[i].getCount()-1)
-            #     self.North.lanesSet[i].count-=1
-            
-            for car in self.West.lanesSet[i].getArray():
+            for car in self.South.lanesSet[i].getArray():
                 if car!=0:
-                    car.x-=2
-                    if car.x<=0:
-                        self.West.lanesSet[i].pop()
-            # for car in self.South.lanesSet[i].getArray():
-            #     if car!=0:car.y+=1
-            # #self.South.lanesSet[i].pop()
+                    car.y+=1
+                    if(car.y>=24):
+                        self.South.lanesSet[i].pop()
+            
+            # for car in self.West.lanesSet[i].getArray():
+            #     if car!=0:
+            #         car.x-=2
+            #         if car.x<=0:
+            #             self.West.lanesSet[i].pop()
+
 
     def isIn(self,x,y):
         for lane in self.fourWay:
@@ -440,10 +449,10 @@ def main():
         print(sim.currentTrafic)
         sim.move()
         sim.controlTraffic()
-        print(sim.East.lanePos1.getCount())
-        print(sim.East.lanePos2.getCount())
-        print(sim.East.lanePos3.getCount())
-        time.sleep(0.5)
+        print(sim.East.laneNeg1.getCount())
+        print(sim.East.laneNeg2.getCount())
+        print(sim.East.laneNeg3.getCount())
+        time.sleep(0.3)
         sim.clearNegativeLanes()
         timer+=0.5
     
