@@ -1,7 +1,7 @@
 # Intersection Simulation
 
 This a re-design terminal visual of a current intersection which implements a different way of traffic flow
-#
+
 This was done as a final project for my second year Engineering Design Course
 
 
